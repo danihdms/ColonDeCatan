@@ -1,0 +1,30 @@
+Hugo :
+
+- Classe Plateau
+- CLasse Tuile
+- Classe Arrete
+- Classe Coin
+
+Daniel :
+
+- Classe Joueur
+- Classe Carte
+- Classe Route
+- Classe Batiment (abstract) 
+  - Colonie + Ville
+- Classe Ressource (abstract)
+
+
+Autres :
+
+Classe Voleur
+Classe Jeu
+Case Desert
+
+General :
+Nom des ressources :
+  - Minerai
+  - Ble
+  - Argile
+  - Bois
+  - Laine
