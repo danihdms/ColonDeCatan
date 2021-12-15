@@ -12,7 +12,6 @@ public class Board {
         tiles = new Tile[7][7];
         structures = new Structure[7][7];
         roads = new Road[7][7];
-        Tile desert = new Tile("desert", true);
 
         // création d'une listes pour mettre les tiles de façon aléatoire sur le
         // plateau
@@ -36,6 +35,7 @@ public class Board {
         tileList.add(new Tile("mouton"));
         tileList.add(new Tile("mouton"));
         tileList.add(new Tile("mouton"));
+        tileList.add(new Tile("desert", true));
 
         // Melange de la liste
         Collections.shuffle(tileList);
