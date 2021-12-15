@@ -1,18 +1,17 @@
 public class Route{
-    private Player owner =null;
-    private EdgeLocation location;
+    
+    private int x;
+    private int y;
 
 
     public Route(int x,int y,int or){
-        location=new EdgeLocation(x, y, or);
+        this.x=x;
+        this.y=y;
     }
-    public void setOwner(Player p){
-        if(null==owner){
-            owner=p;
-        }
-        //p.add(this);
-    }
-    public Player getOwner(){return owner;}
-    public EdgeLocation getEdgeLocation(){return location;}
+    public int getX(){return x;}
+    public int getY(){return y;}
+    public void setX(int x){this.x=x;}
+    public void setY(int y){this.y=y;}
+    
 
 }

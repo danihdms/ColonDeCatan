@@ -1,6 +1,7 @@
 public class Colonie extends Structure{
-    public Colonie(int x,int y,int or){
-        setLocation(new CoinLocation(x, y, or));
+    public Colonie(int x,int y){
+        setX(x);
+        setY(y);
         setType(0);
     }
 

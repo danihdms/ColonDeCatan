@@ -1,14 +1,17 @@
 public class Tuile {
     private int number =0;
-    private Location location;
+    private int x,y;
     private boolean Avoleur = false;
+    private Route n,s,e,o;
+    private Structure no,ne,se,so; 
     private final String type;
         /*
          *Values:
          * DESERT,BRICK,BOIS,PIERRE,BLE,MOUTON
          */
     public Tuile(int x,int y,int n,String str){
-        location=new Location(x, y);
+        this.x=x;
+        this.y=y;
         type=str;
         number=n;
     }    
@@ -23,13 +26,13 @@ public class Tuile {
 
     }
     
-    public void setCoords(int x,int y){
-        location=new Location(x, y);
-
-    }
+    public int getX(){return x;}
+    public int getY(){return y;}
+    public void setX(int x){this.x=x;}
+    public void setY(int y){this.y=y;}
     public boolean Avoleur(){return Avoleur;}
     public void setVoleur(boolean n){Avoleur=n;}
-    public Location getLocation(){return location;}
+    
     public void setNumber(int n){number=n;}
     public int getNumber(){return number;}
     public String getType(){return type;}

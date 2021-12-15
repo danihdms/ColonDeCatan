@@ -4,15 +4,15 @@ import java.util.Collections;
 
 public class Plateau {
     private Tuile[][] tuiles;
-    private Structure[][][] structures;
-    private Route[][][] routes;
-    private Location voleurLocation;
+    private Structure[][] structures;
+    private Route[][] routes;
+    //voleurLocation to do
     private Route endpoint = null;
 
     public Plateau() {
         tuiles = new Tuile[7][7];
-        structures = new Structure[7][7][4];
-        routes = new Route[7][7][4];
+        structures = new Structure[7][7];
+        routes = new Route[7][7];
         Tuile desert = new Tuile("DESERT", true);
 
         // création d'une listes pour mettre les tuiles de façon aléatoire sur le
@@ -51,41 +51,41 @@ public class Plateau {
                 case 1:
                     for (int col = 1; col < 4; col++) {
                         tuiles[col][row] = tuileList.get(count);
-                        tuiles[col][row].setCoords(col, row);
+                        
                         count++;
                     }
                     break;
                 case 2:
                     for (int col = 1; col < 5; col++) {
                         tuiles[col][row] = tuileList.get(count);
-                        tuiles[col][row].setCoords(col, row);
+                        
                         count++;
                     }
                     break;
                 case 3:
                     for (int col = 1; col < 6; col++) {
                         tuiles[col][row] = tuileList.get(count);
-                        tuiles[col][row].setCoords(col, row);
+                       
                         count++;
                     }
                     break;
                 case 4:
                     for (int col = 2; col < 6; col++) {
                         tuiles[col][row] = tuileList.get(count);
-                        tuiles[col][row].setCoords(col, row);
+                        
                         count++;
                     }
                     break;
                 case 5:
                     for (int col = 3; col < 6; col++) {
                         tuiles[col][row] = tuileList.get(count);
-                        tuiles[col][row].setCoords(col, row);
+                        
                         count++;
                     }
                     break;
             }
 
-            voleurLocation = desert.getLocation();
+            //voleurLocation = desert.getLocation();
         }
         //ordre des nombres
 
@@ -116,21 +116,9 @@ public class Plateau {
             }
         }
         //placer les structures
-        for(int row=0;row<structures.length;row++){
-            for (int col=0;col < structures[0].length;col++){
-                for(int or=0;or < structures[0][0].length;or++){
-                    structures[col][row][or] = new Colonie(col,row,or);
-                }
-            }
-        }
+        
         //placer les routes
-        for(int row=0;row<routes.length;row++){
-            for (int col=0;col < routes[0].length;col++){
-                for(int or=0;or < routes[0][0].length;or++){
-                    routes[col][row][or] = new Route(col,row,or);
-                }
-            }
-        }
+        
     }
     //distribuer les ressources
     //rechercher sur le plateau les tuiles avec le numéro fournie
