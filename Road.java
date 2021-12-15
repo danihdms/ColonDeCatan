@@ -1,10 +1,10 @@
-public class Route{
+public class Road{
     
     private int x;
     private int y;
 
 
-    public Route(int x,int y,int or){
+    public Road(int x,int y,int or){
         this.x=x;
         this.y=y;
     }

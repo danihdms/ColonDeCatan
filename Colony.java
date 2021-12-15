@@ -1,5 +1,5 @@
-public class Colonie extends Structure{
-    public Colonie(int x,int y){
+public class Colony extends Structure{
+    public Colony(int x,int y){
         setX(x);
         setY(y);
         setType(0);
