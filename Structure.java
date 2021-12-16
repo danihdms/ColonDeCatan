@@ -4,7 +4,7 @@ public abstract class Structure {
     private int x;
     private int y;
     private int type;
-        //0 pour colonies,1 pour villes
+        //0 pour colonies,1 pour villes,2 pour ports
 
     public abstract void giveRessources(String resType);
 
