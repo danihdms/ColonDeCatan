@@ -4,12 +4,8 @@ public class Tile {
     private boolean hasThief = false;
     private Road n, s, e, w;
     private Structure nw, ne, se, sw;
-    private final String type;
+    private final String type; // desert, colline, plaine, foret, champ, montagne
 
-    /*
-     * Values:
-     * DESERT,BRICK,BOIS,PIERRE,BLE,MOUTON
-     */
     public Tile(int x, int y, int n, String str) {
         this.x = x;
         this.y = y;

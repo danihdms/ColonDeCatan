@@ -1,9 +1,9 @@
 public class Road {
-
+    private Player player;
     private int x;
     private int y;
 
-    public Road(int x, int y, int or) {
+    public Road(int x, int y, Player player) {
         this.x = x;
         this.y = y;
     }
@@ -24,4 +24,7 @@ public class Road {
         this.y = y;
     }
 
+    public Player getPlayer(){
+        return this.player;
+    }
 }

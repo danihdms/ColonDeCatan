@@ -36,24 +36,24 @@ public class Board {
         // plateau
 
         ArrayList<Tile> tileList = new ArrayList<Tile>();
-        tileList.add(new Tile("bois"));
-        tileList.add(new Tile("bois"));
-        tileList.add(new Tile("bois"));
-        tileList.add(new Tile("bois"));
-        tileList.add(new Tile("argile"));
-        tileList.add(new Tile("argile"));
-        tileList.add(new Tile("argile"));
-        tileList.add(new Tile("ble"));
-        tileList.add(new Tile("ble"));
-        tileList.add(new Tile("ble"));
-        tileList.add(new Tile("ble"));
-        tileList.add(new Tile("pierre"));
-        tileList.add(new Tile("pierre"));
-        tileList.add(new Tile("pierre"));
-        tileList.add(new Tile("mouton"));
-        tileList.add(new Tile("mouton"));
-        tileList.add(new Tile("mouton"));
-        tileList.add(new Tile("mouton"));
+        tileList.add(new Tile("foret"));
+        tileList.add(new Tile("foret"));
+        tileList.add(new Tile("foret"));
+        tileList.add(new Tile("foret"));
+        tileList.add(new Tile("colline"));
+        tileList.add(new Tile("colline"));
+        tileList.add(new Tile("colline"));
+        tileList.add(new Tile("champ"));
+        tileList.add(new Tile("champ"));
+        tileList.add(new Tile("champ"));
+        tileList.add(new Tile("champ"));
+        tileList.add(new Tile("montagne"));
+        tileList.add(new Tile("montagne"));
+        tileList.add(new Tile("montagne"));
+        tileList.add(new Tile("plaine"));
+        tileList.add(new Tile("plaine"));
+        tileList.add(new Tile("plaine"));
+        tileList.add(new Tile("plaine"));
         tileList.add(new Tile("desert", true));
 
         // Melange de la liste
@@ -63,8 +63,9 @@ public class Board {
         placeTiles(tileList);
         placeNumbers();
 
-        // voleurLocation = desert.getLocation();
     }
+
+    // voleurLocation = desert.getLocation();
 
     public void placeTiles(ArrayList<Tile> tileList) {
         // Nous avons decide de ne pas faire un plateau carre mais ressemblant plus a
@@ -120,7 +121,7 @@ public class Board {
         int[] tileOrder = { 3, 5, 2, 4, 1, 3, 1, 2, 1, 1, 2, 1, 3, 1, 4, 2, 5, 3, 5, 4, 5, 5, 4, 5, 3, 4, 2, 3, 2, 2, 3,
                 2, 4, 3, 4, 4, 3, 3 }; // coordonées x et y assignées aux tuiles
         // on assigne les numero à leurs tiles
-        for (int s = 0; s < tileOrder.length - 1; s += 2) {
+        for (int s = 0; s < tileOrder.length - 2; s += 2) {
 
             if (tiles[tileOrder[s]][tileOrder[s + 1]].getType().equals("DESERT")) {
                 s = s - 2;
@@ -134,55 +135,55 @@ public class Board {
     // placer les structures
     public boolean addStructure(int x, int y, Structure o, String s) {
         if (tiles[x][y].getStructure(s) != null) {
-            System.out.println("case déjà occupé");
+            System.out.println("case déjà occupée");
             return false;
         }
         while (true) {
             switch (s) {
                 case "no":
                     tiles[x][y].setStructure(o, s);
-                    if(caseValid(x-1, y-1)){
-                        tiles[x-1][y-1].setStructure(o,"se");
+                    if (caseValid(x - 1, y - 1)) {
+                        tiles[x - 1][y - 1].setStructure(o, "se");
                     }
-                    if(caseValid(x-1, y)){
-                        tiles[x-1][y].setStructure(o, "so");
+                    if (caseValid(x - 1, y)) {
+                        tiles[x - 1][y].setStructure(o, "so");
                     }
-                    if(caseValid(x, y-1)){
-                        tiles[x][y-1].setStructure(o, "ne");
+                    if (caseValid(x, y - 1)) {
+                        tiles[x][y - 1].setStructure(o, "ne");
                     }
 
                 case "ne":
                     tiles[x][y].setStructure(o, s);
-                    if(caseValid(x-1, y)){
-                        tiles[x-1][y].setStructure(o,"se");
+                    if (caseValid(x - 1, y)) {
+                        tiles[x - 1][y].setStructure(o, "se");
                     }
-                    if(caseValid(x-1, y+1)){
-                        tiles[x-1][y+1].setStructure(o, "so");
+                    if (caseValid(x - 1, y + 1)) {
+                        tiles[x - 1][y + 1].setStructure(o, "so");
                     }
-                    if(caseValid(x, y+1)){
-                        tiles[x][y+1].setStructure(o, "no");
+                    if (caseValid(x, y + 1)) {
+                        tiles[x][y + 1].setStructure(o, "no");
                     }
                 case "so":
                     tiles[x][y].setStructure(o, s);
-                    if(caseValid(x+1, y)){
-                        tiles[x+1][y].setStructure(o,"no");
+                    if (caseValid(x + 1, y)) {
+                        tiles[x + 1][y].setStructure(o, "no");
                     }
-                    if(caseValid(x, y-1)){
-                        tiles[x][y-1].setStructure(o, "se");
+                    if (caseValid(x, y - 1)) {
+                        tiles[x][y - 1].setStructure(o, "se");
                     }
-                    if(caseValid(x+1, y-1)){
-                        tiles[x+1][y-1].setStructure(o, "ne");
+                    if (caseValid(x + 1, y - 1)) {
+                        tiles[x + 1][y - 1].setStructure(o, "ne");
                     }
                 case "se":
                     tiles[x][y].setStructure(o, s);
-                    if(caseValid(x+1, y+1)){
-                        tiles[x+1][y+1].setStructure(o,"no");
+                    if (caseValid(x + 1, y + 1)) {
+                        tiles[x + 1][y + 1].setStructure(o, "no");
                     }
-                    if(caseValid(x, y+1)){
-                        tiles[x][y+1].setStructure(o, "so");
+                    if (caseValid(x, y + 1)) {
+                        tiles[x][y + 1].setStructure(o, "so");
                     }
-                    if(caseValid(x+1, y)){
-                        tiles[x+1][y].setStructure(o, "ne");
+                    if (caseValid(x + 1, y)) {
+                        tiles[x + 1][y].setStructure(o, "ne");
                     }
             }
             break;
@@ -217,6 +218,20 @@ public class Board {
         }
         return true;
     }
+
+
+    public Road[][] getRoads(){
+        return this.roads;
+    }
+
+    public Tile[][] getTiles(){
+        return this.tiles;
+    }
+
+    public Structure[][] getStructures(){
+        return this.structures;
+    }
+
     // placer les routes
     // distribuer les ressources
     // rechercher sur le plateau les tiles avec le numéro fournie
