@@ -1,7 +1,5 @@
 public class Colony extends Structure{
     public Colony(int x,int y){
-        setX(x);
-        setY(y);
         setType(0);
     }
 

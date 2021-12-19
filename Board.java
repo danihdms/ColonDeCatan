@@ -3,35 +3,36 @@ import java.util.Collections;
 
 public class Board {
     private Tile[][] tiles;
-    private Structure[][] structures;
-    private Road[][] roads;
+    // private Structure[][] structures;
+    // private Road[][] roads;
     private int thiefCoordX;
     private int thiefCoordY;
     private Road endpoint = null;
 
     public Board() {
         tiles = new Tile[7][7];
-        structures = new Structure[6][];
 
-        structures[0] = new Structure[4];
-        structures[1] = new Structure[5];
-        structures[2] = new Structure[6];
-        structures[3] = new Structure[6];
-        structures[4] = new Structure[5];
-        structures[5] = new Structure[4];
+        // structures = new Structure[6][];
+        // structures[0] = new Structure[4];
+        // structures[1] = new Structure[5];
+        // structures[2] = new Structure[6];
+        // structures[3] = new Structure[6];
+        // structures[4] = new Structure[5];
+        // structures[5] = new Structure[4];
 
-        roads = new Road[11][];
-        roads[0] = new Road[3];
-        roads[1] = new Road[4];
-        roads[2] = new Road[4];
-        roads[3] = new Road[5];
-        roads[4] = new Road[5];
-        roads[5] = new Road[6];
-        roads[6] = new Road[5];
-        roads[7] = new Road[5];
-        roads[8] = new Road[4];
-        roads[9] = new Road[4];
-        roads[10] = new Road[3];
+        // roads = new Road[11][];
+        // roads[0] = new Road[3];
+        // roads[1] = new Road[4];
+        // roads[2] = new Road[4];
+        // roads[3] = new Road[5];
+        // roads[4] = new Road[5];
+        // roads[5] = new Road[6];
+        // roads[6] = new Road[5];
+        // roads[7] = new Road[5];
+        // roads[8] = new Road[4];
+        // roads[9] = new Road[4];
+        // roads[10] = new Road[3];
+
         // création d'une listes pour mettre les tiles de façon aléatoire sur le
         // plateau
 
@@ -76,35 +77,30 @@ public class Board {
                 case 1:
                     for (int col = 1; col < 4; col++) {
                         tiles[col][row] = tileList.get(count);
-
                         count++;
                     }
                     break;
                 case 2:
                     for (int col = 1; col < 5; col++) {
                         tiles[col][row] = tileList.get(count);
-
                         count++;
                     }
                     break;
                 case 3:
                     for (int col = 1; col < 6; col++) {
                         tiles[col][row] = tileList.get(count);
-
                         count++;
                     }
                     break;
                 case 4:
                     for (int col = 2; col < 6; col++) {
                         tiles[col][row] = tileList.get(count);
-
                         count++;
                     }
                     break;
                 case 5:
                     for (int col = 3; col < 6; col++) {
                         tiles[col][row] = tileList.get(count);
-
                         count++;
                     }
                     break;
@@ -132,7 +128,7 @@ public class Board {
         }
     }
 
-    // placer les structures
+    // Placer une nouvelle structure sur la plateau
     public boolean addStructure(int x, int y, Structure o, String s) {
         if (tiles[x][y].getStructure(s) != null) {
             System.out.println("case déjà occupée");
@@ -140,13 +136,13 @@ public class Board {
         }
         while (true) {
             switch (s) {
-                case "no":
+                case "nw":
                     tiles[x][y].setStructure(o, s);
                     if (caseValid(x - 1, y - 1)) {
                         tiles[x - 1][y - 1].setStructure(o, "se");
                     }
                     if (caseValid(x - 1, y)) {
-                        tiles[x - 1][y].setStructure(o, "so");
+                        tiles[x - 1][y].setStructure(o, "sw");
                     }
                     if (caseValid(x, y - 1)) {
                         tiles[x][y - 1].setStructure(o, "ne");
@@ -158,15 +154,15 @@ public class Board {
                         tiles[x - 1][y].setStructure(o, "se");
                     }
                     if (caseValid(x - 1, y + 1)) {
-                        tiles[x - 1][y + 1].setStructure(o, "so");
+                        tiles[x - 1][y + 1].setStructure(o, "sw");
                     }
                     if (caseValid(x, y + 1)) {
-                        tiles[x][y + 1].setStructure(o, "no");
+                        tiles[x][y + 1].setStructure(o, "nw");
                     }
-                case "so":
+                case "sw":
                     tiles[x][y].setStructure(o, s);
                     if (caseValid(x + 1, y)) {
-                        tiles[x + 1][y].setStructure(o, "no");
+                        tiles[x + 1][y].setStructure(o, "nw");
                     }
                     if (caseValid(x, y - 1)) {
                         tiles[x][y - 1].setStructure(o, "se");
@@ -177,10 +173,10 @@ public class Board {
                 case "se":
                     tiles[x][y].setStructure(o, s);
                     if (caseValid(x + 1, y + 1)) {
-                        tiles[x + 1][y + 1].setStructure(o, "no");
+                        tiles[x + 1][y + 1].setStructure(o, "nw");
                     }
                     if (caseValid(x, y + 1)) {
-                        tiles[x][y + 1].setStructure(o, "so");
+                        tiles[x][y + 1].setStructure(o, "sw");
                     }
                     if (caseValid(x + 1, y)) {
                         tiles[x + 1][y].setStructure(o, "ne");
@@ -190,6 +186,41 @@ public class Board {
         }
         return true;
     }
+
+    // Placer une nouvelle route sur le plateau
+    public boolean addRoad(int x, int y, Road r, String roadPos) {
+        if (tiles[x][y].getRoad(roadPos) != null) {
+            System.out.println("case déjà occupée");
+            return false;
+        }
+        while (true) {
+            switch (roadPos) {
+                case "n":
+                    tiles[x][y].setRoadOnTile(r, roadPos);
+                    if (caseValid(x - 1, y)) {
+                        tiles[x - 1][y].setRoadOnTile(r, "s");;
+                    }
+                case "s":
+                    tiles[x][y].setRoadOnTile(r, roadPos);;
+                    if (caseValid(x - 1, y)) {
+                        tiles[x - 1][y].setRoadOnTile(r, "n");;
+                    }
+                case "w":
+                    tiles[x][y].setRoadOnTile(r, roadPos);;
+                    if (caseValid(x, y - 1)) {
+                        tiles[x][y - 1].setRoadOnTile(r, "e");;
+                    }
+                case "e":
+                    tiles[x][y].setRoadOnTile(r, roadPos);;
+                    if (caseValid(x, y + 1)) {
+                        tiles[x][y + 1].setRoadOnTile(r, "w");;
+                    }
+            }
+            break;
+        }
+        return true;
+    }
+
 
     public boolean caseValid(int x, int y) {
         switch (x) {
@@ -220,17 +251,17 @@ public class Board {
     }
 
 
-    public Road[][] getRoads(){
-        return this.roads;
-    }
-
     public Tile[][] getTiles(){
         return this.tiles;
     }
+    
+    // public Road[][] getRoads(){
+    //     return this.roads;
+    // }
 
-    public Structure[][] getStructures(){
-        return this.structures;
-    }
+    // public Structure[][] getStructures(){
+    //     return this.structures;
+    // }
 
     // placer les routes
     // distribuer les ressources

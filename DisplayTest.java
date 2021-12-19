@@ -6,15 +6,15 @@ public class DisplayTest {
         // using ANSI to make colors in the console
         String reset = "\u001B[0m";
         String red = "\u001B[31m";
-        String blue = "\u001B[34m";
+        // String blue = "\u001B[34m";
         String green = "\u001B[32m";
         String yellow = "\u001B[33m";
         String boldRoads = "\033[4m";
         String boldTiles = "\033[1m";
 
-        String hLine = "━";
-        String nEdge = "┏┓";
-        String sEdge = "┗┛";
+        // String hLine = "━";
+        // String nEdge = "┏┓";
+        // String sEdge = "┗┛";
 
 
         System.out.println(green + boldTiles + "┏━━━━━━━━━━━━━┓" + reset);

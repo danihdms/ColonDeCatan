@@ -1,14 +1,11 @@
 public class Tile {
     private int number = 0;
-    private int x, y;
     private boolean hasThief = false;
     private Road n, s, e, w;
     private Structure nw, ne, se, sw;
     private final String type; // desert, colline, plaine, foret, champ, montagne
 
-    public Tile(int x, int y, int n, String str) {
-        this.x = x;
-        this.y = y;
+    public Tile(int n, String str) {
         type = str;
         number = n;
     }
@@ -21,22 +18,6 @@ public class Tile {
         type = str;
         hasThief = b;
 
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public boolean hasThief() {
@@ -74,20 +55,20 @@ public class Tile {
         return null;
     }
 
-    public void setRoad(Road r, String roadPos) {
+    public void setRoadOnTile(Road r, String roadPos) {
         switch (roadPos) {
             case "n":
                 n = r;
-                break;
+                return;
             case "s":
                 s = r;
-                break;
+                return;
             case "e":
                 e = r;
-                break;
+                return;
             case "w":
                 w = r;
-                break;
+                return;
         }
         System.out.println("You have to choose between n, s, e, and w.");
     }
@@ -111,16 +92,16 @@ public class Tile {
         switch (structurePos) {
             case "nw":
                 nw = s;
-                break;
+                return;
             case "sw":
                 sw = s;
-                break;
+                return;
             case "se":
                 se = s;
-                break;
-            case "w":
+                return;
+            case "ne":
                 ne = s;
-                break;
+                return;
         }
         System.out.println("You have to choose between nw, sw, ne, and se.");
     }

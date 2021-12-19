@@ -1,6 +1,6 @@
 public interface Display {
 
-    public void printHRoads(Board board, int indexOfLine);
+    // public void printHRoads(Board board, int indexOfLine);
 
     public void printTopTile(Board board, int indexOfLine);
 

@@ -4,28 +4,52 @@ public class ConsoleDisplay implements Display {
     public static final String blue = "\u001B[34m";
     public static final String green = "\u001B[32m";
     public static final String yellow = "\u001B[33m";
-    public static final String boldRoads = "\033[4m";
-    public static final String boldTiles = "\033[1m";
+    public static final String bold = "\033[1m";
 
     // print horizontal roads
     public void printHRoads(Board board, int indexOfLine) {
-        for (Road road : board.getRoads()[indexOfLine]) {
-            if (road != null) {
-                switch (road.getPlayer().getColor()) {
-                    case "red":
-                        System.out.print(red + boldRoads + "  ━━━━━━━━━━━━━  " + reset); // 13 lignes
-                        break;
-                    case "green":
-                        System.out.print(green + boldRoads + "  ━━━━━━━━━━━━━  " + reset);
-                        break;
-                    case "blue":
-                        System.out.print(blue + boldRoads + "  ━━━━━━━━━━━━━  " + reset);
-                        break;
-                    case "yellow":
-                        System.out.print(yellow + boldRoads + "  ━━━━━━━━━━━━━  " + reset);
-                        break;
+        for (Tile tile : board.getTiles()[indexOfLine]) {
+            if (tile != null) {
+                if (tile.getRoad("n") != null) {
+                    switch (tile.getRoad("n").getOwner().getColor()) {
+                        case "red":
+                            System.out.print(red + bold + "  ═════════════  " + reset); // 13 lignes
+                            break;
+                        case "green":
+                            System.out.print(green + bold + "  ═════════════  " + reset);
+                            break;
+                        case "blue":
+                            System.out.print(blue + bold + "  ═════════════  " + reset);
+                            break;
+                        case "yellow":
+                            System.out.print(yellow + bold + "  ═════════════  " + reset);
+                            break;
+                    }
+                } else {
+                    System.out.print("                 ");
                 }
-            } else {
+                if(indexOfLine == 5){
+                    if (tile != null) {
+                        if (tile.getRoad("s") != null) {
+                            switch (tile.getRoad("s").getOwner().getColor()) {
+                                case "red":
+                                    System.out.print(red + bold + "  ═════════════  " + reset); // 13 lignes
+                                    break;
+                                case "green":
+                                    System.out.print(green + bold + "  ═════════════  " + reset);
+                                    break;
+                                case "blue":
+                                    System.out.print(blue + bold + "  ═════════════  " + reset);
+                                    break;
+                                case "yellow":
+                                    System.out.print(yellow + bold + "  ═════════════  " + reset);
+                                    break;
+                            }
+                        } 
+                    }
+                }
+            }
+            else {
                 System.out.print("                 ");
             }
         }
@@ -36,7 +60,7 @@ public class ConsoleDisplay implements Display {
     public void printTopTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
-                System.out.print(boldTiles + " ┏━━━━━━━━━━━━━┓ ");
+                System.out.print(bold + " ┏━━━━━━━━━━━━━┓ ");
 
             } else {
                 System.out.print("                 ");
@@ -49,7 +73,7 @@ public class ConsoleDisplay implements Display {
     public void printBottomTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
-                System.out.print(boldTiles + " ┗━━━━━━━━━━━━━┛ ");
+                System.out.print(bold + " ┗━━━━━━━━━━━━━┛ ");
             } else {
                 System.out.print("                 ");
             }
@@ -61,7 +85,7 @@ public class ConsoleDisplay implements Display {
     public void printOtherPartTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
-                System.out.print(boldTiles + " ┃             ┃ ");
+                System.out.print(bold + " ┃             ┃ ");
             } else {
                 System.out.print("                 ");
             }
@@ -78,22 +102,22 @@ public class ConsoleDisplay implements Display {
             } else {
                 switch (tile.getType()) {
                     case "desert":
-                        System.out.print(boldTiles + " ┃    Desert   ┃ ");
+                        System.out.print(bold + " ┃    Desert   ┃ ");
                         break;
                     case "colline":
-                        System.out.print(boldTiles + " ┃   Colline   ┃ ");
+                        System.out.print(bold + " ┃   Colline   ┃ ");
                         break;
                     case "plaine":
-                        System.out.print(boldTiles + " ┃    Plaine   ┃ ");
+                        System.out.print(bold + " ┃    Plaine   ┃ ");
                         break;
                     case "foret":
-                        System.out.print(boldTiles + " ┃    Foret    ┃ ");
+                        System.out.print(bold + " ┃    Foret    ┃ ");
                         break;
                     case "champ":
-                        System.out.print(boldTiles + " ┃    Champ    ┃ ");
+                        System.out.print(bold + " ┃    Champ    ┃ ");
                         break;
                     case "montagne":
-                        System.out.print(boldTiles + " ┃   Montagne  ┃ ");
+                        System.out.print(bold + " ┃   Montagne  ┃ ");
                         break;
                 }
             }
@@ -105,12 +129,12 @@ public class ConsoleDisplay implements Display {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 if (tile.getType().equals("desert")) {
-                    System.out.print(boldTiles + " ┃             ┃ ");
+                    System.out.print(bold + " ┃             ┃ ");
                 } else {
                     if (tile.getNumber() > 9) {
-                        System.out.print(boldTiles + " ┃      " + tile.getNumber() + "     ┃ ");
+                        System.out.print(bold + " ┃      " + tile.getNumber() + "     ┃ ");
                     } else {
-                        System.out.print(boldTiles + " ┃      " + tile.getNumber() + "      ┃ ");
+                        System.out.print(bold + " ┃      " + tile.getNumber() + "      ┃ ");
                     }
                 }
             } else {
@@ -125,19 +149,21 @@ public class ConsoleDisplay implements Display {
     @Override
     public void printBoard(Board board) {
         for (int i = 0; i < board.getTiles().length; i++) {
-                printTopTile(board, i);
-                printOtherPartTile(board, i);
-                printTypeOnTile(board, i);
-                printNumberOnTile(board, i);
-                printOtherPartTile(board, i);
-                printBottomTile(board, i);
-            }
-            System.out.println();
+            printHRoads(board, i);
+            printTopTile(board, i);
+            printOtherPartTile(board, i);
+            printTypeOnTile(board, i);
+            printNumberOnTile(board, i);
+            printOtherPartTile(board, i);
+            printBottomTile(board, i);
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {
         Board board = new Board();
         ConsoleDisplay c = new ConsoleDisplay();
+        System.out.println(board.addRoad(1, 1, new Road(new Player("blue")), "n"));
         c.printBoard(board);
     }
 
