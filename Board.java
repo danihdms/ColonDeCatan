@@ -91,20 +91,29 @@ public class Board {
         // Ces deux tableaux permettent de placer les numeros sur les tuiles en spirale.
         // Ces numeros ne changent pas, tandis que la place des tuiles change a chaque
         // partie (placées au hasard)
-        int[] numberOrder = { 5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11 }; // ordre des nombres
-        int numberTile = 0;
-        int[] tileOrder = { 3, 5, 2, 4, 1, 3, 1, 2, 1, 1, 2, 1, 3, 1, 4, 2, 5, 3, 5, 4, 5, 5, 4, 5, 3, 4, 2, 3, 2, 2, 3,
-                2, 4, 3, 4, 4, 3, 3 }; // coordonées x et y assignées aux tuiles
-        // on assigne les numero à leurs tiles
-        for (int s = 0; s < tileOrder.length - 2; s += 2) {
+        // The order of the numbers to be assigned to the tiles, followed by an int to be used as an index
+		int[] numberOrder = {5,2,6,3,8,10,9,12,11,4,8,10,9,4,5,6,3,11};
+		int numberTile = 0;
 
-            if (tiles[tileOrder[s]][tileOrder[s + 1]].getType().equals("DESERT")) {
-                s = s - 2;
-            } else {
-                tiles[tileOrder[s]][tileOrder[s + 1]].setNumber(numberOrder[numberTile]);
-                numberTile++;
-            }
-        }
+		// The x y pairs to proceed in a spiral
+		int[] tileOrder = {3,5, 2,4, 1,3, 1,2, 1,1, 2,1, 3,1, 4,2, 5,3, 5,4, 5,5, 4,5, 3,4, 2,3, 2,2, 3,2, 4,3, 4,4, 3,3};
+        
+
+		// Assigning all values from numberOrder to the Tiles in the board, proceeding in a spiral
+		for (int n = 0; n < tileOrder.length - 1; n+=2) {
+			if (numberTile == 18){
+				break;
+			}
+			
+			if (tiles[tileOrder[n]][tileOrder[n+1]].getType().equals("desert")) {
+                tiles[tileOrder[n]][tileOrder[n+1]].setNumber(7);
+			}
+			else {
+				tiles[tileOrder[n]][tileOrder[n+1]].setNumber(numberOrder[numberTile]);
+				numberTile++;
+			}
+		}
+        
     }
 
     // Placer une nouvelle structure sur la plateau
@@ -113,6 +122,7 @@ public class Board {
             System.out.println("case déjà occupée");
             return false;
         }
+        //verifier la regle des deux cases d'écart entre ces colonies
         while (true) {
             switch (s) {
                 case "nw":
@@ -172,6 +182,7 @@ public class Board {
             System.out.println("case déjà occupée");
             return false;
         }
+        //rajouter la condition de si il y a une route au joueur autour
         while (true) {
             switch (roadPos) {
                 case "n":
@@ -235,6 +246,120 @@ public class Board {
         return true;
     }
 
+    // rechercher sur le plateau les tiles avec le numéro fournie
+    public Tile[] getTileByNumber(int x) {
+        if (x > 1 && x < 13) {
+            if (x == 2 || x == 12) {
+                Tile[] t = new Tile[1];
+
+                for (int i = 1; i < 6; i++) {
+                    for (int j = 1; j < 6; j++) {
+                        if (tiles[i][j].getNumber() == x) {
+                            t[0] = tiles[i][j];
+
+                        }
+                    }
+                }
+                return t;
+            } else {
+                Tile[] t = new Tile[1];
+                int count = 0;
+                for (int i = 1; i < 6; i++) {
+                    for (int j = 1; j < 6; j++) {
+                        if (tiles[i][j].getNumber() == x) {
+                            t[count] = tiles[i][j];
+                            count++;
+
+                        }
+                    }
+                }
+                return t;
+
+            }
+        } else {
+            return null;
+        }
+
+    }
+
+    // retourne les coordonnées ou se trouve le voleur
+    public int[] getThief() {
+        int[] t = new int[2];
+        for (int i = 1; i < 6; i++) {
+            for (int j = 1; j < 6; j++) {
+                if (tiles[i][j] != null) {
+                    if (tiles[i][j].hasThief()) {
+                        t[0] = i;
+                        t[1] = j;
+                        break;
+
+                    }
+                }
+            }
+        }
+        return t;
+    }
+
+    // place le voleurs sur les coordonnées mis en argument si ils sont différents
+    // des coordonnées actuel du voleur
+    public boolean setThief(int x, int y) {
+        if (tiles[x][y].hasThief()) {
+            System.out.println("le voleur est déjà sur cette case");
+            return false;
+        } else {
+            this.tiles[getThief()[0]][getThief()[1]].setThief(false);
+            this.tiles[x][y].setThief(true);
+            return true;
+        }
+
+    }
+
+    // donner la liste de structure autour du voleur
+    public Structure[] getThiefColonies() {
+
+        Structure[] list = new Structure[4];
+        Tile temp = tiles[getThief()[0]][getThief()[1]];
+        list[0] = temp.getStructure("ne");
+        list[1] = temp.getStructure("no");
+        list[2] = temp.getStructure("se");
+        list[3] = temp.getStructure("so");
+        return list;
+
+    }
+
+    // donner la liste de Structure autour d'une case dont on a les coordonnées
+    public Structure[] getListColonies(Tile t) {
+
+        Structure[] list = new Structure[4];
+
+        list[0] = t.getStructure("ne");
+        list[1] = t.getStructure("no");
+        list[2] = t.getStructure("se");
+        list[3] = t.getStructure("so");
+        return list;
+
+    }
+
+    // distribuer les ressources
+    public boolean Distribution(int x) {
+        if (x < 13 && x > 1) {
+            Tile[] temp = getTileByNumber(x);
+            for (int i = 0; i < temp.length; i++) {
+                if (temp[i] != null && !temp[i].hasThief()) {
+                    Structure[] Stemp = getListColonies(temp[i]);
+                    for (int j = 0; j < Stemp.length; j++) {
+                        if (Stemp[j] != null) {
+                            Stemp[j].giveRessources(temp[i].getType());
+                        }
+                    }
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public Tile[][] getTiles() {
         return this.tiles;
     }
@@ -247,17 +372,12 @@ public class Board {
     // return this.structures;
     // }
 
-    // placer les routes
-    // distribuer les ressources
-    // rechercher sur le plateau les tiles avec le numéro fournie
-    // getter setter structure ,routes,voleur
     // placer une colonies meme sans route avec vérification des espaces entre 2
     // colonies d'une même équipe
     // checker et assigner si bon la colonie au joueur
     // checker et assigner si bon la route au joueur
     // regarder si la localisation est corretcte puis upgrade en city
-    // verifier la localisation puis deplacer le voleur
-    // donner la liste de structure autour du voleur
+
     // getter pour une tile precise
     // avoir les structures adjacentes autour d'une certain point
     // trouver la plus longue route(optionnel)

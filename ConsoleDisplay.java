@@ -7,6 +7,8 @@ public class ConsoleDisplay implements Display {
     public static final String bold = "\033[1m";
 
     // print horizontal roads
+    
+
     public void printHRoads(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
@@ -36,10 +38,11 @@ public class ConsoleDisplay implements Display {
     }
 
     // print the top of the tiles
+
     public void printTopTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
-                String westColor = " ";
+                String westColor = "  ";
                 if (tile.getRoad("w") != null) {
                     westColor = tile.getRoad("w").getOwner().getColor();
                     switch (westColor) {
@@ -60,7 +63,7 @@ public class ConsoleDisplay implements Display {
                 System.out.print(bold + westColor + "┏━━━━━━━━━━━━━┓");
 
             } else {
-                System.out.print("27272727272727");
+                System.out.print(" 7272727272727");
             }
         }
         System.out.println();
@@ -246,7 +249,8 @@ public class ConsoleDisplay implements Display {
     // print last column of roads
     public void printLastColRoads(Board board, int indexOfLine) {
         for (int i = 0; i < board.getTiles()[indexOfLine].length; i++) {
-            if((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) ||(indexOfLine == 3 && i == 5) || (indexOfLine == 4 && i == 5) ||(indexOfLine == 5 && i == 5)){
+            if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
+                    || (indexOfLine == 4 && i == 5) || (indexOfLine == 5 && i == 5)) {
                 if (board.getTiles()[indexOfLine][i] != null) {
                     String eastColor = " ";
                     if (board.getTiles()[indexOfLine][i].getRoad("e") != null) {
@@ -289,7 +293,7 @@ public class ConsoleDisplay implements Display {
 
             printLastColRoads(board, i);
             printOtherPartTile(board, i);
-            
+
             printLastColRoads(board, i);
             printBottomTile(board, i);
             if (i == 5) {
