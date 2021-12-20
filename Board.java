@@ -12,27 +12,6 @@ public class Board {
     public Board() {
         tiles = new Tile[7][7];
 
-        // structures = new Structure[6][];
-        // structures[0] = new Structure[4];
-        // structures[1] = new Structure[5];
-        // structures[2] = new Structure[6];
-        // structures[3] = new Structure[6];
-        // structures[4] = new Structure[5];
-        // structures[5] = new Structure[4];
-
-        // roads = new Road[11][];
-        // roads[0] = new Road[3];
-        // roads[1] = new Road[4];
-        // roads[2] = new Road[4];
-        // roads[3] = new Road[5];
-        // roads[4] = new Road[5];
-        // roads[5] = new Road[6];
-        // roads[6] = new Road[5];
-        // roads[7] = new Road[5];
-        // roads[8] = new Road[4];
-        // roads[9] = new Road[4];
-        // roads[10] = new Road[3];
-
         // création d'une listes pour mettre les tiles de façon aléatoire sur le
         // plateau
 
@@ -198,29 +177,35 @@ public class Board {
                 case "n":
                     tiles[x][y].setRoadOnTile(r, roadPos);
                     if (caseValid(x - 1, y)) {
-                        tiles[x - 1][y].setRoadOnTile(r, "s");;
+                        tiles[x - 1][y].setRoadOnTile(r, "s");
+                        ;
                     }
                 case "s":
-                    tiles[x][y].setRoadOnTile(r, roadPos);;
+                    tiles[x][y].setRoadOnTile(r, roadPos);
+                    ;
                     if (caseValid(x - 1, y)) {
-                        tiles[x - 1][y].setRoadOnTile(r, "n");;
+                        tiles[x - 1][y].setRoadOnTile(r, "n");
+                        ;
                     }
                 case "w":
-                    tiles[x][y].setRoadOnTile(r, roadPos);;
+                    tiles[x][y].setRoadOnTile(r, roadPos);
+                    ;
                     if (caseValid(x, y - 1)) {
-                        tiles[x][y - 1].setRoadOnTile(r, "e");;
+                        tiles[x][y - 1].setRoadOnTile(r, "e");
+                        ;
                     }
                 case "e":
-                    tiles[x][y].setRoadOnTile(r, roadPos);;
+                    tiles[x][y].setRoadOnTile(r, roadPos);
+                    ;
                     if (caseValid(x, y + 1)) {
-                        tiles[x][y + 1].setRoadOnTile(r, "w");;
+                        tiles[x][y + 1].setRoadOnTile(r, "w");
+                        ;
                     }
             }
             break;
         }
         return true;
     }
-
 
     public boolean caseValid(int x, int y) {
         switch (x) {
@@ -250,17 +235,16 @@ public class Board {
         return true;
     }
 
-
-    public Tile[][] getTiles(){
+    public Tile[][] getTiles() {
         return this.tiles;
     }
-    
+
     // public Road[][] getRoads(){
-    //     return this.roads;
+    // return this.roads;
     // }
 
     // public Structure[][] getStructures(){
-    //     return this.structures;
+    // return this.structures;
     // }
 
     // placer les routes
