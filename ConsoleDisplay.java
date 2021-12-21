@@ -28,10 +28,10 @@ public class ConsoleDisplay implements Display {
                             break;
                     }
                 } else {
-                    System.out.print("                ");
+                    System.out.print("                 ");
                 }
             } else {
-                System.out.print("                ");
+                System.out.print("                 ");
             }
         }
         System.out.println();
@@ -42,7 +42,7 @@ public class ConsoleDisplay implements Display {
     public void printTopTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
-                String westColor = "  ";
+                String westColor = " ";
                 if (tile.getRoad("w") != null) {
                     westColor = tile.getRoad("w").getOwner().getColor();
                     switch (westColor) {
@@ -63,7 +63,7 @@ public class ConsoleDisplay implements Display {
                 System.out.print(bold + westColor + "┏━━━━━━━━━━━━━┓");
 
             } else {
-                System.out.print(" 7272727272727");
+                System.out.print("                ");
             }
         }
         System.out.println();
@@ -93,7 +93,7 @@ public class ConsoleDisplay implements Display {
                 }
                 System.out.print(bold + westColor + "┃             ┃");
             } else {
-                System.out.print("27272727272727");
+                System.out.print("                ");
             }
         }
         System.out.println();
@@ -104,7 +104,7 @@ public class ConsoleDisplay implements Display {
     public void printTypeOnTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile == null) {
-                System.out.print("27272727272727");
+                System.out.print("                ");
             } else {
                 String westColor = " ";
                 if (tile.getRoad("w") != null) {
@@ -181,7 +181,7 @@ public class ConsoleDisplay implements Display {
                     }
                 }
             } else {
-                System.out.print("              ");
+                System.out.print("                ");
 
             }
 
@@ -213,7 +213,7 @@ public class ConsoleDisplay implements Display {
                 }
                 System.out.print(bold + westColor + "┗━━━━━━━━━━━━━┛");
             } else {
-                System.out.print("              ");
+                System.out.print("                ");
             }
         }
         System.out.println();
@@ -240,7 +240,7 @@ public class ConsoleDisplay implements Display {
                     }
                 }
             } else {
-                System.out.print("                ");
+                System.out.print("                 ");
             }
         }
         System.out.println();
@@ -279,9 +279,12 @@ public class ConsoleDisplay implements Display {
     @Override
     public void printBoard(Board board) {
         for (int i = 0; i < board.getTiles().length; i++) {
+            printLastColRoads(board, i);
             printHRoads(board, i);
 
+            printLastColRoads(board, i);
             printTopTile(board, i);
+
             printLastColRoads(board, i);
             printOtherPartTile(board, i);
 
@@ -305,32 +308,32 @@ public class ConsoleDisplay implements Display {
 
     public static void main(String[] args) {
         Board board = new Board();
-        ConsoleDisplay c = new ConsoleDisplay();
-        System.out.println(board.addRoad(1, 1, new Road(new Player("blue")), "n"));
-        board.addRoad(1, 2, new Road(new Player("blue")), "n");
-        board.addRoad(1, 2, new Road(new Player("blue")), "w");
-        board.addRoad(1, 2, new Road(new Player("blue")), "e");
-        board.addRoad(1, 3, new Road(new Player("blue")), "n");
-        board.addRoad(2, 1, new Road(new Player("yellow")), "n");
-        board.addRoad(2, 2, new Road(new Player("green")), "n");
-        board.addRoad(2, 3, new Road(new Player("blue")), "n");
-        board.addRoad(2, 4, new Road(new Player("blue")), "n");
-        board.addRoad(3, 1, new Road(new Player("blue")), "n");
-        board.addRoad(3, 2, new Road(new Player("blue")), "n");
-        board.addRoad(3, 3, new Road(new Player("yellow")), "n");
-        board.addRoad(3, 4, new Road(new Player("blue")), "n");
-        board.addRoad(3, 5, new Road(new Player("blue")), "n");
-        board.addRoad(4, 2, new Road(new Player("blue")), "n");
-        board.addRoad(4, 3, new Road(new Player("red")), "n");
-        board.addRoad(4, 4, new Road(new Player("blue")), "n");
-        board.addRoad(4, 5, new Road(new Player("blue")), "n");
-        board.addRoad(5, 3, new Road(new Player("blue")), "n");
-        board.addRoad(5, 3, new Road(new Player("green")), "s");
-        board.addRoad(5, 4, new Road(new Player("blue")), "n");
-        board.addRoad(5, 4, new Road(new Player("blue")), "s");
-        board.addRoad(5, 5, new Road(new Player("red")), "n");
-        board.addRoad(5, 5, new Road(new Player("blue")), "s");
-        c.printBoard(board);
-    }
+            ConsoleDisplay c = new ConsoleDisplay();
+            System.out.println(board.addRoad(1, 1, new Road(new Player("blue")), "n"));
+            board.addRoad(1, 2, new Road(new Player("blue")), "n");
+            board.addRoad(1, 2, new Road(new Player("blue")), "w");
+            board.addRoad(1, 2, new Road(new Player("blue")), "e");
+            board.addRoad(1, 3, new Road(new Player("blue")), "n");
+            board.addRoad(2, 1, new Road(new Player("yellow")), "n");
+            board.addRoad(2, 2, new Road(new Player("green")), "n");
+            board.addRoad(2, 3, new Road(new Player("blue")), "n");
+            board.addRoad(2, 4, new Road(new Player("blue")), "n");
+            board.addRoad(3, 1, new Road(new Player("blue")), "n");
+            board.addRoad(3, 2, new Road(new Player("blue")), "n");
+            board.addRoad(3, 3, new Road(new Player("yellow")), "n");
+            board.addRoad(3, 4, new Road(new Player("blue")), "n");
+            board.addRoad(3, 5, new Road(new Player("blue")), "n");
+            board.addRoad(4, 2, new Road(new Player("blue")), "n");
+            board.addRoad(4, 3, new Road(new Player("red")), "n");
+            board.addRoad(4, 4, new Road(new Player("blue")), "n");
+            board.addRoad(4, 5, new Road(new Player("blue")), "n");
+            board.addRoad(5, 3, new Road(new Player("blue")), "n");
+            board.addRoad(5, 3, new Road(new Player("green")), "s");
+            board.addRoad(5, 4, new Road(new Player("blue")), "n");
+            board.addRoad(5, 4, new Road(new Player("blue")), "s");
+            board.addRoad(5, 5, new Road(new Player("red")), "n");
+            board.addRoad(5, 5, new Road(new Player("blue")), "s");
+            c.printBoard(board);
+    }        
 
 }

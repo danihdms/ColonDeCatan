@@ -91,29 +91,30 @@ public class Board {
         // Ces deux tableaux permettent de placer les numeros sur les tuiles en spirale.
         // Ces numeros ne changent pas, tandis que la place des tuiles change a chaque
         // partie (placées au hasard)
-        // The order of the numbers to be assigned to the tiles, followed by an int to be used as an index
-		int[] numberOrder = {5,2,6,3,8,10,9,12,11,4,8,10,9,4,5,6,3,11};
-		int numberTile = 0;
+        // The order of the numbers to be assigned to the tiles, followed by an int to
+        // be used as an index
+        int[] numberOrder = { 5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11 };
+        int numberTile = 0;
 
-		// The x y pairs to proceed in a spiral
-		int[] tileOrder = {3,5, 2,4, 1,3, 1,2, 1,1, 2,1, 3,1, 4,2, 5,3, 5,4, 5,5, 4,5, 3,4, 2,3, 2,2, 3,2, 4,3, 4,4, 3,3};
-        
+        // The x y pairs to proceed in a spiral
+        int[] tileOrder = { 3, 5, 2, 4, 1, 3, 1, 2, 1, 1, 2, 1, 3, 1, 4, 2, 5, 3, 5, 4, 5, 5, 4, 5, 3, 4, 2, 3, 2, 2, 3,
+                2, 4, 3, 4, 4, 3, 3 };
 
-		// Assigning all values from numberOrder to the Tiles in the board, proceeding in a spiral
-		for (int n = 0; n < tileOrder.length - 1; n+=2) {
-			if (numberTile == 18){
-				break;
-			}
-			
-			if (tiles[tileOrder[n]][tileOrder[n+1]].getType().equals("desert")) {
-                tiles[tileOrder[n]][tileOrder[n+1]].setNumber(7);
-			}
-			else {
-				tiles[tileOrder[n]][tileOrder[n+1]].setNumber(numberOrder[numberTile]);
-				numberTile++;
-			}
-		}
-        
+        // Assigning all values from numberOrder to the Tiles in the board, proceeding
+        // in a spiral
+        for (int n = 0; n < tileOrder.length - 1; n += 2) {
+            if (numberTile == 18) {
+                break;
+            }
+
+            if (tiles[tileOrder[n]][tileOrder[n + 1]].getType().equals("desert")) {
+                tiles[tileOrder[n]][tileOrder[n + 1]].setNumber(7);
+            } else {
+                tiles[tileOrder[n]][tileOrder[n + 1]].setNumber(numberOrder[numberTile]);
+                numberTile++;
+            }
+        }
+
     }
 
     // Placer une nouvelle structure sur la plateau
@@ -122,100 +123,100 @@ public class Board {
             System.out.println("case déjà occupée");
             return false;
         }
-        //verifier la regle des deux cases d'écart entre ces colonies
-        while (true) {
-            switch (s) {
-                case "nw":
-                    tiles[x][y].setStructure(o, s);
-                    if (caseValid(x - 1, y - 1)) {
-                        tiles[x - 1][y - 1].setStructure(o, "se");
-                    }
-                    if (caseValid(x - 1, y)) {
-                        tiles[x - 1][y].setStructure(o, "sw");
-                    }
-                    if (caseValid(x, y - 1)) {
-                        tiles[x][y - 1].setStructure(o, "ne");
-                    }
+        // verifier la regle des deux cases d'écart entre ces colonies
+        switch (s) {
+            case "nw":
+                tiles[x][y].setStructure(o, s);
+                if (caseValid(x - 1, y - 1)) {
+                    tiles[x - 1][y - 1].setStructure(o, "se");
+                }
+                if (caseValid(x - 1, y)) {
+                    tiles[x - 1][y].setStructure(o, "sw");
+                }
+                if (caseValid(x, y - 1)) {
+                    tiles[x][y - 1].setStructure(o, "ne");
+                }
+                break;
 
-                case "ne":
-                    tiles[x][y].setStructure(o, s);
-                    if (caseValid(x - 1, y)) {
-                        tiles[x - 1][y].setStructure(o, "se");
-                    }
-                    if (caseValid(x - 1, y + 1)) {
-                        tiles[x - 1][y + 1].setStructure(o, "sw");
-                    }
-                    if (caseValid(x, y + 1)) {
-                        tiles[x][y + 1].setStructure(o, "nw");
-                    }
-                case "sw":
-                    tiles[x][y].setStructure(o, s);
-                    if (caseValid(x + 1, y)) {
-                        tiles[x + 1][y].setStructure(o, "nw");
-                    }
-                    if (caseValid(x, y - 1)) {
-                        tiles[x][y - 1].setStructure(o, "se");
-                    }
-                    if (caseValid(x + 1, y - 1)) {
-                        tiles[x + 1][y - 1].setStructure(o, "ne");
-                    }
-                case "se":
-                    tiles[x][y].setStructure(o, s);
-                    if (caseValid(x + 1, y + 1)) {
-                        tiles[x + 1][y + 1].setStructure(o, "nw");
-                    }
-                    if (caseValid(x, y + 1)) {
-                        tiles[x][y + 1].setStructure(o, "sw");
-                    }
-                    if (caseValid(x + 1, y)) {
-                        tiles[x + 1][y].setStructure(o, "ne");
-                    }
-            }
-            break;
+            case "ne":
+                tiles[x][y].setStructure(o, s);
+                if (caseValid(x - 1, y)) {
+                    tiles[x - 1][y].setStructure(o, "se");
+                }
+                if (caseValid(x - 1, y + 1)) {
+                    tiles[x - 1][y + 1].setStructure(o, "sw");
+                }
+                if (caseValid(x, y + 1)) {
+                    tiles[x][y + 1].setStructure(o, "nw");
+                }
+                break;
+            case "sw":
+                tiles[x][y].setStructure(o, s);
+                if (caseValid(x + 1, y)) {
+                    tiles[x + 1][y].setStructure(o, "nw");
+                }
+                if (caseValid(x, y - 1)) {
+                    tiles[x][y - 1].setStructure(o, "se");
+                }
+                if (caseValid(x + 1, y - 1)) {
+                    tiles[x + 1][y - 1].setStructure(o, "ne");
+                }
+                break;
+            case "se":
+                tiles[x][y].setStructure(o, s);
+                if (caseValid(x + 1, y + 1)) {
+                    tiles[x + 1][y + 1].setStructure(o, "nw");
+                }
+                if (caseValid(x, y + 1)) {
+                    tiles[x][y + 1].setStructure(o, "sw");
+                }
+                if (caseValid(x + 1, y)) {
+                    tiles[x + 1][y].setStructure(o, "ne");
+                }
+                break;
         }
         return true;
     }
 
     // Placer une nouvelle route sur le plateau
     public boolean addRoad(int x, int y, Road r, String roadPos) {
-        if (tiles[x][y].getRoad(roadPos) != null) {
-            System.out.println("case déjà occupée");
-            return false;
-        }
-        //rajouter la condition de si il y a une route au joueur autour
-        while (true) {
+        if (caseValid(x, y)) {
+            if (tiles[x][y].getRoad(roadPos) != null) {
+                System.out.println(tiles[x][y].getRoad(roadPos).getOwner().getColor());
+                System.out.println("La case de coordonnées " + x + ", " + y + " est déjà occupée.");
+                return false;
+            }
+            // rajouter la condition de si il y a une route au joueur autour
             switch (roadPos) {
                 case "n":
                     tiles[x][y].setRoadOnTile(r, roadPos);
                     if (caseValid(x - 1, y)) {
                         tiles[x - 1][y].setRoadOnTile(r, "s");
-                        ;
                     }
+                    break;
                 case "s":
                     tiles[x][y].setRoadOnTile(r, roadPos);
-                    ;
-                    if (caseValid(x - 1, y)) {
-                        tiles[x - 1][y].setRoadOnTile(r, "n");
-                        ;
+                    if (caseValid(x + 1, y)) {
+                        tiles[x + 1][y].setRoadOnTile(r, "n");
                     }
+                    break;
                 case "w":
                     tiles[x][y].setRoadOnTile(r, roadPos);
-                    ;
                     if (caseValid(x, y - 1)) {
                         tiles[x][y - 1].setRoadOnTile(r, "e");
-                        ;
                     }
+                    break;
                 case "e":
                     tiles[x][y].setRoadOnTile(r, roadPos);
-                    ;
                     if (caseValid(x, y + 1)) {
                         tiles[x][y + 1].setRoadOnTile(r, "w");
-                        ;
                     }
+                    break;
             }
-            break;
+            return true;
+
         }
-        return true;
+        return false;
     }
 
     public boolean caseValid(int x, int y) {
@@ -226,22 +227,32 @@ public class Board {
                 if (y == 0 || y == 4 || y == 5 || y == 6) {
                     return false;
                 }
+                break;
             case 2:
                 if (y == 0 || y == 5 || y == 6) {
                     return false;
                 }
+                break;
             case 3:
                 if (y == 0 || y == 6) {
                     return false;
                 }
+                break;
             case 4:
                 if (y == 0 || y == 1 || y == 6) {
                     return false;
                 }
+                break;
             case 5:
                 if (y == 0 || y == 1 || y == 2 || y == 6) {
                     return false;
                 }
+                break;
+            case 6:
+                if (y == 0 || y == 1 || y == 2 || y == 3 || y == 4 || y == 5 || y == 6) {
+                    return false;
+                }
+                break;
         }
         return true;
     }
@@ -363,14 +374,6 @@ public class Board {
     public Tile[][] getTiles() {
         return this.tiles;
     }
-
-    // public Road[][] getRoads(){
-    // return this.roads;
-    // }
-
-    // public Structure[][] getStructures(){
-    // return this.structures;
-    // }
 
     // placer une colonies meme sans route avec vérification des espaces entre 2
     // colonies d'une même équipe
