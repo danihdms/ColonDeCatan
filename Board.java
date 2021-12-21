@@ -118,60 +118,60 @@ public class Board {
     }
 
     // Placer une nouvelle structure sur la plateau
-    public boolean addStructure(int x, int y, Structure o, String s) {
-        if (tiles[x][y].getStructure(s) != null) {
+    public boolean addStructure(int x, int y, Structure struct, String structurePos) {
+        if (tiles[x][y].getStructure(structurePos) != null) {
             System.out.println("case déjà occupée");
             return false;
         }
         // verifier la regle des deux cases d'écart entre ces colonies
-        switch (s) {
+        switch (structurePos) {
             case "nw":
-                tiles[x][y].setStructure(o, s);
+                tiles[x][y].setStructure(struct, structurePos);
                 if (caseValid(x - 1, y - 1)) {
-                    tiles[x - 1][y - 1].setStructure(o, "se");
+                    tiles[x - 1][y - 1].setStructure(struct, "se");
                 }
                 if (caseValid(x - 1, y)) {
-                    tiles[x - 1][y].setStructure(o, "sw");
+                    tiles[x - 1][y].setStructure(struct, "sw");
                 }
                 if (caseValid(x, y - 1)) {
-                    tiles[x][y - 1].setStructure(o, "ne");
+                    tiles[x][y - 1].setStructure(struct, "ne");
                 }
                 break;
 
             case "ne":
-                tiles[x][y].setStructure(o, s);
+                tiles[x][y].setStructure(struct, structurePos);
                 if (caseValid(x - 1, y)) {
-                    tiles[x - 1][y].setStructure(o, "se");
+                    tiles[x - 1][y].setStructure(struct, "se");
                 }
                 if (caseValid(x - 1, y + 1)) {
-                    tiles[x - 1][y + 1].setStructure(o, "sw");
+                    tiles[x - 1][y + 1].setStructure(struct, "sw");
                 }
                 if (caseValid(x, y + 1)) {
-                    tiles[x][y + 1].setStructure(o, "nw");
+                    tiles[x][y + 1].setStructure(struct, "nw");
                 }
                 break;
             case "sw":
-                tiles[x][y].setStructure(o, s);
+                tiles[x][y].setStructure(struct, structurePos);
                 if (caseValid(x + 1, y)) {
-                    tiles[x + 1][y].setStructure(o, "nw");
+                    tiles[x + 1][y].setStructure(struct, "nw");
                 }
                 if (caseValid(x, y - 1)) {
-                    tiles[x][y - 1].setStructure(o, "se");
+                    tiles[x][y - 1].setStructure(struct, "se");
                 }
                 if (caseValid(x + 1, y - 1)) {
-                    tiles[x + 1][y - 1].setStructure(o, "ne");
+                    tiles[x + 1][y - 1].setStructure(struct, "ne");
                 }
                 break;
             case "se":
-                tiles[x][y].setStructure(o, s);
+                tiles[x][y].setStructure(struct, structurePos);
                 if (caseValid(x + 1, y + 1)) {
-                    tiles[x + 1][y + 1].setStructure(o, "nw");
+                    tiles[x + 1][y + 1].setStructure(struct, "nw");
                 }
                 if (caseValid(x, y + 1)) {
-                    tiles[x][y + 1].setStructure(o, "sw");
+                    tiles[x][y + 1].setStructure(struct, "sw");
                 }
                 if (caseValid(x + 1, y)) {
-                    tiles[x + 1][y].setStructure(o, "ne");
+                    tiles[x + 1][y].setStructure(struct, "ne");
                 }
                 break;
         }

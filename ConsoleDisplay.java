@@ -5,33 +5,62 @@ public class ConsoleDisplay implements Display {
     public static final String green = "\u001B[32m";
     public static final String yellow = "\u001B[33m";
     public static final String bold = "\033[1m";
+    public static final String colony = "•";
+    public static final String city = "◯";
 
     // print horizontal roads
-    
 
     public void printHRoads(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
+                int nwStructType;
+                String nwStructure = " ";
+                String nwColor = " ";
+                if (tile.getStructure("nw") != null) {
+                    nwColor = tile.getStructure("nw").getOwner().getColor();
+                    if (tile.getStructure("nw") != null) {
+                        nwStructType = tile.getStructure("nw").getType();
+                        if (nwStructType == 0) {
+                            nwStructure = colony; // this is not recognized, might need to add a swith for each the colonies and the cities instead of a string variable ... relou
+                        } else if (nwStructType == 1) {
+                            nwStructure = city; // same as above
+                        }
+                        switch (nwColor) {
+                            case "red":
+                                nwColor = red + nwStructure + reset;
+                                break;
+                            case "green":
+                                nwColor = green + nwStructure + reset;
+                                break;
+                            case "yellow":
+                                nwColor = yellow + nwStructure + reset;
+                                break;
+                            case "blue":
+                                nwColor = blue + nwStructure + reset;
+                                break;
+                        }
+                    }
+                }
                 if (tile.getRoad("n") != null) {
                     switch (tile.getRoad("n").getOwner().getColor()) {
                         case "red":
-                            System.out.print(red + bold + "═══════════════ " + reset); // 13 lignes
+                            System.out.print(red + bold + nwColor + " ═══════════════ " + reset); // 13 lignes
                             break;
                         case "green":
-                            System.out.print(green + bold + "═══════════════ " + reset);
+                            System.out.print(green + bold + nwColor + " ═══════════════ " + reset);
                             break;
                         case "blue":
-                            System.out.print(blue + bold + "═══════════════ " + reset);
+                            System.out.print(blue + bold + nwColor + " ═══════════════ " + reset);
                             break;
                         case "yellow":
-                            System.out.print(yellow + bold + "═══════════════ " + reset);
+                            System.out.print(yellow + bold + nwColor + " ═══════════════ " + reset);
                             break;
                     }
                 } else {
-                    System.out.print("                 ");
+                    System.out.print("                   ");
                 }
             } else {
-                System.out.print("                 ");
+                System.out.print("                   ");
             }
         }
         System.out.println();
@@ -60,10 +89,10 @@ public class ConsoleDisplay implements Display {
                             break;
                     }
                 }
-                System.out.print(bold + westColor + "┏━━━━━━━━━━━━━┓");
+                System.out.print(bold + westColor + " ┏━━━━━━━━━━━━━┓ ");
 
             } else {
-                System.out.print("                ");
+                System.out.print("                  ");
             }
         }
         System.out.println();
@@ -91,9 +120,9 @@ public class ConsoleDisplay implements Display {
                             break;
                     }
                 }
-                System.out.print(bold + westColor + "┃             ┃");
+                System.out.print(bold + westColor + " ┃             ┃ ");
             } else {
-                System.out.print("                ");
+                System.out.print("                  ");
             }
         }
         System.out.println();
@@ -104,7 +133,7 @@ public class ConsoleDisplay implements Display {
     public void printTypeOnTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile == null) {
-                System.out.print("                ");
+                System.out.print("                  ");
             } else {
                 String westColor = " ";
                 if (tile.getRoad("w") != null) {
@@ -126,22 +155,22 @@ public class ConsoleDisplay implements Display {
                 }
                 switch (tile.getType()) {
                     case "desert":
-                        System.out.print(bold + westColor + "┃    Desert   ┃");
+                        System.out.print(bold + westColor + " ┃    Desert   ┃ ");
                         break;
                     case "colline":
-                        System.out.print(bold + westColor + "┃   Colline   ┃");
+                        System.out.print(bold + westColor + " ┃   Colline   ┃ ");
                         break;
                     case "plaine":
-                        System.out.print(bold + westColor + "┃    Plaine   ┃");
+                        System.out.print(bold + westColor + " ┃    Plaine   ┃ ");
                         break;
                     case "foret":
-                        System.out.print(bold + westColor + "┃    Foret    ┃");
+                        System.out.print(bold + westColor + " ┃    Foret    ┃ ");
                         break;
                     case "champ":
-                        System.out.print(bold + westColor + "┃    Champ    ┃");
+                        System.out.print(bold + westColor + " ┃    Champ    ┃ ");
                         break;
                     case "montagne":
-                        System.out.print(bold + westColor + "┃   Montagne  ┃");
+                        System.out.print(bold + westColor + " ┃   Montagne  ┃ ");
                         break;
                 }
             }
@@ -172,16 +201,16 @@ public class ConsoleDisplay implements Display {
                     }
                 }
                 if (tile.getType().equals("desert")) {
-                    System.out.print(bold + westColor + "┃             ┃");
+                    System.out.print(bold + westColor + " ┃             ┃ ");
                 } else {
                     if (tile.getNumber() > 9) {
-                        System.out.print(bold + westColor + "┃      " + tile.getNumber() + "     ┃");
+                        System.out.print(bold + westColor + " ┃      " + tile.getNumber() + "     ┃ ");
                     } else {
-                        System.out.print(bold + westColor + "┃      " + tile.getNumber() + "      ┃");
+                        System.out.print(bold + westColor + " ┃      " + tile.getNumber() + "      ┃ ");
                     }
                 }
             } else {
-                System.out.print("                ");
+                System.out.print("                  ");
 
             }
 
@@ -211,9 +240,9 @@ public class ConsoleDisplay implements Display {
                             break;
                     }
                 }
-                System.out.print(bold + westColor + "┗━━━━━━━━━━━━━┛");
+                System.out.print(bold + westColor + " ┗━━━━━━━━━━━━━┛ ");
             } else {
-                System.out.print("                ");
+                System.out.print("                  ");
             }
         }
         System.out.println();
@@ -223,24 +252,52 @@ public class ConsoleDisplay implements Display {
     public void printLastRowRoads(Board board) {
         for (Tile tile : board.getTiles()[5]) {
             if (tile != null) {
+                int swStructType;
+                String swStructure = " ";
+                String swColor = " ";
+                if (tile.getStructure("sw") != null) {
+                    swColor = tile.getStructure("sw").getOwner().getColor();
+                    if (tile.getStructure("sw") != null) {
+                        swStructType = tile.getStructure("sw").getType();
+                        if (swStructType == 0) {
+                            swStructure = "s"; // this is not recognized, might need to add a swith for each the colonies and the cities instead of a string variable ... relou
+                        } else if (swStructType == 1) {
+                            swStructure = "ss"; // same as above
+                        }
+                        switch (swColor) {
+                            case "red":
+                                swColor = red + swStructure + reset;
+                                break;
+                            case "green":
+                                swColor = green + swStructure + reset;
+                                break;
+                            case "yellow":
+                                swColor = yellow + swStructure + reset;
+                                break;
+                            case "blue":
+                                swColor = blue + swStructure + reset;
+                                break;
+                        }
+                    }
+                }
                 if (tile.getRoad("s") != null) {
                     switch (tile.getRoad("s").getOwner().getColor()) {
                         case "red":
-                            System.out.print(red + bold + "═══════════════ " + reset); // 13 lignes
+                            System.out.print(red + bold + swColor + " ═══════════════ " + reset); // 13 lignes
                             break;
                         case "green":
-                            System.out.print(green + bold + "═══════════════ " + reset);
+                            System.out.print(green + bold + swColor + " ═══════════════ " + reset);
                             break;
                         case "blue":
-                            System.out.print(blue + bold + "═══════════════ " + reset);
+                            System.out.print(blue + bold + swColor + " ═══════════════ " + reset);
                             break;
                         case "yellow":
-                            System.out.print(yellow + bold + "═══════════════ " + reset);
+                            System.out.print(yellow + bold + swColor + " ═══════════════ " + reset);
                             break;
                     }
                 }
             } else {
-                System.out.print("                 ");
+                System.out.print("                   ");
             }
         }
         System.out.println();
@@ -308,32 +365,40 @@ public class ConsoleDisplay implements Display {
 
     public static void main(String[] args) {
         Board board = new Board();
-            ConsoleDisplay c = new ConsoleDisplay();
-            System.out.println(board.addRoad(1, 1, new Road(new Player("blue")), "n"));
-            board.addRoad(1, 2, new Road(new Player("blue")), "n");
-            board.addRoad(1, 2, new Road(new Player("blue")), "w");
-            board.addRoad(1, 2, new Road(new Player("blue")), "e");
-            board.addRoad(1, 3, new Road(new Player("blue")), "n");
-            board.addRoad(2, 1, new Road(new Player("yellow")), "n");
-            board.addRoad(2, 2, new Road(new Player("green")), "n");
-            board.addRoad(2, 3, new Road(new Player("blue")), "n");
-            board.addRoad(2, 4, new Road(new Player("blue")), "n");
-            board.addRoad(3, 1, new Road(new Player("blue")), "n");
-            board.addRoad(3, 2, new Road(new Player("blue")), "n");
-            board.addRoad(3, 3, new Road(new Player("yellow")), "n");
-            board.addRoad(3, 4, new Road(new Player("blue")), "n");
-            board.addRoad(3, 5, new Road(new Player("blue")), "n");
-            board.addRoad(4, 2, new Road(new Player("blue")), "n");
-            board.addRoad(4, 3, new Road(new Player("red")), "n");
-            board.addRoad(4, 4, new Road(new Player("blue")), "n");
-            board.addRoad(4, 5, new Road(new Player("blue")), "n");
-            board.addRoad(5, 3, new Road(new Player("blue")), "n");
-            board.addRoad(5, 3, new Road(new Player("green")), "s");
-            board.addRoad(5, 4, new Road(new Player("blue")), "n");
-            board.addRoad(5, 4, new Road(new Player("blue")), "s");
-            board.addRoad(5, 5, new Road(new Player("red")), "n");
-            board.addRoad(5, 5, new Road(new Player("blue")), "s");
-            c.printBoard(board);
-    }        
+        ConsoleDisplay c = new ConsoleDisplay();
+        System.out.println(board.addRoad(1, 1, new Road(new Player("blue")), "n"));
+        board.addRoad(1, 2, new Road(new Player("blue")), "n");
+        board.addRoad(1, 2, new Road(new Player("blue")), "w");
+        board.addRoad(1, 2, new Road(new Player("blue")), "e");
+        board.addRoad(1, 3, new Road(new Player("blue")), "n");
+        board.addRoad(2, 1, new Road(new Player("yellow")), "n");
+        board.addRoad(2, 2, new Road(new Player("green")), "n");
+        board.addRoad(2, 3, new Road(new Player("blue")), "n");
+        board.addRoad(2, 4, new Road(new Player("blue")), "n");
+        board.addRoad(3, 1, new Road(new Player("blue")), "n");
+        board.addRoad(3, 2, new Road(new Player("blue")), "n");
+        board.addRoad(3, 3, new Road(new Player("yellow")), "n");
+        board.addRoad(3, 4, new Road(new Player("blue")), "n");
+        board.addRoad(3, 5, new Road(new Player("blue")), "n");
+        board.addRoad(4, 2, new Road(new Player("blue")), "n");
+        board.addRoad(4, 3, new Road(new Player("red")), "n");
+        board.addRoad(4, 4, new Road(new Player("blue")), "n");
+        board.addRoad(4, 5, new Road(new Player("blue")), "n");
+        board.addRoad(5, 3, new Road(new Player("blue")), "n");
+        board.addRoad(5, 3, new Road(new Player("green")), "s");
+        board.addRoad(5, 4, new Road(new Player("blue")), "n");
+        board.addRoad(5, 4, new Road(new Player("blue")), "s");
+        board.addRoad(5, 5, new Road(new Player("red")), "n");
+        board.addRoad(5, 5, new Road(new Player("blue")), "s");
+
+        board.addStructure(1, 2, new Structure(0, new Player(red)), "nw");
+        board.addStructure(1, 2, new Structure(1, new Player(red)), "ne");
+        board.addStructure(2, 3, new Structure(1, new Player(red)), "nw");
+        board.addStructure(3, 4, new Structure(0, new Player(red)), "nw");
+        board.addStructure(4, 5, new Structure(1, new Player(red)), "nw");
+        board.addStructure(5, 5, new Structure(1, new Player(red)), "nw");
+
+        c.printBoard(board);
+    }
 
 }
