@@ -4,20 +4,24 @@ import java.util.LinkedList;
 import Cards.DevCard;
 import Cards.KnightCard;
 import Cards.MonopolyCard;
+import Cards.ResCard;
 import Cards.RoadBuildingCard;
 import Cards.VictoryCard;
 import Cards.YearOfPlentyCard;
 
 public class Game {
     private LinkedList<DevCard> devCards;
+    private LinkedList<ResCard> resCards;
     private Board board;
 
     public Game(){
-        this.devCards = addCardsToGame(devCards);
+        this.devCards = addDevCards();
+        this.resCards = addResCards();
         this.board = new Board();
     }
 
-    public LinkedList<DevCard> addCardsToGame(LinkedList<DevCard> devCards){
+    public LinkedList<DevCard> addDevCards(){
+        this.devCards = new LinkedList<>();
         for(int i = 0; i < 14; i++){
             devCards.add(new KnightCard());
         }
@@ -33,5 +37,17 @@ public class Game {
 
         Collections.shuffle(devCards);
         return devCards;
+    }
+
+    public LinkedList<ResCard> addResCards(){
+        this.resCards = new LinkedList<>();
+        for(int i = 0; i < 19; i++){
+            resCards.add(new ResCard("ble"));
+            resCards.add(new ResCard("bois"));
+            resCards.add(new ResCard("argile"));
+            resCards.add(new ResCard("minerais"));
+            resCards.add(new ResCard("laine"));
+        }
+        return resCards;
     }
 }
