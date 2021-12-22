@@ -459,7 +459,7 @@ public class Board {
         }
     }
 
-    public Tile[][] getTiless() {
+    public Tile[][] getTiles() {
         return this.tiles;
     }
 
