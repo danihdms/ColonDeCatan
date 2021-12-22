@@ -11,7 +11,7 @@ public class ConsoleDisplay implements Display {
     // print horizontal roads
 
     public void printHRoads(Board board, int indexOfLine) {
-        for (Tile tile : board.getTiles()[indexOfLine]) {
+        for (Tile tile : board.getTiless()[indexOfLine]) {
             if (tile != null) {
                 int nwStructType;
                 String nwStructure = " ";
@@ -69,7 +69,7 @@ public class ConsoleDisplay implements Display {
     // print the top of the tiles
 
     public void printTopTile(Board board, int indexOfLine) {
-        for (Tile tile : board.getTiles()[indexOfLine]) {
+        for (Tile tile : board.getTiless()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
                 if (tile.getRoad("w") != null) {
@@ -100,7 +100,7 @@ public class ConsoleDisplay implements Display {
 
     // print other tile lines
     public void printOtherPartTile(Board board, int indexOfLine) {
-        for (Tile tile : board.getTiles()[indexOfLine]) {
+        for (Tile tile : board.getTiless()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
                 if (tile.getRoad("w") != null) {
@@ -131,7 +131,7 @@ public class ConsoleDisplay implements Display {
     // print the middle of the tiles, with the name of the land
     // desert, colline, plaine, foret, champ, montagne
     public void printTypeOnTile(Board board, int indexOfLine) {
-        for (Tile tile : board.getTiles()[indexOfLine]) {
+        for (Tile tile : board.getTiless()[indexOfLine]) {
             if (tile == null) {
                 System.out.print("                  ");
             } else {
@@ -180,7 +180,7 @@ public class ConsoleDisplay implements Display {
 
     // print the line with the number of the tile
     public void printNumberOnTile(Board board, int indexOfLine) {
-        for (Tile tile : board.getTiles()[indexOfLine]) {
+        for (Tile tile : board.getTiless()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
                 if (tile.getRoad("w") != null) {
@@ -220,7 +220,7 @@ public class ConsoleDisplay implements Display {
 
     // print the bottom of the tiles
     public void printBottomTile(Board board, int indexOfLine) {
-        for (Tile tile : board.getTiles()[indexOfLine]) {
+        for (Tile tile : board.getTiless()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
                 if (tile.getRoad("w") != null) {
@@ -250,7 +250,7 @@ public class ConsoleDisplay implements Display {
 
     // print the last row of roads
     public void printLastRowRoads(Board board) {
-        for (Tile tile : board.getTiles()[5]) {
+        for (Tile tile : board.getTiless()[5]) {
             if (tile != null) {
                 int swStructType;
                 String swStructure = " ";
@@ -305,13 +305,13 @@ public class ConsoleDisplay implements Display {
 
     // print last column of roads
     public void printLastColRoads(Board board, int indexOfLine) {
-        for (int i = 0; i < board.getTiles()[indexOfLine].length; i++) {
+        for (int i = 0; i < board.getTiless()[indexOfLine].length; i++) {
             if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
                     || (indexOfLine == 4 && i == 5) || (indexOfLine == 5 && i == 5)) {
-                if (board.getTiles()[indexOfLine][i] != null) {
+                if (board.getTiless()[indexOfLine][i] != null) {
                     String eastColor = " ";
-                    if (board.getTiles()[indexOfLine][i].getRoad("e") != null) {
-                        eastColor = board.getTiles()[indexOfLine][i].getRoad("e").getOwner().getColor();
+                    if (board.getTiless()[indexOfLine][i].getRoad("e") != null) {
+                        eastColor = board.getTiless()[indexOfLine][i].getRoad("e").getOwner().getColor();
                         switch (eastColor) {
                             case "red":
                                 eastColor = red + "║" + reset;
@@ -335,7 +335,7 @@ public class ConsoleDisplay implements Display {
 
     @Override
     public void printBoard(Board board) {
-        for (int i = 0; i < board.getTiles().length; i++) {
+        for (int i = 0; i < board.getTiless().length; i++) {
             printLastColRoads(board, i);
             printHRoads(board, i);
 

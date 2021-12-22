@@ -14,7 +14,7 @@ public class Structure {
         //getOwner().setNumberResourcesType(resType,getOwner().getNumberResourecesType(resType)+1);
         }
     }
-
+    
     public void setOwner(Player p) {
         if (owner == null) {
             owner = p;

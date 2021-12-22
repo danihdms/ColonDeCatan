@@ -123,59 +123,64 @@ public class Board {
             System.out.println("case déjà occupée");
             return false;
         }
-        // verifier la regle des deux cases d'écart entre ces colonies
-        switch (structurePos) {
-            case "nw":
-                tiles[x][y].setStructure(struct, structurePos);
-                if (caseValid(x - 1, y - 1)) {
-                    tiles[x - 1][y - 1].setStructure(struct, "se");
-                }
-                if (caseValid(x - 1, y)) {
-                    tiles[x - 1][y].setStructure(struct, "sw");
-                }
-                if (caseValid(x, y - 1)) {
-                    tiles[x][y - 1].setStructure(struct, "ne");
-                }
-                break;
+        if (suisLaregleColonie(x, y, structurePos)) {
 
-            case "ne":
-                tiles[x][y].setStructure(struct, structurePos);
-                if (caseValid(x - 1, y)) {
-                    tiles[x - 1][y].setStructure(struct, "se");
-                }
-                if (caseValid(x - 1, y + 1)) {
-                    tiles[x - 1][y + 1].setStructure(struct, "sw");
-                }
-                if (caseValid(x, y + 1)) {
-                    tiles[x][y + 1].setStructure(struct, "nw");
-                }
-                break;
-            case "sw":
-                tiles[x][y].setStructure(struct, structurePos);
-                if (caseValid(x + 1, y)) {
-                    tiles[x + 1][y].setStructure(struct, "nw");
-                }
-                if (caseValid(x, y - 1)) {
-                    tiles[x][y - 1].setStructure(struct, "se");
-                }
-                if (caseValid(x + 1, y - 1)) {
-                    tiles[x + 1][y - 1].setStructure(struct, "ne");
-                }
-                break;
-            case "se":
-                tiles[x][y].setStructure(struct, structurePos);
-                if (caseValid(x + 1, y + 1)) {
-                    tiles[x + 1][y + 1].setStructure(struct, "nw");
-                }
-                if (caseValid(x, y + 1)) {
-                    tiles[x][y + 1].setStructure(struct, "sw");
-                }
-                if (caseValid(x + 1, y)) {
-                    tiles[x + 1][y].setStructure(struct, "ne");
-                }
-                break;
+            // verifier la regle des deux cases d'écart entre ces colonies
+            switch (structurePos) {
+                case "nw":
+                    tiles[x][y].setStructure(struct, structurePos);
+                    if (caseValid(x - 1, y - 1)) {
+                        tiles[x - 1][y - 1].setStructure(struct, "se");
+                    }
+                    if (caseValid(x - 1, y)) {
+                        tiles[x - 1][y].setStructure(struct, "sw");
+                    }
+                    if (caseValid(x, y - 1)) {
+                        tiles[x][y - 1].setStructure(struct, "ne");
+                    }
+                    break;
+
+                case "ne":
+                    tiles[x][y].setStructure(struct, structurePos);
+                    if (caseValid(x - 1, y)) {
+                        tiles[x - 1][y].setStructure(struct, "se");
+                    }
+                    if (caseValid(x - 1, y + 1)) {
+                        tiles[x - 1][y + 1].setStructure(struct, "sw");
+                    }
+                    if (caseValid(x, y + 1)) {
+                        tiles[x][y + 1].setStructure(struct, "nw");
+                    }
+                    break;
+                case "sw":
+                    tiles[x][y].setStructure(struct, structurePos);
+                    if (caseValid(x + 1, y)) {
+                        tiles[x + 1][y].setStructure(struct, "nw");
+                    }
+                    if (caseValid(x, y - 1)) {
+                        tiles[x][y - 1].setStructure(struct, "se");
+                    }
+                    if (caseValid(x + 1, y - 1)) {
+                        tiles[x + 1][y - 1].setStructure(struct, "ne");
+                    }
+                    break;
+                case "se":
+                    tiles[x][y].setStructure(struct, structurePos);
+                    if (caseValid(x + 1, y + 1)) {
+                        tiles[x + 1][y + 1].setStructure(struct, "nw");
+                    }
+                    if (caseValid(x, y + 1)) {
+                        tiles[x][y + 1].setStructure(struct, "sw");
+                    }
+                    if (caseValid(x + 1, y)) {
+                        tiles[x + 1][y].setStructure(struct, "ne");
+                    }
+                    break;
+            }
+            return true;
         }
-        return true;
+        return false;
+
     }
 
     // Placer une nouvelle route sur le plateau
@@ -255,6 +260,80 @@ public class Board {
                 break;
         }
         return true;
+    }
+
+    public boolean suisLaregleColonie(int x, int y, String pos) {
+        switch (pos) {
+            case "nw":
+                if (isEmptyS(x - 1, y, "nw") && isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne")
+                        && isEmptyS(x, y - 1, "nw")) {
+                    return true;
+                }
+                break;
+            case "ne":
+                if (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x, y + 1, "ne")
+                        && isEmptyS(x - 1, y, "ne")) {
+                    return true;
+                }
+                break;
+            case "se":
+                if (isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne") && isEmptyS(x + 1, y, "se")
+                        && isEmptyS(x, y + 1, "se")) {
+                    return true;
+                }
+                break;
+            case "sw":
+                if (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x + 1, y, "sw")
+                        && isEmptyS(x, y - 1, "sw")) {
+                    return true;
+                }
+                break;
+
+        }
+        return false;
+    }
+
+    public boolean suisLaregleRoute(int x, int y, String pos, Player owner) {
+        switch (pos) {
+            case "s":
+                if (hasSameOwnerR(x, y+1, pos, owner) || hasSameOwnerR(x, y-1, pos, owner)
+                        || hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)
+                        || hasSameOwnerR(x+1, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)) {
+                    return true;
+                }
+                break;
+
+            case "w":
+                if (hasSameOwnerR(x, y, "n", owner) || hasSameOwnerR(x+1, y, pos, owner)
+                        || hasSameOwnerR(x-1, y, pos, owner) || hasSameOwnerR(x, y, "s", owner)
+                        || hasSameOwnerR(x, y+1, "n", owner) || hasSameOwnerR(x, y+1, "s", owner)) {
+                    return true;
+                }
+                break;
+            case "e":
+                if (hasSameOwnerR(x+1, y, pos, owner) || hasSameOwnerR(x-1, y, pos, owner)
+                        || hasSameOwnerR(x, y, "n", owner) || hasSameOwnerR(x, y, "s", owner)
+                        || hasSameOwnerR(x, y-1, "n", owner) || hasSameOwnerR(x, y-1, "s", owner)) {
+                    return true;
+                }
+                break;
+            case "n":
+                if (hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)
+                        || hasSameOwnerR(x-1, y, "e", owner) || hasSameOwnerR(x-1, y, "w", owner)
+                        || hasSameOwnerR(x, y-1, pos, owner) || hasSameOwnerR(x, y+1, pos, owner)) {
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
+
+    public boolean isEmptyS(int x, int y, String pos) {
+        return this.tiles[x][y].getStructure(pos) == null;
+    }
+
+    public boolean hasSameOwnerR(int x, int y, String pos, Player owner) {
+        return (this.tiles[x][y].getRoad(pos).getOwner() == owner && this.tiles[x][y] != null);
     }
 
     // rechercher sur le plateau les tiles avec le numéro fournie
@@ -350,6 +429,15 @@ public class Board {
         return list;
 
     }
+    //upgrade une colonie
+    public boolean getUpgrade(int x,int y,String pos){
+        if(this.tiles[x][y].getStructure(pos) != null && this.tiles[x][y].getStructure(pos).getType()==0){
+            this.tiles[x][y].getStructure(pos).setType(1);
+            return true;
+        }
+        return false;
+    }
+    
 
     // distribuer les ressources
     public boolean Distribution(int x) {
@@ -371,20 +459,19 @@ public class Board {
         }
     }
 
-    public Tile[][] getTiles() {
+    public Tile[][] getTiless() {
         return this.tiles;
     }
 
-    // placer une colonies meme sans route avec vérification des espaces entre 2
-    // colonies d'une même équipe
-    // checker et assigner si bon la colonie au joueur
-    // checker et assigner si bon la route au joueur
-    // regarder si la localisation est corretcte puis upgrade en city
+    
+    
 
-    // getter pour une tile precise
-    // avoir les structures adjacentes autour d'une certain point
+    
+    
     // trouver la plus longue route(optionnel)
-    // trouver les routes adjacentes et connecter à une route donné(optionnel)
+    
     // verifier si une localisation est un port
+    //ajouter les port
+    //mettre leurs ressources en random
 
 }
