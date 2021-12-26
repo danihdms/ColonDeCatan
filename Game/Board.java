@@ -1,3 +1,5 @@
+package Game;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -42,7 +44,7 @@ public class Board {
         // Placement des tuiles et de leur numero
         placeTiles(tileList);
         placeNumbers();
-
+        placeThief();
     }
 
     // voleurLocation = desert.getLocation();
@@ -117,15 +119,31 @@ public class Board {
 
     }
 
+    public void placeThief() {
+        for (int i = 1; i < tiles.length - 1; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (caseValid(i, j)) {
+                    if (tiles[i][j].getType().equals("desert")) {
+                        thiefCoordX = i;
+                        thiefCoordY = j;
+                        tiles[i][j].setThief(true);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
     // Placer une nouvelle structure sur la plateau
     public boolean addStructure(int x, int y, Structure struct, String structurePos) {
         if (tiles[x][y].getStructure(structurePos) != null) {
             System.out.println("case déjà occupée");
             return false;
         }
+        // verifier la regle des deux cases d'écart entre ces colonies
         if (suisLaregleColonie(x, y, structurePos)) {
+            System.out.printf("x: %d, y: %d\n", x, y);
 
-            // verifier la regle des deux cases d'écart entre ces colonies
             switch (structurePos) {
                 case "nw":
                     tiles[x][y].setStructure(struct, structurePos);
@@ -263,28 +281,37 @@ public class Board {
     }
 
     public boolean suisLaregleColonie(int x, int y, String pos) {
+        System.out.println("x: " + x + " y: " + y + " pos: " + pos);
         switch (pos) {
             case "nw":
-                if (isEmptyS(x - 1, y, "nw") && isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne")
-                        && isEmptyS(x, y - 1, "nw")) {
+                if (
+                    (caseValid(x - 1, y) || caseValid(x, y) || caseValid(x, y - 1)) &&
+                    (isEmptyS(x - 1, y, "nw") && isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne") && isEmptyS(x, y - 1, "nw"))
+                ) {
                     return true;
                 }
                 break;
             case "ne":
-                if (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x, y + 1, "ne")
-                        && isEmptyS(x - 1, y, "ne")) {
+                if (
+                    (caseValid(x - 1, y) || caseValid(x, y) || caseValid(x, y + 1)) &&
+                    (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x, y + 1, "ne") && isEmptyS(x - 1, y, "ne"))
+                ) {
                     return true;
                 }
                 break;
             case "se":
-                if (isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne") && isEmptyS(x + 1, y, "se")
-                        && isEmptyS(x, y + 1, "se")) {
+                if (
+                    (caseValid(x + 1, y) || caseValid(x, y) || caseValid(x, y + 1)) &&
+                    (isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne") && isEmptyS(x + 1, y, "se") && isEmptyS(x, y + 1, "se"))
+                ) {
                     return true;
                 }
                 break;
             case "sw":
-                if (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x + 1, y, "sw")
-                        && isEmptyS(x, y - 1, "sw")) {
+                if (
+                    (caseValid(x + 1, y) || caseValid(x, y) || caseValid(x, y - 1)) &&
+                    (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x + 1, y, "sw") && isEmptyS(x, y - 1, "sw"))
+                ) {
                     return true;
                 }
                 break;
@@ -296,31 +323,31 @@ public class Board {
     public boolean suisLaregleRoute(int x, int y, String pos, Player owner) {
         switch (pos) {
             case "s":
-                if (hasSameOwnerR(x, y+1, pos, owner) || hasSameOwnerR(x, y-1, pos, owner)
+                if (hasSameOwnerR(x, y + 1, pos, owner) || hasSameOwnerR(x, y - 1, pos, owner)
                         || hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)
-                        || hasSameOwnerR(x+1, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)) {
+                        || hasSameOwnerR(x + 1, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)) {
                     return true;
                 }
                 break;
 
             case "w":
-                if (hasSameOwnerR(x, y, "n", owner) || hasSameOwnerR(x+1, y, pos, owner)
-                        || hasSameOwnerR(x-1, y, pos, owner) || hasSameOwnerR(x, y, "s", owner)
-                        || hasSameOwnerR(x, y+1, "n", owner) || hasSameOwnerR(x, y+1, "s", owner)) {
+                if (hasSameOwnerR(x, y, "n", owner) || hasSameOwnerR(x + 1, y, pos, owner)
+                        || hasSameOwnerR(x - 1, y, pos, owner) || hasSameOwnerR(x, y, "s", owner)
+                        || hasSameOwnerR(x, y + 1, "n", owner) || hasSameOwnerR(x, y + 1, "s", owner)) {
                     return true;
                 }
                 break;
             case "e":
-                if (hasSameOwnerR(x+1, y, pos, owner) || hasSameOwnerR(x-1, y, pos, owner)
+                if (hasSameOwnerR(x + 1, y, pos, owner) || hasSameOwnerR(x - 1, y, pos, owner)
                         || hasSameOwnerR(x, y, "n", owner) || hasSameOwnerR(x, y, "s", owner)
-                        || hasSameOwnerR(x, y-1, "n", owner) || hasSameOwnerR(x, y-1, "s", owner)) {
+                        || hasSameOwnerR(x, y - 1, "n", owner) || hasSameOwnerR(x, y - 1, "s", owner)) {
                     return true;
                 }
                 break;
             case "n":
                 if (hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)
-                        || hasSameOwnerR(x-1, y, "e", owner) || hasSameOwnerR(x-1, y, "w", owner)
-                        || hasSameOwnerR(x, y-1, pos, owner) || hasSameOwnerR(x, y+1, pos, owner)) {
+                        || hasSameOwnerR(x - 1, y, "e", owner) || hasSameOwnerR(x - 1, y, "w", owner)
+                        || hasSameOwnerR(x, y - 1, pos, owner) || hasSameOwnerR(x, y + 1, pos, owner)) {
                     return true;
                 }
                 break;
@@ -329,11 +356,15 @@ public class Board {
     }
 
     public boolean isEmptyS(int x, int y, String pos) {
-        return this.tiles[x][y].getStructure(pos) == null;
+        if (caseValid(x, y))
+            return this.tiles[x][y].getStructure(pos) == null;
+        return true;
     }
 
     public boolean hasSameOwnerR(int x, int y, String pos, Player owner) {
-        return (this.tiles[x][y].getRoad(pos).getOwner() == owner && this.tiles[x][y] != null);
+        if (caseValid(x, y))
+            return (this.tiles[x][y].getRoad(pos).getOwner() == owner && this.tiles[x][y] != null);
+        throw new IllegalStateException();
     }
 
     // rechercher sur le plateau les tiles avec le numéro fournie
@@ -429,15 +460,15 @@ public class Board {
         return list;
 
     }
-    //upgrade une colonie
-    public boolean getUpgrade(int x,int y,String pos){
-        if(this.tiles[x][y].getStructure(pos) != null && this.tiles[x][y].getStructure(pos).getType()==0){
+
+    // upgrade une colonie
+    public boolean getUpgrade(int x, int y, String pos) {
+        if (this.tiles[x][y].getStructure(pos) != null && this.tiles[x][y].getStructure(pos).getType() == 0) {
             this.tiles[x][y].getStructure(pos).setType(1);
             return true;
         }
         return false;
     }
-    
 
     // distribuer les ressources
     public boolean Distribution(int x) {
@@ -463,15 +494,10 @@ public class Board {
         return this.tiles;
     }
 
-    
-    
-
-    
-    
     // trouver la plus longue route(optionnel)
-    
+
     // verifier si une localisation est un port
-    //ajouter les port
-    //mettre leurs ressources en random
+    // ajouter les port
+    // mettre leurs ressources en random
 
 }

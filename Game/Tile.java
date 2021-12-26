@@ -1,3 +1,4 @@
+package Game;
 public class Tile {
     private int number = 0;
     private boolean hasThief = false;

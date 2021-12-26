@@ -1,3 +1,4 @@
+package Cards;
 public abstract class DevCard {
     private String type;
 

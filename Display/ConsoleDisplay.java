@@ -1,3 +1,11 @@
+package Display;
+
+import Game.Board;
+import Game.Player;
+import Game.Road;
+import Game.Structure;
+import Game.Tile;
+
 public class ConsoleDisplay {
     public static final String reset = "\u001B[0m";
     public static final String red = "\u001B[31m";
@@ -10,57 +18,88 @@ public class ConsoleDisplay {
 
     // print horizontal roads
 
-    public void printHRoads(Board board, int indexOfLine) {
+    private void printHRoads(Board board, int indexOfLine) {
+        Tile lastTile = null;
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
+                lastTile = tile;
                 int nwStructType;
                 String nwStructure = " ";
                 String nwColor = " ";
                 if (tile.getStructure("nw") != null) {
                     nwColor = tile.getStructure("nw").getOwner().getColor();
-                    if (tile.getStructure("nw") != null) {
-                        nwStructType = tile.getStructure("nw").getType();
-                        if (nwStructType == 0) {
-                            nwStructure = colony; // this is not recognized, might need to add a swith for each the colonies and the cities instead of a string variable ... relou
-                        } else if (nwStructType == 1) {
-                            nwStructure = city; // same as above
-                        }
-                        switch (nwColor) {
-                            case "red":
-                                nwColor = red + nwStructure + reset;
-                                break;
-                            case "green":
-                                nwColor = green + nwStructure + reset;
-                                break;
-                            case "yellow":
-                                nwColor = yellow + nwStructure + reset;
-                                break;
-                            case "blue":
-                                nwColor = blue + nwStructure + reset;
-                                break;
-                        }
+                    nwStructType = tile.getStructure("nw").getType();
+                    if (nwStructType == 0) {
+                        nwStructure = colony;
+                    } else if (nwStructType == 1) {
+                        nwStructure = city;
+                    }
+                    switch (nwColor) {
+                        case "red":
+                            nwColor = red + nwStructure + reset;
+                            break;
+                        case "green":
+                            nwColor = green + nwStructure + reset;
+                            break;
+                        case "yellow":
+                            nwColor = yellow + nwStructure + reset;
+                            break;
+                        case "blue":
+                            nwColor = blue + nwStructure + reset;
+                            break;
                     }
                 }
                 if (tile.getRoad("n") != null) {
                     switch (tile.getRoad("n").getOwner().getColor()) {
                         case "red":
-                            System.out.print(red + bold + nwColor + " ═══════════════ " + reset); // 13 lignes
+                            System.out.print(nwColor + red + bold + " ═══════════════ " + reset); // 13 lignes
                             break;
                         case "green":
-                            System.out.print(green + bold + nwColor + " ═══════════════ " + reset);
+                            System.out.print(nwColor + green + bold + " ═══════════════ " + reset);
                             break;
                         case "blue":
-                            System.out.print(blue + bold + nwColor + " ═══════════════ " + reset);
+                            System.out.print(nwColor + blue + bold + " ═══════════════ " + reset);
                             break;
                         case "yellow":
-                            System.out.print(yellow + bold + nwColor + " ═══════════════ " + reset);
+                            System.out.print(nwColor + yellow + bold + " ═══════════════ " + reset);
                             break;
                     }
                 } else {
-                    System.out.print("                   ");
+                    System.out.print("                  ");
                 }
             } else {
-                System.out.print("                   ");
+                if(lastTile != null) {
+                    int neStructType;
+                    String neColor = "!";
+                    String neStructure = "!";
+                    if (lastTile.getStructure("ne") != null) {
+                        neColor = lastTile.getStructure("ne").getOwner().getColor();
+                        neStructType = lastTile.getStructure("ne").getType();
+                        if (neStructType == 0) {
+                            neStructure = colony;
+                        } else if (neStructType == 1) {
+                            neStructure = city;
+                        }
+                        switch (neColor) {
+                            case "red":
+                                System.out.print(red + neStructure + reset);
+                                break;
+                            case "green":
+                                System.out.print(green + neStructure + reset);
+                                break;
+                            case "yellow":
+                                System.out.print(yellow + neStructure + reset);
+                                break;
+                            case "blue":
+                                System.out.print(blue + neStructure + reset);
+                                break;
+                            default:
+                                System.out.print("neColor");
+                        }
+                    }
+                    lastTile = null;
+                }
+                System.out.print("                  ");
             }
         }
         System.out.println();
@@ -68,7 +107,7 @@ public class ConsoleDisplay {
 
     // print the top of the tiles
 
-    public void printTopTile(Board board, int indexOfLine) {
+    private void printTopTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
@@ -99,7 +138,7 @@ public class ConsoleDisplay {
     }
 
     // print other tile lines
-    public void printOtherPartTile(Board board, int indexOfLine) {
+    private void printOtherPartTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
@@ -130,7 +169,7 @@ public class ConsoleDisplay {
 
     // print the middle of the tiles, with the name of the land
     // desert, colline, plaine, foret, champ, montagne
-    public void printTypeOnTile(Board board, int indexOfLine) {
+    private void printTypeOnTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile == null) {
                 System.out.print("                  ");
@@ -179,7 +218,7 @@ public class ConsoleDisplay {
     }
 
     // print the line with the number of the tile
-    public void printNumberOnTile(Board board, int indexOfLine) {
+    private void printNumberOnTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
@@ -219,7 +258,7 @@ public class ConsoleDisplay {
     }
 
     // print the bottom of the tiles
-    public void printBottomTile(Board board, int indexOfLine) {
+    private void printBottomTile(Board board, int indexOfLine) {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
@@ -249,20 +288,26 @@ public class ConsoleDisplay {
     }
 
     // print the last row of roads
-    public void printLastRowRoads(Board board) {
+    private void printLastRowRoads(Board board) {
+        boolean firstNotNullTile = true;
         for (Tile tile : board.getTiles()[5]) {
             if (tile != null) {
+                if (firstNotNullTile) {
+                    System.out.print(" ");
+                    firstNotNullTile = false;
+                }
                 int swStructType;
                 String swStructure = " ";
-                String swColor = " ";
+                String swColor = "!";
                 if (tile.getStructure("sw") != null) {
                     swColor = tile.getStructure("sw").getOwner().getColor();
                     if (tile.getStructure("sw") != null) {
                         swStructType = tile.getStructure("sw").getType();
                         if (swStructType == 0) {
-                            swStructure = "s"; // this is not recognized, might need to add a swith for each the colonies and the cities instead of a string variable ... relou
+                            swStructure = colony; // this is not recognized, might need to add a swith for each the
+                                                  // colonies and the cities instead of a string variable ... relou
                         } else if (swStructType == 1) {
-                            swStructure = "ss"; // same as above
+                            swStructure = city; // same as above
                         }
                         switch (swColor) {
                             case "red":
@@ -283,28 +328,28 @@ public class ConsoleDisplay {
                 if (tile.getRoad("s") != null) {
                     switch (tile.getRoad("s").getOwner().getColor()) {
                         case "red":
-                            System.out.print(red + bold + swColor + " ═══════════════ " + reset); // 13 lignes
+                            System.out.print(swColor + red + bold + " ═══════════════ " + reset); // 13 lignes
                             break;
                         case "green":
-                            System.out.print(green + bold + swColor + " ═══════════════ " + reset);
+                            System.out.print(swColor + green + bold + " ═══════════════ " + reset);
                             break;
                         case "blue":
-                            System.out.print(blue + bold + swColor + " ═══════════════ " + reset);
+                            System.out.print(swColor + blue + bold + " ═══════════════ " + reset);
                             break;
                         case "yellow":
-                            System.out.print(yellow + bold + swColor + " ═══════════════ " + reset);
+                            System.out.print(swColor + yellow + bold + " ═══════════════ " + reset);
                             break;
                     }
                 }
             } else {
-                System.out.print("                   ");
+                System.out.print("                  ");
             }
         }
         System.out.println();
     }
 
     // print last column of roads
-    public void printLastColRoads(Board board, int indexOfLine) {
+    private void printLastColRoads(Board board, int indexOfLine) {
         for (int i = 0; i < board.getTiles()[indexOfLine].length; i++) {
             if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
                     || (indexOfLine == 4 && i == 5) || (indexOfLine == 5 && i == 5)) {
@@ -365,37 +410,39 @@ public class ConsoleDisplay {
     public static void main(String[] args) {
         Board board = new Board();
         ConsoleDisplay c = new ConsoleDisplay();
-        System.out.println(board.addRoad(1, 1, new Road(new Player("blue")), "n"));
-        board.addRoad(1, 2, new Road(new Player("blue")), "n");
-        board.addRoad(1, 2, new Road(new Player("blue")), "w");
-        board.addRoad(1, 2, new Road(new Player("blue")), "e");
-        board.addRoad(1, 3, new Road(new Player("blue")), "n");
-        board.addRoad(2, 1, new Road(new Player("yellow")), "n");
-        board.addRoad(2, 2, new Road(new Player("green")), "n");
-        board.addRoad(2, 3, new Road(new Player("blue")), "n");
-        board.addRoad(2, 4, new Road(new Player("blue")), "n");
-        board.addRoad(3, 1, new Road(new Player("blue")), "n");
-        board.addRoad(3, 2, new Road(new Player("blue")), "n");
-        board.addRoad(3, 3, new Road(new Player("yellow")), "n");
-        board.addRoad(3, 4, new Road(new Player("blue")), "n");
-        board.addRoad(3, 5, new Road(new Player("blue")), "n");
-        board.addRoad(4, 2, new Road(new Player("blue")), "n");
-        board.addRoad(4, 3, new Road(new Player("red")), "n");
-        board.addRoad(4, 4, new Road(new Player("blue")), "n");
-        board.addRoad(4, 5, new Road(new Player("blue")), "n");
-        board.addRoad(5, 3, new Road(new Player("blue")), "n");
-        board.addRoad(5, 3, new Road(new Player("green")), "s");
-        board.addRoad(5, 4, new Road(new Player("blue")), "n");
-        board.addRoad(5, 4, new Road(new Player("blue")), "s");
-        board.addRoad(5, 5, new Road(new Player("red")), "n");
-        board.addRoad(5, 5, new Road(new Player("blue")), "s");
+        System.out.println(board.addRoad(1, 1, new Road(new Player("Stanley", "blue", true)), "n"));
+        board.addRoad(1, 2, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(1, 2, new Road(new Player("Stanley", "blue", true)), "w");
+        board.addRoad(1, 2, new Road(new Player("Stanley", "blue", true)), "e");
+        board.addRoad(1, 3, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(2, 1, new Road(new Player("Stanley", "yellow", true)), "n");
+        board.addRoad(2, 2, new Road(new Player("Stanley", "green", true)), "n");
+        board.addRoad(2, 3, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(2, 4, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(3, 1, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(3, 2, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(3, 3, new Road(new Player("Stanley", "yellow", true)), "n");
+        board.addRoad(3, 4, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(3, 5, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(4, 2, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(4, 3, new Road(new Player("Stanley", "red", true)), "n");
+        board.addRoad(4, 4, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(4, 5, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(5, 3, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(5, 3, new Road(new Player("Stanley", "green", true)), "s");
+        board.addRoad(5, 4, new Road(new Player("Stanley", "blue", true)), "n");
+        board.addRoad(5, 4, new Road(new Player("Stanley", "blue", true)), "s");
+        board.addRoad(5, 5, new Road(new Player("Stanley", "red", true)), "n");
+        board.addRoad(5, 5, new Road(new Player("Stanley", "blue", true)), "s");
 
-        board.addStructure(1, 2, new Structure(0, new Player(red)), "nw");
-        board.addStructure(1, 2, new Structure(1, new Player(red)), "ne");
-        board.addStructure(2, 3, new Structure(1, new Player(red)), "nw");
-        board.addStructure(3, 4, new Structure(0, new Player(red)), "nw");
-        board.addStructure(4, 5, new Structure(1, new Player(red)), "nw");
-        board.addStructure(5, 5, new Structure(1, new Player(red)), "nw");
+        board.addStructure(1, 2, new Structure(0, new Player("Stanley", "red", true)), "nw");
+        board.addStructure(1, 2, new Structure(1, new Player("Stanley", "red", true)), "ne");
+        board.addStructure(2, 3, new Structure(1, new Player("Stanley", "red", true)), "nw");
+        board.addStructure(3, 4, new Structure(0, new Player("Stanley", "red", true)), "nw");
+        board.addStructure(4, 5, new Structure(1, new Player("Stanley", "red", true)), "nw");
+        board.addStructure(5, 5, new Structure(1, new Player("Stanley", "red", true)), "nw");
+        board.addStructure(5, 5, new Structure(1, new Player("Stanley", "red", true)), "se");
+        board.addStructure(4, 5, new Structure(1, new Player("Stanley", "red", true)), "se");
 
         c.printBoard(board);
     }

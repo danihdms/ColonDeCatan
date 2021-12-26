@@ -1,3 +1,4 @@
+package Game;
 public class Structure {
     private Player owner = null;
     private int type; // 0 pour colonies,1 pour villes

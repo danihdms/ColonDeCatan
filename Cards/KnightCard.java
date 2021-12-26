@@ -1,3 +1,4 @@
+package Cards;
 public class KnightCard extends DevCard {
     
     public KnightCard(){

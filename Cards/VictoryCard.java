@@ -1,3 +1,4 @@
+package Cards;
 public class VictoryCard extends DevCard {
     
     public VictoryCard(){

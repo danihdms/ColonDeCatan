@@ -1,3 +1,4 @@
+package Cards;
 public class ProgressCard extends DevCard {
 
     public ProgressCard(String type) {
