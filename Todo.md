@@ -41,3 +41,12 @@
 
 - 3 cartes chevalier tu recois armée plus puissante -> 2 points instant
 
+
+### Repartition
+#### Hugo
+ - Déroulé du jeu
+ - Implementation des fonctions necessaires
+#### Daniel
+ - Implementationd e l'intelligence artificielle
+ - Completion des fonctionnalités des cartes de jeu
+ - Affichage des coordonnées sur le plateau

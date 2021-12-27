@@ -2,6 +2,8 @@ package Game;
 
 import java.util.Scanner;
 
+import Display.ConsoleDisplay;
+
 public class PlayConsole {
     
     public static void main(String[] args) {
@@ -37,10 +39,21 @@ public class PlayConsole {
             players[i] = new Player(name, colors[i], human);
         }
         
+        ConsoleDisplay display = new ConsoleDisplay();
         Game game = new Game(players);
-        for(Player p : game.getPlayers()){
-            System.out.println(p.getName() + p.getHuman());
-        }
+        
+        display.printBoard(game.getBoard());
+
+        // Demander de poser les structures et les routes : une structure et un route par joueur 2 fois (chacun leur tour)
+        // Lancer le dé
+        // recevoir les resources ou appeler le voleur
+        // choisir quoi faire :
+            // tirer une carte en depensant ses resources
+                // la jouer si il peut ou la garder
+            // placer une colonie
+            // placer une route
+            // ameliorer une colonie
+
 
 
         sc.close();

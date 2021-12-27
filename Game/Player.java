@@ -13,6 +13,7 @@ public class Player {
     private int nbSettelments = 5;
     private int nbCities = 4;
     private int nbRoads = 15;
+    private int nbVictoryPoints = 0;
 
     public Player(String name, String color, boolean human){
         this.name = name;

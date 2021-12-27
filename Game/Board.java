@@ -43,7 +43,6 @@ public class Board {
         // Placement des tuiles et de leur numero
         placeTiles(tileList);
         placeNumbers();
-        placeThief();
     }
 
     // voleurLocation = desert.getLocation();
@@ -118,21 +117,6 @@ public class Board {
 
     }
 
-    public void placeThief() {
-        for (int i = 1; i < tiles.length - 1; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                if (caseValid(i, j)) {
-                    if (tiles[i][j].getType().equals("desert")) {
-                        thiefCoordX = i;
-                        thiefCoordY = j;
-                        tiles[i][j].setThief(true);
-                        return;
-                    }
-                }
-            }
-        }
-    }
-
     // Placer une nouvelle structure sur la plateau
     public boolean addStructure(int x, int y, Structure struct, String structurePos) {
         if (caseValid(x, y)) {
@@ -205,40 +189,42 @@ public class Board {
     // Placer une nouvelle route sur le plateau
     public boolean addRoad(int x, int y, Road r, String roadPos) {
         if (caseValid(x, y)) {
-            if (tiles[x][y].getRoad(roadPos) != null) {
-                System.out.println(tiles[x][y].getRoad(roadPos).getOwner().getColor());
-                System.out.println("La case de coordonnées " + x + ", " + y + " est déjà occupée.");
-                return false;
-            }
-            // rajouter la condition de si il y a une route au joueur autour
-            switch (roadPos) {
-                case "n":
-                    tiles[x][y].setRoadOnTile(r, roadPos);
-                    if (caseValid(x - 1, y)) {
-                        tiles[x - 1][y].setRoadOnTile(r, "s");
-                    }
-                    break;
-                case "s":
-                    tiles[x][y].setRoadOnTile(r, roadPos);
-                    if (caseValid(x + 1, y)) {
-                        tiles[x + 1][y].setRoadOnTile(r, "n");
-                    }
-                    break;
-                case "w":
-                    tiles[x][y].setRoadOnTile(r, roadPos);
-                    if (caseValid(x, y - 1)) {
-                        tiles[x][y - 1].setRoadOnTile(r, "e");
-                    }
-                    break;
-                case "e":
-                    tiles[x][y].setRoadOnTile(r, roadPos);
-                    if (caseValid(x, y + 1)) {
-                        tiles[x][y + 1].setRoadOnTile(r, "w");
-                    }
-                    break;
-            }
-            return true;
 
+            if (suisLaregleRoute(x, y, roadPos, r.getOwner())) {
+                if (tiles[x][y].getRoad(roadPos) != null) {
+                    System.out.println(tiles[x][y].getRoad(roadPos).getOwner().getColor());
+                    System.out.println("La case de coordonnées " + x + ", " + y + " est déjà occupée.");
+                    return false;
+                }
+                // rajouter la condition de si il y a une route au joueur autour
+                switch (roadPos) {
+                    case "n":
+                        tiles[x][y].setRoadOnTile(r, roadPos);
+                        if (caseValid(x - 1, y)) {
+                            tiles[x - 1][y].setRoadOnTile(r, "s");
+                        }
+                        break;
+                    case "s":
+                        tiles[x][y].setRoadOnTile(r, roadPos);
+                        if (caseValid(x + 1, y)) {
+                            tiles[x + 1][y].setRoadOnTile(r, "n");
+                        }
+                        break;
+                    case "w":
+                        tiles[x][y].setRoadOnTile(r, roadPos);
+                        if (caseValid(x, y - 1)) {
+                            tiles[x][y - 1].setRoadOnTile(r, "e");
+                        }
+                        break;
+                    case "e":
+                        tiles[x][y].setRoadOnTile(r, roadPos);
+                        if (caseValid(x, y + 1)) {
+                            tiles[x][y + 1].setRoadOnTile(r, "w");
+                        }
+                        break;
+                }
+                return true;
+            }
         }
         return false;
     }
@@ -273,16 +259,12 @@ public class Board {
                 }
                 break;
             case 6:
-                if (y == 0 || y == 1 || y == 2 || y == 3 || y == 4 || y == 5 || y == 6) {
-                    return false;
-                }
-                break;
+                return false;
         }
         return true;
     }
 
     public boolean suisLaregleColonie(int x, int y, String pos) {
-        System.out.println("x: " + x + " y: " + y + " pos: " + pos);
         switch (pos) {
             case "nw":
                 if ((caseValid(x - 1, y) || caseValid(x, y) || caseValid(x, y - 1)) &&
@@ -320,34 +302,51 @@ public class Board {
     public boolean suisLaregleRoute(int x, int y, String pos, Player owner) {
         switch (pos) {
             case "s":
-                if (hasSameOwnerR(x, y + 1, pos, owner) || hasSameOwnerR(x, y - 1, pos, owner)
+                if ((hasSameOwnerR(x, y + 1, pos, owner) || hasSameOwnerR(x, y - 1, pos, owner)
                         || hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)
-                        || hasSameOwnerR(x + 1, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)) {
+                        || hasSameOwnerR(x + 1, y, "e", owner) || hasSameOwnerR(x + 1, y, "w", owner))
+                        || (hasSameOwnerS(x, y, "se", owner)
+                        || hasSameOwnerS(x, y, "sw", owner))) {
                     return true;
                 }
                 break;
 
             case "w":
-                if (hasSameOwnerR(x, y, "n", owner) || hasSameOwnerR(x + 1, y, pos, owner)
+                if ((hasSameOwnerR(x, y, "n", owner) || hasSameOwnerR(x + 1, y, pos, owner)
                         || hasSameOwnerR(x - 1, y, pos, owner) || hasSameOwnerR(x, y, "s", owner)
-                        || hasSameOwnerR(x, y + 1, "n", owner) || hasSameOwnerR(x, y + 1, "s", owner)) {
+                        || hasSameOwnerR(x, y - 1, "n", owner) || hasSameOwnerR(x, y - 1, "s", owner))
+                        || (hasSameOwnerS(x, y, "nw", owner)
+                        || hasSameOwnerS(x, y, "sw", owner))) {
                     return true;
                 }
                 break;
             case "e":
-                if (hasSameOwnerR(x + 1, y, pos, owner) || hasSameOwnerR(x - 1, y, pos, owner)
+                if ((hasSameOwnerR(x + 1, y, pos, owner) || hasSameOwnerR(x - 1, y, pos, owner)
                         || hasSameOwnerR(x, y, "n", owner) || hasSameOwnerR(x, y, "s", owner)
-                        || hasSameOwnerR(x, y - 1, "n", owner) || hasSameOwnerR(x, y - 1, "s", owner)) {
+                        || hasSameOwnerR(x, y + 1, "n", owner) || hasSameOwnerR(x, y + 1, "s", owner))
+                        || (hasSameOwnerS(x, y, "ne", owner) || hasSameOwnerS(x, y, "se", owner))){
                     return true;
                 }
                 break;
             case "n":
-                if (hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)
+                if ((hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)
                         || hasSameOwnerR(x - 1, y, "e", owner) || hasSameOwnerR(x - 1, y, "w", owner)
-                        || hasSameOwnerR(x, y - 1, pos, owner) || hasSameOwnerR(x, y + 1, pos, owner)) {
+                        || hasSameOwnerR(x, y - 1, pos, owner) || hasSameOwnerR(x, y + 1, pos, owner))
+                        || (hasSameOwnerS(x, y, "ne", owner)
+                        || hasSameOwnerS(x, y, "nw", owner))) {
                     return true;
                 }
                 break;
+        }
+        return false;
+    }
+
+    public boolean hasSameOwnerS(int x, int y, String pos, Player owner) {
+        if (tiles[x][y].getStructure(pos) != null) {
+            if (tiles[x][y].getStructure(pos).getOwner() == owner) {
+                return true;
+            }
+            return false;
         }
         return false;
     }
@@ -360,8 +359,11 @@ public class Board {
 
     public boolean hasSameOwnerR(int x, int y, String pos, Player owner) {
         if (caseValid(x, y))
-            return (this.tiles[x][y].getRoad(pos).getOwner() == owner && this.tiles[x][y] != null);
-        throw new IllegalStateException();
+            if (this.tiles[x][y].getRoad(pos) != null) {
+                
+                return this.tiles[x][y].getRoad(pos).getOwner() == owner && this.tiles[x][y] != null;
+            }
+        return false;
     }
 
     // rechercher sur le plateau les tiles avec le numéro fournie
@@ -493,7 +495,7 @@ public class Board {
     }
 
     // trouver la plus longue route(optionnel)
-    // verifier si il y a une route du meme owner ou une colonie du meme owner a
+    // verifier si il y a une colonie du meme owner a
     // cote avant de placer une route
     // verifier si une localisation est un port
     // ajouter les port
