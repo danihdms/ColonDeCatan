@@ -34,4 +34,7 @@ public class Player {
     public boolean getHuman(){
         return this.human;
     }
+    public int getV(){
+        return this.nbVictoryPoints;
+    }
 }

@@ -2,6 +2,7 @@ package Game;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 
 import Cards.DevCard;
 import Cards.KnightCard;
@@ -59,7 +60,19 @@ public class Game {
         }
         return resCards;
     }
-
+    public int throwDice(){
+        Random r=new Random();
+        int x=r.nextInt(11)+2;//crée un nombre entre 2 et 12
+        return x;
+    }
+    public boolean endGame(){
+        for (Player p : this.players){
+            if (p.getV() >= 10){
+                return true;
+            }
+        }
+        return false;
+    }
     public Player[] getPlayers(){
         return this.players;
     }
