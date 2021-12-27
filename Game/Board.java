@@ -9,7 +9,6 @@ public class Board {
     // private Road[][] roads;
     private int thiefCoordX;
     private int thiefCoordY;
-    private Road endpoint = null;
 
     public Board() {
         tiles = new Tile[7][7];
@@ -136,69 +135,71 @@ public class Board {
 
     // Placer une nouvelle structure sur la plateau
     public boolean addStructure(int x, int y, Structure struct, String structurePos) {
-        if (tiles[x][y].getStructure(structurePos) != null) {
-            System.out.println("case déjà occupée");
+        if (caseValid(x, y)) {
+            if (tiles[x][y].getStructure(structurePos) != null) {
+                System.out.println("case déjà occupée");
+                return false;
+            }
+            // verifier la regle des deux cases d'écart entre ces colonies
+            if (suisLaregleColonie(x, y, structurePos)) {
+                System.out.printf("x: %d, y: %d\n", x, y);
+
+                switch (structurePos) {
+                    case "nw":
+                        tiles[x][y].setStructure(struct, structurePos);
+                        if (caseValid(x - 1, y - 1)) {
+                            tiles[x - 1][y - 1].setStructure(struct, "se");
+                        }
+                        if (caseValid(x - 1, y)) {
+                            tiles[x - 1][y].setStructure(struct, "sw");
+                        }
+                        if (caseValid(x, y - 1)) {
+                            tiles[x][y - 1].setStructure(struct, "ne");
+                        }
+                        break;
+
+                    case "ne":
+                        tiles[x][y].setStructure(struct, structurePos);
+                        if (caseValid(x - 1, y)) {
+                            tiles[x - 1][y].setStructure(struct, "se");
+                        }
+                        if (caseValid(x - 1, y + 1)) {
+                            tiles[x - 1][y + 1].setStructure(struct, "sw");
+                        }
+                        if (caseValid(x, y + 1)) {
+                            tiles[x][y + 1].setStructure(struct, "nw");
+                        }
+                        break;
+                    case "sw":
+                        tiles[x][y].setStructure(struct, structurePos);
+                        if (caseValid(x + 1, y)) {
+                            tiles[x + 1][y].setStructure(struct, "nw");
+                        }
+                        if (caseValid(x, y - 1)) {
+                            tiles[x][y - 1].setStructure(struct, "se");
+                        }
+                        if (caseValid(x + 1, y - 1)) {
+                            tiles[x + 1][y - 1].setStructure(struct, "ne");
+                        }
+                        break;
+                    case "se":
+                        tiles[x][y].setStructure(struct, structurePos);
+                        if (caseValid(x + 1, y + 1)) {
+                            tiles[x + 1][y + 1].setStructure(struct, "nw");
+                        }
+                        if (caseValid(x, y + 1)) {
+                            tiles[x][y + 1].setStructure(struct, "sw");
+                        }
+                        if (caseValid(x + 1, y)) {
+                            tiles[x + 1][y].setStructure(struct, "ne");
+                        }
+                        break;
+                }
+                return true;
+            }
             return false;
         }
-        // verifier la regle des deux cases d'écart entre ces colonies
-        if (suisLaregleColonie(x, y, structurePos)) {
-            System.out.printf("x: %d, y: %d\n", x, y);
-
-            switch (structurePos) {
-                case "nw":
-                    tiles[x][y].setStructure(struct, structurePos);
-                    if (caseValid(x - 1, y - 1)) {
-                        tiles[x - 1][y - 1].setStructure(struct, "se");
-                    }
-                    if (caseValid(x - 1, y)) {
-                        tiles[x - 1][y].setStructure(struct, "sw");
-                    }
-                    if (caseValid(x, y - 1)) {
-                        tiles[x][y - 1].setStructure(struct, "ne");
-                    }
-                    break;
-
-                case "ne":
-                    tiles[x][y].setStructure(struct, structurePos);
-                    if (caseValid(x - 1, y)) {
-                        tiles[x - 1][y].setStructure(struct, "se");
-                    }
-                    if (caseValid(x - 1, y + 1)) {
-                        tiles[x - 1][y + 1].setStructure(struct, "sw");
-                    }
-                    if (caseValid(x, y + 1)) {
-                        tiles[x][y + 1].setStructure(struct, "nw");
-                    }
-                    break;
-                case "sw":
-                    tiles[x][y].setStructure(struct, structurePos);
-                    if (caseValid(x + 1, y)) {
-                        tiles[x + 1][y].setStructure(struct, "nw");
-                    }
-                    if (caseValid(x, y - 1)) {
-                        tiles[x][y - 1].setStructure(struct, "se");
-                    }
-                    if (caseValid(x + 1, y - 1)) {
-                        tiles[x + 1][y - 1].setStructure(struct, "ne");
-                    }
-                    break;
-                case "se":
-                    tiles[x][y].setStructure(struct, structurePos);
-                    if (caseValid(x + 1, y + 1)) {
-                        tiles[x + 1][y + 1].setStructure(struct, "nw");
-                    }
-                    if (caseValid(x, y + 1)) {
-                        tiles[x][y + 1].setStructure(struct, "sw");
-                    }
-                    if (caseValid(x + 1, y)) {
-                        tiles[x + 1][y].setStructure(struct, "ne");
-                    }
-                    break;
-            }
-            return true;
-        }
         return false;
-
     }
 
     // Placer une nouvelle route sur le plateau
@@ -284,34 +285,30 @@ public class Board {
         System.out.println("x: " + x + " y: " + y + " pos: " + pos);
         switch (pos) {
             case "nw":
-                if (
-                    (caseValid(x - 1, y) || caseValid(x, y) || caseValid(x, y - 1)) &&
-                    (isEmptyS(x - 1, y, "nw") && isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne") && isEmptyS(x, y - 1, "nw"))
-                ) {
+                if ((caseValid(x - 1, y) || caseValid(x, y) || caseValid(x, y - 1)) &&
+                        (isEmptyS(x - 1, y, "nw") && isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne")
+                                && isEmptyS(x, y - 1, "nw"))) {
                     return true;
                 }
                 break;
             case "ne":
-                if (
-                    (caseValid(x - 1, y) || caseValid(x, y) || caseValid(x, y + 1)) &&
-                    (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x, y + 1, "ne") && isEmptyS(x - 1, y, "ne"))
-                ) {
+                if ((caseValid(x - 1, y) || caseValid(x, y) || caseValid(x, y + 1)) &&
+                        (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x, y + 1, "ne")
+                                && isEmptyS(x - 1, y, "ne"))) {
                     return true;
                 }
                 break;
             case "se":
-                if (
-                    (caseValid(x + 1, y) || caseValid(x, y) || caseValid(x, y + 1)) &&
-                    (isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne") && isEmptyS(x + 1, y, "se") && isEmptyS(x, y + 1, "se"))
-                ) {
+                if ((caseValid(x + 1, y) || caseValid(x, y) || caseValid(x, y + 1)) &&
+                        (isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne") && isEmptyS(x + 1, y, "se")
+                                && isEmptyS(x, y + 1, "se"))) {
                     return true;
                 }
                 break;
             case "sw":
-                if (
-                    (caseValid(x + 1, y) || caseValid(x, y) || caseValid(x, y - 1)) &&
-                    (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x + 1, y, "sw") && isEmptyS(x, y - 1, "sw"))
-                ) {
+                if ((caseValid(x + 1, y) || caseValid(x, y) || caseValid(x, y - 1)) &&
+                        (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x + 1, y, "sw")
+                                && isEmptyS(x, y - 1, "sw"))) {
                     return true;
                 }
                 break;
@@ -421,8 +418,9 @@ public class Board {
         return t;
     }
 
-    // place le voleurs sur les coordonnées mis en argument si ils sont différents
-    // des coordonnées actuel du voleur
+    // place le voleurs sur les coordonnées mis en argument si elles sont
+    // différentes
+    // des coordonnées actuelles du voleur
     public boolean setThief(int x, int y) {
         if (tiles[x][y].hasThief()) {
             System.out.println("le voleur est déjà sur cette case");
@@ -495,7 +493,8 @@ public class Board {
     }
 
     // trouver la plus longue route(optionnel)
-
+    // verifier si il y a une route du meme owner ou une colonie du meme owner a
+    // cote avant de placer une route
     // verifier si une localisation est un port
     // ajouter les port
     // mettre leurs ressources en random

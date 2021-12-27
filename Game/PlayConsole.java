@@ -42,5 +42,7 @@ public class PlayConsole {
             System.out.println(p.getName() + p.getHuman());
         }
 
+
+        sc.close();
     }
 }

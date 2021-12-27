@@ -68,10 +68,10 @@ public class ConsoleDisplay {
                     System.out.print("                  ");
                 }
             } else {
-                if(lastTile != null) {
+                if (lastTile != null) {
                     int neStructType;
-                    String neColor = "!";
-                    String neStructure = "!";
+                    String neColor = " ";
+                    String neStructure = " ";
                     if (lastTile.getStructure("ne") != null) {
                         neColor = lastTile.getStructure("ne").getOwner().getColor();
                         neStructType = lastTile.getStructure("ne").getType();
@@ -93,8 +93,6 @@ public class ConsoleDisplay {
                             case "blue":
                                 System.out.print(blue + neStructure + reset);
                                 break;
-                            default:
-                                System.out.print("neColor");
                         }
                     }
                     lastTile = null;
@@ -240,12 +238,22 @@ public class ConsoleDisplay {
                     }
                 }
                 if (tile.getType().equals("desert")) {
-                    System.out.print(bold + westColor + " ┃             ┃ ");
+                    if (tile.hasThief()) {
+                        System.out.print(bold + westColor + " ┃      T      ┃ ");
+                    } else
+                        System.out.print(bold + westColor + " ┃             ┃ ");
                 } else {
                     if (tile.getNumber() > 9) {
-                        System.out.print(bold + westColor + " ┃      " + tile.getNumber() + "     ┃ ");
+                        if (tile.hasThief()) {
+                            System.out.print(bold + westColor + " ┃     " + tile.getNumber() + " T    ┃ ");
+                        } else {
+                            System.out.print(bold + westColor + " ┃      " + tile.getNumber() + "     ┃ ");
+                        }
                     } else {
-                        System.out.print(bold + westColor + " ┃      " + tile.getNumber() + "      ┃ ");
+                        if (tile.hasThief()) {
+                            System.out.print(bold + westColor + " ┃     " + tile.getNumber() + " T     ┃ ");
+                        } else
+                            System.out.print(bold + westColor + " ┃      " + tile.getNumber() + "      ┃ ");
                     }
                 }
             } else {
@@ -289,16 +297,18 @@ public class ConsoleDisplay {
 
     // print the last row of roads
     private void printLastRowRoads(Board board) {
+        Tile lastTile = null;
         boolean firstNotNullTile = true;
         for (Tile tile : board.getTiles()[5]) {
             if (tile != null) {
+                lastTile = tile;
                 if (firstNotNullTile) {
                     System.out.print(" ");
                     firstNotNullTile = false;
                 }
                 int swStructType;
                 String swStructure = " ";
-                String swColor = "!";
+                String swColor = " ";
                 if (tile.getStructure("sw") != null) {
                     swColor = tile.getStructure("sw").getOwner().getColor();
                     if (tile.getStructure("sw") != null) {
@@ -342,6 +352,35 @@ public class ConsoleDisplay {
                     }
                 }
             } else {
+                if (lastTile != null) {
+                    int seStructType;
+                    String seColor = " ";
+                    String seStructure = " ";
+                    if (lastTile.getStructure("se") != null) {
+                        seColor = lastTile.getStructure("se").getOwner().getColor();
+                        seStructType = lastTile.getStructure("se").getType();
+                        if (seStructType == 0) {
+                            seStructure = colony;
+                        } else if (seStructType == 1) {
+                            seStructure = city;
+                        }
+                        switch (seColor) {
+                            case "red":
+                                System.out.print(red + seStructure + reset);
+                                break;
+                            case "green":
+                                System.out.print(green + seStructure + reset);
+                                break;
+                            case "yellow":
+                                System.out.print(yellow + seStructure + reset);
+                                break;
+                            case "blue":
+                                System.out.print(blue + seStructure + reset);
+                                break;
+                        }
+                    }
+                    lastTile = null;
+                }
                 System.out.print("                  ");
             }
         }
@@ -442,7 +481,10 @@ public class ConsoleDisplay {
         board.addStructure(4, 5, new Structure(1, new Player("Stanley", "red", true)), "nw");
         board.addStructure(5, 5, new Structure(1, new Player("Stanley", "red", true)), "nw");
         board.addStructure(5, 5, new Structure(1, new Player("Stanley", "red", true)), "se");
-        board.addStructure(4, 5, new Structure(1, new Player("Stanley", "red", true)), "se");
+        board.addStructure(5, 3, new Structure(1, new Player("Stanley", "red", true)), "sw");
+
+        // board.addStructure(4, 5, new Structure(1, new Player("Stanley", "red",
+        // true)), "se");
 
         c.printBoard(board);
     }
