@@ -73,6 +73,26 @@ public class Game {
         }
         return false;
     }
+    public boolean hasRessourcesForPlaceStructure(Player p){
+        //todo :dois verifier que la personne à les ressources suffisante pour placer une structure
+        return true;
+    }
+    public boolean hasRessourcesForRoad(Player p){
+        //todo :dois verifier que la personne à les ressources suffisante pour placer une route
+        return true;
+    }
+    public boolean hasRessourcesForUpgrade(Player p){
+        //todo :dois verifier que la personne à les ressources suffisante pour améliorer une colonie
+        return true;
+    }
+    public boolean hassRessourcesPickCard(Player p){
+        //todo :verifier si la personne à les ressoureces pour piocher une carte
+        return true;
+    }
+    public boolean PrendrePaiement(Player p,ResCard [] resCards){
+        //todo :enlever les ressources de la liste au joueur et les remettres dans le paquet commun
+        return true;
+    }
     public Player[] getPlayers(){
         return this.players;
     }

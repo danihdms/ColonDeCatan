@@ -37,4 +37,10 @@ public class Player {
     public int getV(){
         return this.nbVictoryPoints;
     }
+    public LinkedList<DevCard> getDevC(){
+        return this.devCards;
+    }
+    public LinkedList<ResCard> getResC(){
+        return this.resCards;
+    }
 }

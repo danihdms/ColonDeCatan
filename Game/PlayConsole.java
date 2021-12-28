@@ -59,6 +59,7 @@ public class PlayConsole {
                     String pos = sc.nextLine();
                     // verifier pos
                     while (!game.getBoard().addStructure(Integer.parseInt(x),Integer.parseInt(y), new Structure(0, p), pos)) {
+                        System.out.println("Vous ne respecter pas la règle de placement recommencé");
                         System.out.println("donnez la ligne ou placer votre colonie");
                         x = sc.nextLine();
                         // verifier x
@@ -80,6 +81,7 @@ public class PlayConsole {
                     pos = sc.nextLine();
                     // verifier pos
                     while (!game.getBoard().addRoad(Integer.parseInt(x), Integer.parseInt(y), new Road(p), pos)) {
+                        System.out.println("Vous ne respecter pas la règle de placement recommencé");
                         System.out.println("donnez la ligne ou placer votre route");
                         x = sc.nextLine();
                         // verifier x
@@ -101,16 +103,150 @@ public class PlayConsole {
                 }
             }
         }
-        
+        int turnP=0;
+        while(!game.endGame()){
+            if(turnP>=game.getPlayers().length){//pour recommencer au début de la file de joueur
+                turnP=0;
+            }
+            Player temp=game.getPlayers()[turnP];
+            //lancer le dé
+            int dice=game.throwDice();
+            if (dice != 7){
+                System.out.println("vous avez fait "+ dice);
+                game.getBoard().Distribution(dice);
+            } else {
+                System.out.println("vous avez fait un 7 veuillez deplacer le voleur");
+                System.out.println("donnez la ligne ");
+                String x=sc.nextLine();
+                //verifier x
+                System.out.println("donnez la colonne");
+                String y=sc.nextLine();
+                //verifier y
+                while(game.getBoard().setThief(Integer.parseInt(x), Integer.parseInt(y))){
+                    System.out.println("Vous ne respecter pas la règle de placement recommencé");
+                    System.out.println("donnez la ligne ");
+                    x=sc.nextLine();
+                    //verifier x
+                    System.out.println("donnez la colonne");
+                    y=sc.nextLine();
+                    //verifier y
+                }
+                //todo le vole des ressources plus si il faut enlever les ressources quand au dessus de 7;
+            }
+            //si humain
+            if(temp.getHuman()){
+                //placer structure
+                if (game.hasRessourcesForPlaceStructure(temp)){
+                    System.out.println("voulez vous [y/n]");
+                    String rep=sc.nextLine();
+                    
+                    if(rep.equals("y")){
+                        System.out.println("donnez la ligne ou placer votre colonie");
+                        String x = sc.nextLine();
+                        // verifier x
+                        System.out.println("donnez la colonne  ou placer votre colonie");
+                        String y = sc.nextLine();
+                        // verifier y
+                        System.out.println("Dans quel coin ?[ne/nw/se/sw]");
+                        String pos = sc.nextLine();
+                        // verifier pos
+                        while (!game.getBoard().addStructure(Integer.parseInt(x),Integer.parseInt(y), new Structure(0, temp), pos)) {
+                            System.out.println("Vous ne respecter pas la règle de placement recommencé");
+                            System.out.println("donnez la ligne ou placer votre colonie");
+                            x = sc.nextLine();
+                            // verifier x
+                            System.out.println("donnez la colonne  ou placer votre colonie");
+                            y = sc.nextLine();
+                            // verifier y
+                            System.out.println("Dans quel coin ?[ne/nw/se/sw]");
+                            pos = sc.nextLine();
+                            // verifier pos
+                        }
+                        display.printBoard(game.getBoard());
+                        //Todo enlevez les ressources
+                        //ajouter les point de victoires si besion
+                    }
+                    
+                }
+                //placer routes
+                if (game.hasRessourcesForRoad(temp)){
+                    System.out.println("voulez vous [y/n]");
+                    String rep=sc.nextLine();
+                    
+                    if(rep.equals("y")){
+                        System.out.println("donnez la ligne ou placer votre route");
+                        String x = sc.nextLine();
+                        // verifier x
+                        System.out.println("donnez la colonne  ou placer votre route");
+                        String y = sc.nextLine();
+                        // verifier y
+                        System.out.println("Dans quel coin ?[n/w/e/s]");
+                        String pos = sc.nextLine();
+                        // verifier pos
+                        while (!game.getBoard().addRoad(Integer.parseInt(x), Integer.parseInt(y), new Road(temp),pos)) {
+                            System.out.println("Vous ne respecter pas la règle de placement recommencé");
+                            System.out.println("donnez la ligne ou placer votre route");
+                            x = sc.nextLine();
+                            // verifier x
+                            System.out.println("donnez la colonne  ou placer votre route");
+                            y = sc.nextLine();
+                            // verifier y
+                            System.out.println("Dans quel coin ?[n/w/e/s]");
+                            pos = sc.nextLine();
+                            // verifier pos
+                        }
+                    display.printBoard(game.getBoard());
+                    //Todo enlevez les ressources
+                    //ajouter les point de victoires si besion
+                    }
+                    
+                }
+                //améliorer une colonies
+                if (game.hasRessourcesForUpgrade(temp)){
+                    System.out.println("voulez vous [y/n]");
+                    String rep=sc.nextLine();
+                    
+                    if(rep.equals("y")){
+                        System.out.println("donnez la ligne ou ameliorer votre colonie");
+                        String x = sc.nextLine();
+                        // verifier x
+                        System.out.println("donnez la colonne  ou ameliorer votre colonie");
+                        String y = sc.nextLine();
+                        // verifier y
+                        System.out.println("Dans quel coin ?[ne/nw/se/sw]");
+                        String pos = sc.nextLine();
+                        // verifier pos
+                        while (game.getBoard().getTiles()[Integer.parseInt(x)][Integer.parseInt(y)].getStructure(pos).getOwner()!=temp) {
+                            System.out.println("Cette colonie n'est pas à vous choisissez en une qui vous appartiens");
+                            System.out.println("donnez la ligne ou ameliorer votre colonie");
+                            x = sc.nextLine();
+                            // verifier x
+                            System.out.println("donnez la colonne  ou ameliorer votre colonie");
+                            y = sc.nextLine();
+                            // verifier y
+                            System.out.println("Dans quel coin ?[ne/nw/se/sw]");
+                            pos = sc.nextLine();
+                            // verifier pos
+                        }
+                        game.getBoard().getTiles()[Integer.parseInt(x)][Integer.parseInt(y)].getStructure(pos).setType(1);
+                        display.printBoard(game.getBoard());
+                        //Todo enlevez les ressources
+                        //ajouter les point de victoires si besion
+                    }
+                }
+                if(!temp.getDevC().isEmpty()){
+                    //voulez vous jouez une carte ?,laquelle,jouez la carte si oui
+                }
+                //Todo echange
+            } else {
+                //si c'est une ia
+            }
+            turnP++;
+        }
 
-        // Lancer le dé
-        // recevoir les resources ou appeler le voleur
-        // choisir quoi faire :
-        // tirer une carte en depensant ses resources
-        // la jouer si il peut ou la garder
-        // placer une colonie
-        // placer une route
-        // ameliorer une colonie
+        
+        
+        
 
         sc.close();
     }
