@@ -17,6 +17,7 @@ public class Game {
     private LinkedList<ResCard> resCards;
     private Board board;
     private Player[] players;
+    
 
     public Game(Player[] player) {
         this.devCards = addDevCards();
@@ -74,24 +75,66 @@ public class Game {
         return false;
     }
     public boolean hasRessourcesToPlaceStructure(Player p){
-        //todo :dois verifier que la personne à les ressources suffisante pour placer une structure
-        return true;
+        //verifier que la personne à les ressources suffisante pour placer une structure
+        
+        if(hasRessources(1,new ResCard("argile"), p) && hasRessources(1,new ResCard("bois"), p) && hasRessources(1,new ResCard("blé"), p) && hasRessources(1,new ResCard("laine") , p)){
+            return true;
+        }
+        return false;
     }
     public boolean hasRessourcesForRoad(Player p){
-        //todo :dois verifier que la personne à les ressources suffisante pour placer une route
-        return true;
+        //verifier que la personne à les ressources suffisante pour placer une route
+        
+        if(hasRessources(1, new ResCard("argile"), p) && hasRessources(1,new ResCard("bois"), p)){
+            return true;
+        }
+        return false;
     }
     public boolean hasRessourcesToUpgrade(Player p){
-        //todo :dois verifier que la personne à les ressources suffisante pour améliorer une colonie
-        return true;
+        //verifier que la personne à les ressources suffisante pour améliorer une colonie
+        if(hasRessources(2, new ResCard("blé"), p) && hasRessources(3, new ResCard("minerais"), p)){
+            return true;
+        }
+        return false;
     }
     public boolean hassRessourcesPickCard(Player p){
-        //todo :verifier si la personne à les ressoureces pour piocher une carte
+        //verifier si la personne à les ressoureces pour piocher une carte
+        
+        if(hasRessources(1, new ResCard("blé"), p) && hasRessources(1, new ResCard("minerais"), p) && hasRessources(1,new ResCard("laine"), p)){
+            return true;
+        }
+        return false;
+    }
+    public boolean PrendrePaiement(Player p,ResCard [] resCardss){
+        //enlever les ressources de la liste au joueur et les remettres dans le paquet commun
+        for(int i=0;i<resCardss.length;i++){
+            enleveRessources(resCardss[i],p);
+        }
         return true;
     }
-    public boolean PrendrePaiement(Player p,ResCard [] resCards){
-        //todo :enlever les ressources de la liste au joueur et les remettres dans le paquet commun
-        return true;
+    public boolean hasRessources(int n,ResCard r,Player p){
+        int count =0;
+        for (ResCard card :p.getResC()){
+            if(card.getType().equals(r.getType())){
+                count++;
+            }
+        }
+        if(count >= n){
+            return true;
+        } 
+        return false;
+    }
+    public void enleveRessources(ResCard r,Player p){
+        for(int i=0;i<p.getResC().size();i++){
+            if(p.getResC().get(i).getType().equals(r.getType())){
+                p.getResC().remove(i);
+                this.resCards.push(r);
+                break;
+            }
+        }
+    }
+    public void giveVictoryP(Player p){
+        p.setV(p.getV()+1);
     }
     public Player[] getPlayers(){
         return this.players;

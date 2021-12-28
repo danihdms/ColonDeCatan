@@ -37,6 +37,9 @@ public class Player {
     public int getV(){
         return this.nbVictoryPoints;
     }
+    public void setV(int n){
+        this.nbVictoryPoints=n;
+    }
     public LinkedList<DevCard> getDevC(){
         return this.devCards;
     }
