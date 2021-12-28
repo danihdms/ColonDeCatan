@@ -5,10 +5,6 @@ import java.util.Collections;
 
 public class Board {
     private Tile[][] tiles;
-    // private Structure[][] structures;
-    // private Road[][] roads;
-    private int thiefCoordX;
-    private int thiefCoordY;
 
     public Board() {
         tiles = new Tile[7][7];

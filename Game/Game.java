@@ -73,7 +73,7 @@ public class Game {
         }
         return false;
     }
-    public boolean hasRessourcesForPlaceStructure(Player p){
+    public boolean hasRessourcesToPlaceStructure(Player p){
         //todo :dois verifier que la personne à les ressources suffisante pour placer une structure
         return true;
     }
@@ -81,7 +81,7 @@ public class Game {
         //todo :dois verifier que la personne à les ressources suffisante pour placer une route
         return true;
     }
-    public boolean hasRessourcesForUpgrade(Player p){
+    public boolean hasRessourcesToUpgrade(Player p){
         //todo :dois verifier que la personne à les ressources suffisante pour améliorer une colonie
         return true;
     }

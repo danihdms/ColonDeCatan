@@ -43,10 +43,11 @@
 
 
 ### Repartition
+
 #### Hugo
  - Déroulé du jeu
  - Implementation des fonctions necessaires
+ 
 #### Daniel
- - Implementationd e l'intelligence artificielle
+ - Implementation de l'intelligence artificielle
  - Completion des fonctionnalités des cartes de jeu
- - Affichage des coordonnées sur le plateau

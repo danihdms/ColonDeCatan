@@ -1,9 +1,6 @@
 package Display;
 
 import Game.Board;
-import Game.Player;
-import Game.Road;
-import Game.Structure;
 import Game.Tile;
 
 public class ConsoleDisplay {
@@ -36,16 +33,16 @@ public class ConsoleDisplay {
                     }
                     switch (nwColor) {
                         case "red":
-                            nwColor = red + nwStructure + reset;
+                            nwColor = bold + red + nwStructure + reset;
                             break;
                         case "green":
-                            nwColor = green + nwStructure + reset;
+                            nwColor =  bold + green + nwStructure + reset;
                             break;
                         case "yellow":
-                            nwColor = yellow + nwStructure + reset;
+                            nwColor =  bold + yellow + nwStructure + reset;
                             break;
                         case "blue":
-                            nwColor = blue + nwStructure + reset;
+                            nwColor =  bold + blue + nwStructure + reset;
                             break;
                     }
                 }
@@ -113,20 +110,20 @@ public class ConsoleDisplay {
                     westColor = tile.getRoad("w").getOwner().getColor();
                     switch (westColor) {
                         case "red":
-                            westColor = red + "║" + reset;
+                            westColor = bold + red + "║" + reset;
                             break;
                         case "green":
-                            westColor = green + "║" + reset;
+                            westColor = bold + green + "║" + reset;
                             break;
                         case "yellow":
-                            westColor = yellow + "║" + reset;
+                            westColor = bold + yellow + "║" + reset;
                             break;
                         case "blue":
-                            westColor = blue + "║" + reset;
+                            westColor = bold + blue + "║" + reset;
                             break;
                     }
                 }
-                System.out.print(bold + westColor + " ┏━━━━━━━━━━━━━┓ ");
+                System.out.print(westColor + bold + " ┏━━━━━━━━━━━━━┓ ");
 
             } else {
                 System.out.print("                  ");
@@ -144,20 +141,20 @@ public class ConsoleDisplay {
                     westColor = tile.getRoad("w").getOwner().getColor();
                     switch (westColor) {
                         case "red":
-                            westColor = red + "║" + reset;
+                            westColor = bold + red + "║" + reset;
                             break;
                         case "green":
-                            westColor = green + "║" + reset;
+                            westColor = bold + green + "║" + reset;
                             break;
                         case "yellow":
-                            westColor = yellow + "║" + reset;
+                            westColor = bold + yellow + "║" + reset;
                             break;
                         case "blue":
-                            westColor = blue + "║" + reset;
+                            westColor = bold + blue + "║" + reset;
                             break;
                     }
                 }
-                System.out.print(bold + westColor + " ┃             ┃ ");
+                System.out.print(westColor + bold + " ┃             ┃ ");
             } else {
                 System.out.print("                  ");
             }
@@ -177,37 +174,37 @@ public class ConsoleDisplay {
                     westColor = tile.getRoad("w").getOwner().getColor();
                     switch (westColor) {
                         case "red":
-                            westColor = red + "║" + reset;
+                            westColor = bold + red + "║" + reset;
                             break;
                         case "green":
-                            westColor = green + "║" + reset;
+                            westColor = bold + green + "║" + reset;
                             break;
                         case "yellow":
-                            westColor = yellow + "║" + reset;
+                            westColor = bold + yellow + "║" + reset;
                             break;
                         case "blue":
-                            westColor = blue + "║" + reset;
+                            westColor = bold + blue + "║" + reset;
                             break;
                     }
                 }
                 switch (tile.getType()) {
                     case "desert":
-                        System.out.print(bold + westColor + " ┃    Desert   ┃ ");
+                        System.out.print(westColor + bold + " ┃    Desert   ┃ ");
                         break;
                     case "colline":
-                        System.out.print(bold + westColor + " ┃   Colline   ┃ ");
+                        System.out.print(westColor + bold + " ┃   Colline   ┃ ");
                         break;
                     case "plaine":
-                        System.out.print(bold + westColor + " ┃    Plaine   ┃ ");
+                        System.out.print(westColor + bold + " ┃    Plaine   ┃ ");
                         break;
                     case "foret":
-                        System.out.print(bold + westColor + " ┃    Foret    ┃ ");
+                        System.out.print(westColor + bold + " ┃    Foret    ┃ ");
                         break;
                     case "champ":
-                        System.out.print(bold + westColor + " ┃    Champ    ┃ ");
+                        System.out.print(westColor + bold + " ┃    Champ    ┃ ");
                         break;
                     case "montagne":
-                        System.out.print(bold + westColor + " ┃   Montagne  ┃ ");
+                        System.out.print(westColor + bold + " ┃   Montagne  ┃ ");
                         break;
                 }
             }
@@ -224,16 +221,16 @@ public class ConsoleDisplay {
                     westColor = tile.getRoad("w").getOwner().getColor();
                     switch (westColor) {
                         case "red":
-                            westColor = red + "║" + reset;
+                            westColor = bold + red + "║" + reset;
                             break;
                         case "green":
-                            westColor = green + "║" + reset;
+                            westColor = bold + green + "║" + reset;
                             break;
                         case "yellow":
-                            westColor = yellow + "║" + reset;
+                            westColor = bold + yellow + "║" + reset;
                             break;
                         case "blue":
-                            westColor = blue + "║" + reset;
+                            westColor = bold + blue + "║" + reset;
                             break;
                     }
                 }
@@ -274,16 +271,16 @@ public class ConsoleDisplay {
                     westColor = tile.getRoad("w").getOwner().getColor();
                     switch (westColor) {
                         case "red":
-                            westColor = red + "║" + reset;
+                            westColor = bold + red + "║" + reset;
                             break;
                         case "green":
-                            westColor = green + "║" + reset;
+                            westColor = bold + green + "║" + reset;
                             break;
                         case "yellow":
-                            westColor = yellow + "║" + reset;
+                            westColor = bold + yellow + "║" + reset;
                             break;
                         case "blue":
-                            westColor = blue + "║" + reset;
+                            westColor = bold + blue + "║" + reset;
                             break;
                     }
                 }
@@ -321,16 +318,16 @@ public class ConsoleDisplay {
                         }
                         switch (swColor) {
                             case "red":
-                                swColor = red + swStructure + reset;
+                                swColor = bold + red + swStructure + reset;
                                 break;
                             case "green":
-                                swColor = green + swStructure + reset;
+                                swColor = bold + green + swStructure + reset;
                                 break;
                             case "yellow":
-                                swColor = yellow + swStructure + reset;
+                                swColor = bold + yellow + swStructure + reset;
                                 break;
                             case "blue":
-                                swColor = blue + swStructure + reset;
+                                swColor = bold + blue + swStructure + reset;
                                 break;
                         }
                     }
@@ -368,16 +365,16 @@ public class ConsoleDisplay {
                         }
                         switch (seColor) {
                             case "red":
-                                System.out.print(red + seStructure + reset);
+                                System.out.print(bold + red + seStructure + reset);
                                 break;
                             case "green":
-                                System.out.print(green + seStructure + reset);
+                                System.out.print(bold + green + seStructure + reset);
                                 break;
                             case "yellow":
-                                System.out.print(yellow + seStructure + reset);
+                                System.out.print(bold + yellow + seStructure + reset);
                                 break;
                             case "blue":
-                                System.out.print(blue + seStructure + reset);
+                                System.out.print(bold + blue + seStructure + reset);
                                 break;
                         }
                     }
@@ -400,16 +397,16 @@ public class ConsoleDisplay {
                         eastColor = board.getTiles()[indexOfLine][i].getRoad("e").getOwner().getColor();
                         switch (eastColor) {
                             case "red":
-                                eastColor = red + "║" + reset;
+                                eastColor = bold + red + "║" + reset;
                                 break;
                             case "green":
-                                eastColor = green + "║" + reset;
+                                eastColor = bold + green + "║" + reset;
                                 break;
                             case "yellow":
-                                eastColor = yellow + "║" + reset;
+                                eastColor = bold + yellow + "║" + reset;
                                 break;
                             case "blue":
-                                eastColor = blue + "║" + reset;
+                                eastColor = bold + blue + "║" + reset;
                                 break;
                         }
                     }
@@ -420,77 +417,44 @@ public class ConsoleDisplay {
     }
 
     public void printBoard(Board board) {
+        System.out.print("                  ");
+        System.out.print("          1        ");
+        System.out.print("          2        ");
+        System.out.print("          3        ");
+        System.out.print("          4        ");
+        System.out.print("          5        ");
         for (int i = 0; i < board.getTiles().length; i++) {
             printLastColRoads(board, i);
             printHRoads(board, i);
 
+            System.out.print(" ");
             printLastColRoads(board, i);
             printTopTile(board, i);
 
+            System.out.print(" ");
             printLastColRoads(board, i);
             printOtherPartTile(board, i);
 
+            if(i > 0 && i < 6) System.out.print(i);
             printLastColRoads(board, i);
             printTypeOnTile(board, i);
 
+            System.out.print(" ");
             printLastColRoads(board, i);
             printNumberOnTile(board, i);
 
+            System.out.print(" ");
             printLastColRoads(board, i);
             printOtherPartTile(board, i);
 
+            System.out.print(" ");
             printLastColRoads(board, i);
             printBottomTile(board, i);
+            System.out.print(" ");
             if (i == 5) {
                 printLastRowRoads(board);
             }
         }
         System.out.println();
     }
-
-    public static void main(String[] args) {
-        Board board = new Board();
-        ConsoleDisplay c = new ConsoleDisplay();
-        System.out.println(board.addRoad(1, 1, new Road(new Player("Stanley", "blue", true)), "n"));
-
-        Player p = new Player("Stanley", "red", true);
-
-        board.addStructure(1, 2, new Structure(0, p), "nw");
-        board.addStructure(1, 2, new Structure(1, p), "ne");
-        board.addStructure(2, 3, new Structure(1, p), "nw");
-        board.addStructure(3, 4, new Structure(0, p), "nw");
-        board.addStructure(4, 5, new Structure(1, p), "nw");
-        board.addStructure(5, 5, new Structure(1, p), "nw");
-        board.addStructure(5, 5, new Structure(1, p), "se");
-        board.addStructure(5, 3, new Structure(1, p), "sw");
-        board.addRoad(1, 2, new Road(p), "n");
-        board.addRoad(1, 2, new Road(p), "w");
-        board.addRoad(1, 2, new Road(p), "e");
-        board.addRoad(1, 3, new Road(p), "n");
-        board.addRoad(2, 1, new Road(p), "n");
-        board.addRoad(2, 2, new Road(p), "n");
-        board.addRoad(2, 3, new Road(p), "n");
-        board.addRoad(2, 4, new Road(p), "n");
-        board.addRoad(3, 1, new Road(p), "n");
-        board.addRoad(3, 2, new Road(p), "n");
-        board.addRoad(3, 3, new Road(p), "n");
-        board.addRoad(3, 4, new Road(p), "n");
-        board.addRoad(3, 5, new Road(p), "n");
-        board.addRoad(4, 2, new Road(p), "n");
-        board.addRoad(4, 3, new Road(p), "n");
-        board.addRoad(4, 4, new Road(p), "n");
-        board.addRoad(4, 5, new Road(p), "n");
-        board.addRoad(5, 3, new Road(p), "n");
-        board.addRoad(5, 3, new Road(p), "s");
-        board.addRoad(5, 4, new Road(p), "n");
-        board.addRoad(5, 4, new Road(p), "s");
-        board.addRoad(5, 5, new Road(p), "n");
-        board.addRoad(5, 5, new Road(p), "s");
-
-        // board.addStructure(4, 5, new Structure(1, new Player("Stanley", "red",
-        // true)), "se");
-
-        c.printBoard(board);
-    }
-
 }
