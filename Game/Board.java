@@ -115,6 +115,7 @@ public class Board {
 
     // Placer une nouvelle structure sur la plateau
     public boolean addStructure(int x, int y, Structure struct, String structurePos) {
+        System.out.printf("x: %d, y: %d pos: %s\n", x, y, structurePos);
         if (caseValid(x, y)) {
             if (tiles[x][y].getStructure(structurePos) != null) {
                 System.out.println("case déjà occupée");
@@ -122,7 +123,6 @@ public class Board {
             }
             // verifier la regle des deux cases d'écart entre ces colonies
             if (suisLaregleColonie(x, y, structurePos)) {
-                System.out.printf("x: %d, y: %d\n", x, y);
 
                 switch (structurePos) {
                     case "nw":
@@ -184,6 +184,7 @@ public class Board {
 
     // Placer une nouvelle route sur le plateau
     public boolean addRoad(int x, int y, Road r, String roadPos) {
+        System.out.printf("x: %d, y: %d, pos: %s\n", x, y, roadPos);
         if (caseValid(x, y)) {
 
             if (suisLaregleRoute(x, y, roadPos, r.getOwner())) {
@@ -370,7 +371,7 @@ public class Board {
 
                 for (int i = 1; i < 6; i++) {
                     for (int j = 1; j < 6; j++) {
-                        if (tiles[i][j].getNumber() == x) {
+                        if (!tiles[i][j].getType().equals("desert") && tiles[i][j].getNumber() == x) {
                             t[0] = tiles[i][j];
 
                         }
@@ -378,11 +379,11 @@ public class Board {
                 }
                 return t;
             } else {
-                Tile[] t = new Tile[1];
+                Tile[] t = new Tile[2];
                 int count = 0;
                 for (int i = 1; i < 6; i++) {
                     for (int j = 1; j < 6; j++) {
-                        if (tiles[i][j].getNumber() == x) {
+                        if (!tiles[i][j].getType().equals("desert") && tiles[i][j].getNumber() == x) {
                             t[count] = tiles[i][j];
                             count++;
 

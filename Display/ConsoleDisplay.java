@@ -1,6 +1,9 @@
 package Display;
 
 import Game.Board;
+import Game.Player;
+import Game.Road;
+import Game.Structure;
 import Game.Tile;
 
 public class ConsoleDisplay {
@@ -17,6 +20,7 @@ public class ConsoleDisplay {
 
     private void printHRoads(Board board, int indexOfLine) {
         Tile lastTile = null;
+        int i = 0;
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 lastTile = tile;
@@ -36,13 +40,13 @@ public class ConsoleDisplay {
                             nwColor = bold + red + nwStructure + reset;
                             break;
                         case "green":
-                            nwColor =  bold + green + nwStructure + reset;
+                            nwColor = bold + green + nwStructure + reset;
                             break;
                         case "yellow":
-                            nwColor =  bold + yellow + nwStructure + reset;
+                            nwColor = bold + yellow + nwStructure + reset;
                             break;
                         case "blue":
-                            nwColor =  bold + blue + nwStructure + reset;
+                            nwColor = bold + blue + nwStructure + reset;
                             break;
                     }
                 }
@@ -60,6 +64,10 @@ public class ConsoleDisplay {
                         case "yellow":
                             System.out.print(nwColor + yellow + bold + " ═══════════════ " + reset);
                             break;
+                    }
+                    if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
+                            || (indexOfLine == 4 && i == 5) || (indexOfLine == 5 && i == 5)) {
+                        printLastColRoads(board, indexOfLine);
                     }
                 } else {
                     System.out.print(nwColor + "                 ");
@@ -96,6 +104,7 @@ public class ConsoleDisplay {
                 }
                 System.out.print("                  ");
             }
+            i++;
         }
         System.out.println();
     }
@@ -103,6 +112,7 @@ public class ConsoleDisplay {
     // print the top of the tiles
 
     private void printTopTile(Board board, int indexOfLine) {
+        int i = 0;
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
@@ -124,16 +134,21 @@ public class ConsoleDisplay {
                     }
                 }
                 System.out.print(westColor + bold + " ┏━━━━━━━━━━━━━┓ ");
-
+                if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
+                        || (indexOfLine == 4 && i == 5) || (indexOfLine == 5 && i == 5)) {
+                    printLastColRoads(board, indexOfLine);
+                }
             } else {
                 System.out.print("                  ");
             }
+            i++;
         }
         System.out.println();
     }
 
     // print other tile lines
     private void printOtherPartTile(Board board, int indexOfLine) {
+        int i = 0;
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
@@ -155,9 +170,14 @@ public class ConsoleDisplay {
                     }
                 }
                 System.out.print(westColor + bold + " ┃             ┃ ");
+                if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
+                        || (indexOfLine == 4 && i == 5) || (indexOfLine == 5 && i == 5)) {
+                    printLastColRoads(board, indexOfLine);
+                }
             } else {
                 System.out.print("                  ");
             }
+            i++;
         }
         System.out.println();
     }
@@ -165,6 +185,7 @@ public class ConsoleDisplay {
     // print the middle of the tiles, with the name of the land
     // desert, colline, plaine, foret, champ, montagne
     private void printTypeOnTile(Board board, int indexOfLine) {
+        int i = 0;
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile == null) {
                 System.out.print("                  ");
@@ -207,13 +228,19 @@ public class ConsoleDisplay {
                         System.out.print(westColor + bold + " ┃   Montagne  ┃ ");
                         break;
                 }
+                if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
+                        || (indexOfLine == 4 && i == 5) || (indexOfLine == 5 && i == 5)) {
+                    printLastColRoads(board, indexOfLine);
+                }
             }
+            i++;
         }
         System.out.println();
     }
 
     // print the line with the number of the tile
     private void printNumberOnTile(Board board, int indexOfLine) {
+        int i = 0;
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
@@ -253,17 +280,22 @@ public class ConsoleDisplay {
                             System.out.print(bold + westColor + " ┃      " + tile.getNumber() + "      ┃ ");
                     }
                 }
+                if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
+                        || (indexOfLine == 4 && i == 5) || (indexOfLine == 5 && i == 5)) {
+                    printLastColRoads(board, indexOfLine);
+                }
             } else {
                 System.out.print("                  ");
 
             }
-
+            i++;
         }
         System.out.println();
     }
 
     // print the bottom of the tiles
     private void printBottomTile(Board board, int indexOfLine) {
+        int i = 0;
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
@@ -285,9 +317,14 @@ public class ConsoleDisplay {
                     }
                 }
                 System.out.print(bold + westColor + " ┗━━━━━━━━━━━━━┛ ");
+                if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
+                        || (indexOfLine == 4 && i == 5) || (indexOfLine == 5 && i == 5)) {
+                    printLastColRoads(board, indexOfLine);
+                }
             } else {
                 System.out.print("                  ");
             }
+            i++;
         }
         System.out.println();
     }
@@ -424,31 +461,25 @@ public class ConsoleDisplay {
         System.out.print("          4        ");
         System.out.print("          5        ");
         for (int i = 0; i < board.getTiles().length; i++) {
-            printLastColRoads(board, i);
             printHRoads(board, i);
 
             System.out.print(" ");
-            printLastColRoads(board, i);
             printTopTile(board, i);
 
             System.out.print(" ");
-            printLastColRoads(board, i);
             printOtherPartTile(board, i);
 
-            if(i > 0 && i < 6) System.out.print(i);
-            printLastColRoads(board, i);
+            if (i > 0 && i < 6)
+                System.out.print(i);
             printTypeOnTile(board, i);
 
             System.out.print(" ");
-            printLastColRoads(board, i);
             printNumberOnTile(board, i);
 
             System.out.print(" ");
-            printLastColRoads(board, i);
             printOtherPartTile(board, i);
 
             System.out.print(" ");
-            printLastColRoads(board, i);
             printBottomTile(board, i);
             System.out.print(" ");
             if (i == 5) {
@@ -456,5 +487,49 @@ public class ConsoleDisplay {
             }
         }
         System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Board board = new Board();
+        ConsoleDisplay c = new ConsoleDisplay();
+        Player p = new Player("Stanley", "red", true);
+        System.out.println(board.addRoad(1, 1, new Road(new Player("Stanley", "blue", true)), "n"));
+        board.addStructure(1, 2, new Structure(0, p), "nw");
+        board.addStructure(1, 2, new Structure(1, p), "ne");
+        board.addStructure(2, 3, new Structure(1, p), "nw");
+        board.addStructure(3, 4, new Structure(0, p), "nw");
+        board.addStructure(4, 5, new Structure(1, p), "nw");
+        board.addStructure(5, 5, new Structure(1, p), "nw");
+        board.addStructure(5, 5, new Structure(1, p), "se");
+        board.addStructure(5, 3, new Structure(1, p), "sw");
+        board.addRoad(1, 2, new Road(p), "n");
+        board.addRoad(1, 2, new Road(p), "w");
+        board.addRoad(1, 2, new Road(p), "e");
+        board.addRoad(1, 3, new Road(p), "n");
+        board.addRoad(2, 1, new Road(p), "n");
+        board.addRoad(2, 2, new Road(p), "n");
+        board.addRoad(2, 3, new Road(p), "n");
+        board.addRoad(2, 4, new Road(p), "n");
+        board.addRoad(3, 1, new Road(p), "n");
+        board.addRoad(3, 2, new Road(p), "n");
+        board.addRoad(3, 3, new Road(p), "n");
+        board.addRoad(3, 4, new Road(p), "n");
+        board.addRoad(3, 5, new Road(p), "e");
+        board.addRoad(4, 2, new Road(p), "n");
+        board.addRoad(4, 3, new Road(p), "n");
+        board.addRoad(4, 4, new Road(p), "n");
+        board.addRoad(4, 5, new Road(p), "e");
+        board.addRoad(5, 3, new Road(p), "n");
+        board.addRoad(5, 3, new Road(p), "s");
+        board.addRoad(5, 4, new Road(p), "n");
+        board.addRoad(5, 4, new Road(p), "s");
+        board.addRoad(5, 5, new Road(p), "n");
+        board.addRoad(5, 5, new Road(p), "s");
+        board.addRoad(5, 5, new Road(p), "e");
+
+        // board.addStructure(4, 5, new Structure(1, new Player("Stanley", "red",
+        // true)), "se");
+
+        c.printBoard(board);
     }
 }

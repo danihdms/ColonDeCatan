@@ -6,7 +6,7 @@
     4. echange:personnage/banque/port
     5. améliorer un élément
     6. compteur de point
-    7. compteur de ressources:séparé
+    7. compteur de ressources:séparéà
     8. compteur de carte
     9. affichage regle
     10. voleurs 

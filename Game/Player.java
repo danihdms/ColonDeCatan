@@ -1,4 +1,6 @@
 package Game;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.LinkedList;
 
 import Cards.DevCard;
@@ -15,12 +17,17 @@ public class Player {
     public int nbRoads = 15;
     private int nbVictoryPoints = 0;
 
+    private LinkedList<Integer[]> structures;
+    // Only useful for AI since it makes random moves.
+
     public Player(String name, String color, boolean human){
         this.name = name;
         this.color = color;
         this.devCards = new LinkedList<DevCard>();
         this.resCards = new LinkedList<ResCard>();
         this.human = human;
+
+        this.structures = new LinkedList<>();
     }
 
     public String getColor(){
@@ -45,5 +52,21 @@ public class Player {
     }
     public LinkedList<ResCard> getResC(){
         return this.resCards;
+    }
+
+    public int getNbSettlements(){
+        return nbSettelments;
+    }
+
+    public int getNbCities(){
+        return nbSettelments;
+    }
+
+    public int getNbRoads(){
+        return this.nbRoads;
+    }
+
+    public LinkedList<Integer[]> getStructures(){
+        return this.structures;
     }
 }

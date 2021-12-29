@@ -17,7 +17,6 @@ public class Game {
     private LinkedList<ResCard> resCards;
     private Board board;
     private Player[] players;
-    
 
     public Game(Player[] player) {
         this.devCards = addDevCards();
@@ -61,94 +60,150 @@ public class Game {
         }
         return resCards;
     }
-    public int throwDice(){
-        Random r=new Random();
-        int x=r.nextInt(11)+2;//crée un nombre entre 2 et 12
+
+    public int throwDice() {
+        Random r = new Random();
+        int x = r.nextInt(13) + 2;// crée un nombre entre 2 et 12
         return x;
     }
-    public boolean endGame(){
-        for (Player p : this.players){
-            if (p.getV() >= 10){
+
+    public boolean endGame() {
+        for (Player p : this.players) {
+            if (p.getV() >= 10) {
                 return true;
             }
         }
         return false;
     }
-    public boolean hasRessourcesToPlaceStructure(Player p){
-        //verifier que la personne à les ressources suffisante pour placer une structure
-        
-        if(hasRessources(1,new ResCard("argile"), p) && hasRessources(1,new ResCard("bois"), p) && hasRessources(1,new ResCard("blé"), p) && hasRessources(1,new ResCard("laine") , p)){
+
+    public boolean hasRessourcesToPlaceStructure(Player p) {
+        // verifier que la personne à les ressources suffisante pour placer une
+        // structure
+
+        if (hasRessources(1, new ResCard("argile"), p) && hasRessources(1, new ResCard("bois"), p)
+                && hasRessources(1, new ResCard("blé"), p) && hasRessources(1, new ResCard("laine"), p)) {
             return true;
         }
         return false;
     }
-    public boolean hasRessourcesForRoad(Player p){
-        //verifier que la personne à les ressources suffisante pour placer une route
-        
-        if(hasRessources(1, new ResCard("argile"), p) && hasRessources(1,new ResCard("bois"), p)){
+
+    public boolean hasRessourcesForRoad(Player p) {
+        // verifier que la personne à les ressources suffisante pour placer une route
+
+        if (hasRessources(1, new ResCard("argile"), p) && hasRessources(1, new ResCard("bois"), p)) {
             return true;
         }
         return false;
     }
-    public boolean hasRessourcesToUpgrade(Player p){
-        //verifier que la personne à les ressources suffisante pour améliorer une colonie
-        if(hasRessources(2, new ResCard("blé"), p) && hasRessources(3, new ResCard("minerais"), p)){
+
+    public boolean hasRessourcesToUpgrade(Player p) {
+        // verifier que la personne à les ressources suffisante pour améliorer une
+        // colonie
+        if (hasRessources(2, new ResCard("blé"), p) && hasRessources(3, new ResCard("minerais"), p)) {
             return true;
         }
         return false;
     }
-    public boolean hassRessourcesPickCard(Player p){
-        //verifier si la personne à les ressoureces pour piocher une carte
-        
-        if(hasRessources(1, new ResCard("blé"), p) && hasRessources(1, new ResCard("minerais"), p) && hasRessources(1,new ResCard("laine"), p)){
+
+    public boolean hassRessourcesPickCard(Player p) {
+        // verifier si la personne à les ressoureces pour piocher une carte
+
+        if (hasRessources(1, new ResCard("blé"), p) && hasRessources(1, new ResCard("minerais"), p)
+                && hasRessources(1, new ResCard("laine"), p)) {
             return true;
         }
         return false;
     }
-    public boolean PrendrePaiement(Player p,ResCard [] resCardss){
-        //enlever les ressources de la liste au joueur et les remettres dans le paquet commun
-        for(int i=0;i<resCardss.length;i++){
-            enleveRessources(resCardss[i],p);
+
+    public boolean PrendrePaiement(Player p, ResCard[] resCardss) {
+        // enlever les ressources de la liste au joueur et les remettres dans le paquet
+        // commun
+        for (int i = 0; i < resCardss.length; i++) {
+            enleveRessources(resCardss[i], p);
         }
         return true;
     }
-    public boolean hasRessources(int n,ResCard r,Player p){
-        int count =0;
-        for (ResCard card :p.getResC()){
-            if(card.getType().equals(r.getType())){
+
+    public boolean hasRessources(int n, ResCard r, Player p) {
+        int count = 0;
+        for (ResCard card : p.getResC()) {
+            if (card.getType().equals(r.getType())) {
                 count++;
             }
         }
-        if(count >= n){
+        if (count >= n) {
             return true;
-        } 
+        }
         return false;
     }
-    public void enleveRessources(ResCard r,Player p){
-        for(int i=0;i<p.getResC().size();i++){
-            if(p.getResC().get(i).getType().equals(r.getType())){
+
+    public void enleveRessources(ResCard r, Player p) {
+        for (int i = 0; i < p.getResC().size(); i++) {
+            if (p.getResC().get(i).getType().equals(r.getType())) {
                 p.getResC().remove(i);
                 this.resCards.push(r);
                 break;
             }
         }
     }
-    public void giveVictoryP(Player p){
-        p.setV(p.getV()+1);
+
+    public void giveVictoryP(Player p) {
+        p.setV(p.getV() + 1);
     }
-    public Player[] getPlayers(){
+
+    public void addAIStructure(Player player) {
+        String[] pos = { "ne", "se", "nw", "sw" };
+        int x, y, z;
+        do {
+            Random r = new Random();
+            x = r.nextInt(6) + 1;
+            y = r.nextInt(6) + 1;
+            z = r.nextInt(4);
+            Integer[] coordinates = {x, y, z};
+            player.getStructures().add(coordinates);
+        } while (!board.addStructure(x, y, new Structure(0, player), pos[z]));
+    }
+
+    public void addAIRoad(Player player) {
+        int x, y, z;
+        String[] pos = { "n", "s", "w", "e" };
+        do {
+            Random r = new Random();
+            x = r.nextInt(6) + 1;
+            y = r.nextInt(6) + 1;
+            z = r.nextInt(4);
+        } while (!board.addRoad(x, y, new Road(player), pos[z]));
+    }
+
+    public Integer[] getCoordinatesOfStructure(Player player){
+        if(!player.getStructures().isEmpty()){
+            return player.getStructures().removeFirst();
+        }
+        throw new IllegalStateException();
+    }
+
+    public void setAIThief() {
+        int x, y;
+        do {
+            Random r = new Random();
+            x = r.nextInt(6) + 1;
+            y = r.nextInt(6) + 1;
+        } while (!board.setThief(x, y));
+    }
+
+    public Player[] getPlayers() {
         return this.players;
     }
 
-    public Board getBoard(){
+    public Board getBoard() {
         return this.board;
     }
 
-    public LinkedList<DevCard> getDevCards(){
+    public LinkedList<DevCard> getDevCards() {
         return this.devCards;
     }
 
-    public LinkedList<ResCard> getResCards(){
+    public LinkedList<ResCard> getResCards() {
         return this.resCards;
     }
 }
