@@ -8,13 +8,7 @@ public class Structure {
         this.owner = owner;
     }
 
-    public void giveRessources(String resType){
-        if(type == 1) {
-        //getOwner().setNumberResourcesType(resType,getOwner().getNumberResourecesType(resType)+2);
-        } else if (type == 0){
-        //getOwner().setNumberResourcesType(resType,getOwner().getNumberResourecesType(resType)+1);
-        }
-    }
+    
     
     public void setOwner(Player p) {
         if (owner == null) {

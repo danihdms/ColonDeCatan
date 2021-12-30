@@ -66,6 +66,11 @@ public class Game {
         int x = r.nextInt(13) + 2;// crée un nombre entre 2 et 12
         return x;
     }
+    public int getRandom(int range){
+        Random r=new Random();
+        int x=r.nextInt(range);
+        return x;
+    }
 
     public boolean endGame() {
         for (Player p : this.players) {
@@ -146,11 +151,50 @@ public class Game {
             }
         }
     }
+    public void giveRessources(ResCard r,Player p){
+        for (int i = 0; i < this.resCards.size(); i++) {
+            if (this.resCards.get(i).getType().equals(r.getType())) {
+                p.getResC().push(r);
+                this.resCards.remove(i);
+                break;
+            }
+        }
+    }
+    public boolean Distribution(int x) {
+        if (x < 13 && x > 1) {
+            Tile[] temp = board.getTileByNumber(x);
+            for (int i = 0; i < temp.length; i++) {
+                if (temp[i] != null && !temp[i].hasThief()) {
+                    Structure[] Stemp = board.getListColonies(temp[i]);
+                    for (int j = 0; j < Stemp.length; j++) {
+                        if (Stemp[j] != null) {
+                            if (Stemp[j].getType() ==0){
+                                giveRessources(new ResCard(temp[i].getType()), Stemp[i].getOwner());
+                            }
+                            if(Stemp[j].getType() == 1){
+                                giveRessources(new ResCard(temp[i].getType()), Stemp[i].getOwner());
+                                giveRessources(new ResCard(temp[i].getType()), Stemp[i].getOwner());
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void giveVictoryP(Player p) {
         p.setV(p.getV() + 1);
     }
+    public void throwCard(Player p){
+        DevCard s=devCards.pop();
+        p.getDevC().push(s);
+        System.out.println("vous avez piochez :"+ s.getType());
 
+    }
+    
     public void addAIStructure(Player player) {
         String[] pos = { "ne", "se", "nw", "sw" };
         int x, y, z;

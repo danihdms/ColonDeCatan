@@ -468,24 +468,7 @@ public class Board {
     }
 
     // distribuer les ressources
-    public boolean Distribution(int x) {
-        if (x < 13 && x > 1) {
-            Tile[] temp = getTileByNumber(x);
-            for (int i = 0; i < temp.length; i++) {
-                if (temp[i] != null && !temp[i].hasThief()) {
-                    Structure[] Stemp = getListColonies(temp[i]);
-                    for (int j = 0; j < Stemp.length; j++) {
-                        if (Stemp[j] != null) {
-                            Stemp[j].giveRessources(temp[i].getType());
-                        }
-                    }
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
+    
 
     public Tile[][] getTiles() {
         return this.tiles;

@@ -7,5 +7,6 @@ public abstract class DevCard {
     }
 
     public abstract void useCard();
+    public String getType(){return this.type;}
 
 }
