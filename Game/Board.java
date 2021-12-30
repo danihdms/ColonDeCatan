@@ -371,9 +371,11 @@ public class Board {
 
                 for (int i = 1; i < 6; i++) {
                     for (int j = 1; j < 6; j++) {
-                        if (!tiles[i][j].getType().equals("desert") && tiles[i][j].getNumber() == x) {
-                            t[0] = tiles[i][j];
+                        if(tiles[i][j] != null){
+                            if (!tiles[i][j].getType().equals("desert") && tiles[i][j].getNumber() == x) {
+                                t[0] = tiles[i][j];
 
+                            }
                         }
                     }
                 }
@@ -383,10 +385,14 @@ public class Board {
                 int count = 0;
                 for (int i = 1; i < 6; i++) {
                     for (int j = 1; j < 6; j++) {
-                        if (!tiles[i][j].getType().equals("desert") && tiles[i][j].getNumber() == x) {
-                            t[count] = tiles[i][j];
-                            count++;
+                        if (tiles[i][j] != null){
+                            if (!tiles[i][j].getType().equals("desert") && tiles[i][j].getNumber() == x) {
+                                if (count <= 1){
+                                    t[count] = tiles[i][j];
+                                    count++;
+                                }
 
+                            }
                         }
                     }
                 }

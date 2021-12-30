@@ -196,7 +196,7 @@ public class PlayConsole {
                 int res=game.getRandom(game.getResCards().size());
                 int playerChoose=game.getRandom(tabAction.length);
                 //vol d'une ressources apres le placement du voleur
-                if(tabAction.length >0){
+                if(tabAction.length >0 && tabAction != null){
                     while (tabAction[playerChoose].getOwner() == temp){
                         playerChoose=game.getRandom(tabAction.length);
                     }
