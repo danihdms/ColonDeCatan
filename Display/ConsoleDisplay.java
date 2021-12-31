@@ -208,7 +208,7 @@ public class ConsoleDisplay {
                             break;
                     }
                 }
-                switch (tile.getType()) {
+                switch (tile.getTypeTile()) {
                     case "desert":
                         System.out.print(westColor + bold + " ┃    Desert   ┃ ");
                         break;

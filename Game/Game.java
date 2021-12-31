@@ -100,7 +100,7 @@ public class Game {
         }
         return false;
     }
-
+    
     public boolean hasRessourcesToUpgrade(Player p) {
         // verifier que la personne à les ressources suffisante pour améliorer une
         // colonie
@@ -169,7 +169,7 @@ public class Game {
                     for (int j = 0; j < Stemp.length; j++) {
                         if (Stemp[j] != null) {
                             if (Stemp[j].getType() ==0){
-                                giveRessources(new ResCard(temp[i].getType()), Stemp[i].getOwner());
+                                giveRessources(new ResCard(temp[i].getType()), Stemp[j].getOwner());
                             }
                             if(Stemp[j].getType() == 1){
                                 giveRessources(new ResCard(temp[i].getType()), Stemp[i].getOwner());

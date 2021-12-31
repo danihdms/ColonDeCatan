@@ -1,26 +1,61 @@
 package Game;
+
 public class Tile {
     private int number = 0;
     private boolean hasThief = false;
     private Road n, s, e, w;
     private Structure nw, ne, se, sw;
-    private final String type; // desert, colline, plaine, foret, champ, montagne
+    private final String typeTile; // desert, colline, plaine, foret, champ, montagne
+    private final String type;
+    private boolean isAport = false;
 
     public Tile(int n, String str) {
-        type = str;
+        typeTile = str;
         number = n;
+        type = setType(str);
     }
 
     public Tile(String str) {
-        type = str;
+        typeTile = str;
+        type = setType(str);
     }
 
     public Tile(String str, boolean b) {
-        type = str;
+        typeTile = str;
         hasThief = b;
+        type = setType(str);
 
     }
 
+    public String setType(String s) {
+        switch (s) {
+
+            case "colline":
+                return "argile";
+
+            case "plaine":
+                return "mouton";
+
+            case "foret":
+                return "bois";
+
+            case "champ":
+                return "mouton";
+
+            case "montagne":
+                return "minerais";
+
+            default:
+                return "";
+
+        }
+    }
+
+    public void isApoert() {
+        this.isAport = true;
+        this.number = 0;
+    }
+    public String getTypeTile(){return typeTile;}
     public boolean hasThief() {
         return hasThief;
     }
@@ -104,6 +139,6 @@ public class Tile {
                 ne = s;
                 return;
         }
-        System.out.println("You have to choose between nw, sw, ne, and se.");
+        
     }
 }
