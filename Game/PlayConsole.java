@@ -6,53 +6,6 @@ import Display.ConsoleDisplay;
 import Cards.*;
 
 public class PlayConsole {
-
-    public static String verifNumber(String s) {
-        String[] number = { "1", "2", "3", "4", "5", "6" };
-        Scanner ss = new Scanner(System.in);
-        for (String n : number) {
-            if (n.equals(s)) {
-                return n;
-
-            }
-        }
-        System.out.println("La coordonné est invalide redonné en une autre");
-        s = ss.nextLine();
-        ss.close();
-        return verifNumber(s);
-
-    }
-
-    public static String verifCoin(String s) {
-        String[] number = { "ne", "nw", "se", "sw" };
-        Scanner ss = new Scanner(System.in);
-        for (String n : number) {
-            if (n.equals(s)) {
-                return n;
-
-            }
-        }
-        System.out.println("Le coin  est invalide redonné en une autre[ne/nw/se/sw]");
-        s = ss.nextLine();
-        ss.close();
-        return verifNumber(s);
-    }
-
-    public static String verifCote(String s) {
-        String[] number = { "n", "w", "e", "s" };
-        Scanner ss = new Scanner(System.in);
-        for (String n : number) {
-            if (n.equals(s)) {
-                return n;
-
-            }
-        }
-        System.out.println("Le coin  est invalide redonné en une autre[n/w/e/s]");
-        s = ss.nextLine();
-        ss.close();
-        return verifNumber(s);
-    }
-
     public static void main(String[] args) {
         // argile, laine, blé, minerais, bois
 
@@ -107,25 +60,19 @@ public class PlayConsole {
                     System.out.println("Vous devez placer une colonie.");
                     System.out.println("Donnez la ligne de la colonie à placer.");
                     String x = sc.nextLine();
-                    x = verifNumber(x);
                     System.out.println("Donnez la colonne de la colonie à placer.");
                     String y = sc.nextLine();
-                    y = verifNumber(y);
                     System.out.println("Dans quel coin de la tuile voulez-vous la placer ? [ne/nw/se/sw]");
                     String pos = sc.nextLine();
-                    pos = verifCoin(pos);
                     while (!game.getBoard().addStructure(Integer.parseInt(x), Integer.parseInt(y), new Structure(0, p),
                             pos)) {
                         System.out.println("Vous ne respecter pas la règle de placement. Recommencez.");
                         System.out.println("Donnez la ligne de la colonie à placer.");
                         x = sc.nextLine();
-                        x = verifNumber(x);
                         System.out.println("Donnez la colonne de la colonie à placer.");
                         y = sc.nextLine();
-                        y = verifNumber(y);
                         System.out.println("Dans quel coin voulez-vous la placer ? [ne/nw/se/sw]");
                         pos = sc.nextLine();
-                        pos = verifCoin(pos);
                     }
                     System.out.println("Vous gagnez 1 point de victoire");
                     game.giveVictoryP(p);
@@ -134,24 +81,18 @@ public class PlayConsole {
                     System.out.println("Vous devez desormais placer une route, près de votre colonie.");
                     System.out.println("Donnez la ligne de la route à placer.");
                     x = sc.nextLine();
-                    x = verifNumber(x);
                     System.out.println("Donnez la colonne de la route à placer.");
                     y = sc.nextLine();
-                    y = verifNumber(y);
                     System.out.println("De quel côté voulez-vous la placer ? [n/w/e/s]");
                     pos = sc.nextLine();
-                    pos = verifCote(pos);
                     while (!game.getBoard().addRoad(Integer.parseInt(x), Integer.parseInt(y), new Road(p), pos)) {
                         System.out.println("Vous ne respecter pas la règle de placement. Recommencez.");
                         System.out.println("Donnez la ligne de la route à placer.");
                         x = sc.nextLine();
-                        x = verifNumber(x);
                         System.out.println("Donnez la colonne de la route à placer.");
                         y = sc.nextLine();
-                        y = verifNumber(y);
                         System.out.println("De quel côté voulez-vous la placer ? [n/w/e/s]");
                         pos = sc.nextLine();
-                        pos = verifCote(pos);
                     }
                     display.printBoard(game.getBoard());
                     turn++;
@@ -169,7 +110,7 @@ public class PlayConsole {
             if (turnP >= game.getPlayers().length) {// pour recommencer au début de la file de joueur
                 turnP = 0;
             }
-            Player temp = game.getPlayers()[turnP];
+            Player player = game.getPlayers()[turnP];
             // lancé de dé
             int dice = game.throwDice();
             if (dice != 7) {
@@ -179,203 +120,212 @@ public class PlayConsole {
                 System.out.println("Vous avez fait un 7, veuillez deplacer le voleur.");
                 System.out.println("Donnez la ligne où vous voulez placer le voleur.");
                 String x = sc.nextLine();
-                x = verifNumber(x);
                 System.out.println("Donnez la colonne où vous voulez placer le voleur.");
                 String y = sc.nextLine();
-                y = verifNumber(y);
                 while (!game.getBoard().setThief(Integer.parseInt(x), Integer.parseInt(y))) {
                     System.out.println("Vous ne respecter pas la règle de placement. Recommencez");
                     System.out.println("Donnez la ligne où vous voulez placer le voleur.");
                     x = sc.nextLine();
-                    x = verifNumber(x);
                     System.out.println("Donnez la colonne où vous voulez placer le voleur.");
                     y = sc.nextLine();
-                    y = verifNumber(y);
                 }
-                Structure [] tabAction=game.getBoard().getThiefColonies();
-                int res=game.getRandom(game.getResCards().size());
-                int playerChoose=game.getRandom(tabAction.length);
-                //vol d'une ressources apres le placement du voleur
-                if(tabAction.length >0 && tabAction != null){
-                    while (tabAction[playerChoose].getOwner() == temp){
-                        playerChoose=game.getRandom(tabAction.length);
+
+                Structure[] tabAction = game.getBoard().getThiefColonies();
+                int res = game.getRandom(game.getResCards().size());
+                int playerChoose = game.getRandom(tabAction.length);
+                // vol d'une ressources apres le placement du voleur
+                if (tabAction.length > 0 && tabAction != null) {
+                    while (tabAction[playerChoose].getOwner() == player) {
+                        playerChoose = game.getRandom(tabAction.length);
                     }
-                    while(!game.hasRessources(1, game.getResCards().get(res), tabAction[playerChoose].getOwner())){
-                        res=game.getRandom(game.getResCards().size());
+                    while (!game.hasRessources(1, game.getResCards().get(res), tabAction[playerChoose].getOwner())) {
+                        res = game.getRandom(game.getResCards().size());
                     }
-                    game.enleveRessources( game.getResCards().get(res), tabAction[playerChoose].getOwner());
-                    game.giveRessources(game.getResCards().get(res), temp);
+                    game.enleveRessources(game.getResCards().get(res), tabAction[playerChoose].getOwner());
+                    game.giveRessources(game.getResCards().get(res), player);
                 }
-                //le vol des ressources; si il faut enlever les ressources quand au dessus de 7;
-                for (int i =0;i<game.getPlayers().length;i++){
-                    if(game.getPlayers()[i].getResC().size() > 7){
-                        int s=game.getPlayers()[i].getResC().size();
-                        while (game.getPlayers()[i].getResC().size() != s/2){
-                            while(!game.hasRessources(1, game.getResCards().get(res), game.getPlayers()[i])){
-                                res=game.getRandom(game.getResCards().size());
+                // le vol des ressources; si il faut enlever les ressources quand au dessus de
+                // 7;
+                for (int i = 0; i < game.getPlayers().length; i++) {
+                    if (game.getPlayers()[i].getResC().size() > 7) {
+                        int s = game.getPlayers()[i].getResC().size();
+                        while (game.getPlayers()[i].getResC().size() != s / 2) {
+                            while (!game.hasRessources(1, game.getResCards().get(res), game.getPlayers()[i])) {
+                                res = game.getRandom(game.getResCards().size());
                             }
-                            game.enleveRessources( game.getResCards().get(res),game.getPlayers()[i] );
+                            game.enleveRessources(game.getResCards().get(res), game.getPlayers()[i]);
                         }
                     }
                 }
-                
+
             }
             // si humain
-            if (temp.getHuman()) {
+            if (player.getHuman()) {
                 // placer structure
-                if (game.hasRessourcesToPlaceStructure(temp)) {
+                if (game.hasRessourcesToPlaceStructure(player)) {
                     System.out.println("Voulez vous placer une colonie ? [y/n]");
                     String rep = sc.nextLine();
 
                     if (rep.equals("y")) {
                         System.out.println("Donnez la ligne où placer votre colonie.");
                         String x = sc.nextLine();
-                        x = verifNumber(x);
                         System.out.println("Donnez la colonne où placer votre colonie.");
                         String y = sc.nextLine();
-                        y = verifNumber(y);
                         System.out.println("Dans quel coin voulez-vous la placer ? [ne/nw/se/sw]");
                         String pos = sc.nextLine();
-                        pos = verifCoin(pos);
                         while (!game.getBoard().addStructure(Integer.parseInt(x), Integer.parseInt(y),
-                                new Structure(0, temp), pos)) {
+                                new Structure(0, player), pos)) {
                             System.out.println("Vous ne respecter pas la règle de placement. Recommencez.");
                             System.out.println("Donnez la ligne où placer votre colonie.");
                             x = sc.nextLine();
-                            x = verifNumber(x);
                             System.out.println("donnez la colonne où placer votre colonie.");
                             y = sc.nextLine();
-                            y = verifNumber(y);
                             System.out.println("Dans quel coin voulez- vous la placer ? [ne/nw/se/sw]");
                             pos = sc.nextLine();
-                            pos = verifCoin(pos);
                         }
-                        temp.nbSettelments--;
+                        player.nbSettelments--;
                         display.printBoard(game.getBoard());
-                        game.PrendrePaiement(temp, coutStructure);
+                        game.PrendrePaiement(player, coutStructure);
                         System.out.println("Vous gagnez 1 point de victoire");
-                        game.giveVictoryP(temp);
+                        game.giveVictoryP(player);
                     }
 
                 }
                 // placer routes
-                if (game.hasRessourcesForRoad(temp)) {
+                if (game.hasRessourcesForRoad(player)) {
                     System.out.println("Voulez-vous placer une route ? [y/n]");
                     String rep = sc.nextLine();
 
                     if (rep.equals("y")) {
                         System.out.println("Donnez la ligne où placer votre route.");
                         String x = sc.nextLine();
-                        x = verifNumber(x);
                         System.out.println("Donnez la colonne où placer votre route.");
                         String y = sc.nextLine();
-                        y = verifNumber(y);
                         System.out.println("Dans quel coin voulez-vous la placer ? [n/w/e/s]");
                         String pos = sc.nextLine();
-                        pos = verifCote(pos);
-                        while (!game.getBoard().addRoad(Integer.parseInt(x), Integer.parseInt(y), new Road(temp),
+                        while (!game.getBoard().addRoad(Integer.parseInt(x), Integer.parseInt(y), new Road(player),
                                 pos)) {
                             System.out.println("Vous ne respecter pas la règle de placement. Recommencez.");
                             System.out.println("Donnez la ligne où placer votre route.");
                             x = sc.nextLine();
-                            x = verifNumber(x);
                             System.out.println("Donnez la colonne où placer votre route.");
                             y = sc.nextLine();
-                            y = verifNumber(y);
                             System.out.println("Dans quel coin voulez-vous la placer ? [n/w/e/s]");
                             pos = sc.nextLine();
-                            pos = verifCote(pos);
                         }
-                        temp.nbRoads--;
+                        player.nbRoads--;
                         display.printBoard(game.getBoard());
-                        game.PrendrePaiement(temp, coutRoad);
+                        game.PrendrePaiement(player, coutRoad);
                         // TODO la route la plus longue plus tout ce qu'il y a autour
                     }
-
                 }
                 // améliorer une colonies
-                if (game.hasRessourcesToUpgrade(temp)) {
+                if (game.hasRessourcesToUpgrade(player)) {
                     System.out.println("Voulez-vous améliorer une colonie ? [y/n]");
                     String rep = sc.nextLine();
 
                     if (rep.equals("y")) {
                         System.out.println("Donnez la ligne de la colonie à améliorer.");
                         String x = sc.nextLine();
-                        x = verifNumber(x);
                         System.out.println("Donnezla colonne de la colonie à améliorer.");
                         String y = sc.nextLine();
-                        y = verifNumber(y);
                         System.out.println("Dans quel coin ?[ne/nw/se/sw]");
                         String pos = sc.nextLine();
-                        pos = verifCoin(pos);
                         while (game.getBoard().getTiles()[Integer.parseInt(x)][Integer.parseInt(y)].getStructure(pos)
-                                .getOwner() != temp) {
+                                .getOwner() != player) {
                             System.out.println("Cette colonie n'est pas à vous choisissez en une qui vous appartiens");
                             System.out.println("Donnez la ligne de la colonie à améliorer.");
                             x = sc.nextLine();
-                            x = verifNumber(x);
                             System.out.println("Donnez la colonne de la colonie à améliorer.");
                             y = sc.nextLine();
-                            y = verifNumber(y);
                             System.out.println("Dans quel coin ?[ne/nw/se/sw]");
                             pos = sc.nextLine();
-                            pos = verifCoin(pos);
                         }
                         game.getBoard().getTiles()[Integer.parseInt(x)][Integer.parseInt(y)].getStructure(pos)
                                 .setType(1);
-                        temp.nbCities--;
-                        temp.nbSettelments--;
+                        player.nbCities--;
+                        player.nbSettelments++;
                         display.printBoard(game.getBoard());
-                        game.PrendrePaiement(temp, coutUpgrade);
+                        game.PrendrePaiement(player, coutUpgrade);
                         System.out.println("Vous gagnez 1 point de victoire");
-                        game.giveVictoryP(temp);
+                        game.giveVictoryP(player);
                     }
                 }
-                if (!temp.getDevC().isEmpty()) {
+                if (!player.getDevC().isEmpty()) {
                     // voulez vous jouez une carte ?,laquelle,jouez la carte si oui
-                    if(game.hassRessourcesPickCard(temp)){
+                    if (game.hassRessourcesPickCard(player)) {
                         System.out.println("Voulez-vous piochez une carte ? [y/n]");
                         String rep = sc.nextLine();
 
                         if (rep.equals("y")) {
-                            game.throwCard(temp);
-                            game.PrendrePaiement(temp, coutPioche);
+                            game.throwCard(player);
+                            game.PrendrePaiement(player, coutPioche);
                         }
-                        if(!temp.getDevC().isEmpty()){
+                        if (!player.getDevC().isEmpty()) {
                             System.out.println("Voulez vous jouez l'une de vos cartes ?[y/n]");
-                            rep=sc.nextLine();
-                            if(rep.equals("y")){
+                            rep = sc.nextLine();
+                            if (rep.equals("y")) {
                                 System.out.println("Vous avez le choix entre ces cartes Choisissez avec le numéro");
-                                for (int i =0;i<temp.getDevC().size();i++){
-                                    System.out.println(i + "." +temp.getDevC().get(i).getType());
+                                for (int i = 0; i < player.getDevC().size(); i++) {
+                                    System.out.println(i + "." + player.getDevC().get(i).getType());
                                 }
-                                rep=sc.nextLine();
-                                //verifiez le numero
-                                temp.getDevC().get(Integer.parseInt(rep)).useCard();
-                                //todo les différenetes cartes et effets
-                                if (temp.getDevC().get(Integer.parseInt(rep)).getType().equals("victory")){
+                                rep = sc.nextLine();
+                                // verifiez le numero
+                                player.getDevC().get(Integer.parseInt(rep)).useCard();
+                                // todo les différenetes cartes et effets
+                                if (player.getDevC().get(Integer.parseInt(rep)).getType().equals("victory")) {
 
                                 } else {
-                                    temp.getResC().remove(Integer.parseInt(rep));
+                                    player.getResC().remove(Integer.parseInt(rep));
                                 }
-                                    
 
-                                
                             }
-                                
-                            
+
                         }
                     }
                 }
                 // TODO echange
             } else {
                 // si c'est une ia
+                if (game.hasRessourcesToPlaceStructure(player) && player.getNbSettlements() > 0) {
+                    game.addAIStructure(player);
+                    display.printBoard(game.getBoard());
+                }
+
+                if (game.hasRessourcesForRoad(player) && player.getNbRoads() > 0) {
+                    game.addAIRoad(player);
+                    display.printBoard(game.getBoard());
+                }
+                if (game.hasRessourcesToUpgrade(player) && player.getNbCities() > 0) {
+                    Integer[] coordinates = game.getCoordinatesOfStructure(player);
+                    String pos = "";
+                    switch (coordinates[2]) {
+                        case 0:
+                            pos = "ne";
+                            break;
+                        case 1:
+                            pos = "se";
+                            break;
+                        case 2:
+                            pos = "nw";
+                            break;
+                        case 3:
+                            pos = "sw";
+                            break;
+                    }
+                    game.getBoard().getTiles()[coordinates[0]][coordinates[1]].getStructure(pos).setType(1);
+                    player.nbCities--;
+                    player.nbSettelments++;
+                    // TODO enlevez les ressources
+                    // ajouter les point de victoires si besion
+                    // si c'est une ia
+                }
+                turnP++;
             }
-            turnP++;
+
+            sc.close();
+
         }
 
-        sc.close();
-
     }
-
 }
