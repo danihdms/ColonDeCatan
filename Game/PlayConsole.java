@@ -98,6 +98,9 @@ public class PlayConsole {
                     turn++;
                 } else {
                     // a ecrie pour l'IA
+                    game.addAIStructure(p);
+                    game.addAIRoad(p);
+                    display.printBoard(game.getBoard());
                     turn++;
                 }
                 if (turn == 2 * game.getPlayers().length) { // permet de faire deux tour du tableau
@@ -318,14 +321,14 @@ public class PlayConsole {
                     player.nbSettelments++;
                     // TODO enlevez les ressources
                     // ajouter les point de victoires si besion
-                    // si c'est une ia
                 }
-                turnP++;
+                if (!player.getDevC().isEmpty()) {
+                    // voulez vous jouez une carte ?,laquelle,jouez la carte si oui
+                }
             }
-
-            sc.close();
-
+            turnP++;
         }
+        sc.close();
 
     }
 }
