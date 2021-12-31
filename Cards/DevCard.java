@@ -1,4 +1,5 @@
 package Cards;
+import Game.*;
 public abstract class DevCard {
     private String type;
 
