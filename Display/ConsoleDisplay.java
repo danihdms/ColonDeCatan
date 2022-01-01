@@ -1,9 +1,6 @@
 package Display;
 
 import Game.Board;
-import Game.Player;
-import Game.Road;
-import Game.Structure;
 import Game.Tile;
 
 public class ConsoleDisplay {
@@ -429,25 +426,21 @@ public class ConsoleDisplay {
         System.out.print("                  ");
         System.out.print("          1        ");
         System.out.print("          2        ");
-        System.out.print("          3        ");
-        System.out.print("          4        ");
-        System.out.print("          5        ");
+        System.out.print("        3        ");
+        System.out.print("         4        ");
+        System.out.print("         5        ");
         for (int i = 0; i < board.getTiles().length; i++) {
             if (i < 6)
                 printHRoads(board, i);
-
             System.out.print(" ");
             printTopTile(board, i);
-
             if (i == 0 || i == 6)
                 System.out.print(" ");
             if (i > 0 && i < 6)
-                System.out.print(i);
+                System.out.print(bold + i);
             printTypeOnTile(board, i);
-
             System.out.print(" ");
             printNumberOnTile(board, i);
-
             System.out.print(" ");
             printBottomTile(board, i);
             System.out.print(" ");
@@ -456,49 +449,5 @@ public class ConsoleDisplay {
             }
         }
         System.out.println();
-    }
-
-    public static void main(String[] args) {
-        Board board = new Board();
-        ConsoleDisplay c = new ConsoleDisplay();
-        Player p = new Player("Stanley", "red", true);
-        System.out.println(board.addRoad(1, 1, new Road(new Player("Stanley", "blue", true)), "n"));
-        board.addStructure(1, 2, new Structure(0, p), "nw");
-        board.addStructure(1, 2, new Structure(1, p), "ne");
-        board.addStructure(2, 3, new Structure(1, p), "nw");
-        board.addStructure(3, 4, new Structure(0, p), "nw");
-        board.addStructure(4, 5, new Structure(1, p), "nw");
-        board.addStructure(5, 5, new Structure(1, p), "nw");
-        board.addStructure(5, 5, new Structure(1, p), "se");
-        board.addStructure(5, 3, new Structure(1, p), "sw");
-        board.addRoad(1, 2, new Road(p), "n");
-        board.addRoad(1, 2, new Road(p), "w");
-        board.addRoad(1, 2, new Road(p), "e");
-        board.addRoad(1, 3, new Road(p), "n");
-        board.addRoad(2, 1, new Road(p), "n");
-        board.addRoad(2, 2, new Road(p), "n");
-        board.addRoad(2, 3, new Road(p), "n");
-        board.addRoad(2, 4, new Road(p), "n");
-        board.addRoad(3, 1, new Road(p), "n");
-        board.addRoad(3, 2, new Road(p), "n");
-        board.addRoad(3, 3, new Road(p), "n");
-        board.addRoad(3, 4, new Road(p), "n");
-        board.addRoad(3, 5, new Road(p), "e");
-        board.addRoad(4, 2, new Road(p), "n");
-        board.addRoad(4, 3, new Road(p), "n");
-        board.addRoad(4, 4, new Road(p), "n");
-        board.addRoad(4, 5, new Road(p), "e");
-        board.addRoad(5, 3, new Road(p), "n");
-        board.addRoad(5, 3, new Road(p), "s");
-        board.addRoad(5, 4, new Road(p), "n");
-        board.addRoad(5, 4, new Road(p), "s");
-        board.addRoad(5, 5, new Road(p), "n");
-        board.addRoad(5, 5, new Road(p), "s");
-        board.addRoad(5, 5, new Road(p), "e");
-
-        // board.addStructure(4, 5, new Structure(1, new Player("Stanley", "red",
-        // true)), "se");
-
-        c.printBoard(board);
     }
 }
