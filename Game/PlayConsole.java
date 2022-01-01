@@ -116,51 +116,60 @@ public class PlayConsole {
             Player player = game.getPlayers()[turnP];
             // lancé de dé
             int dice = game.throwDice();
-            if (dice != 7) {
-                System.out.println("Vous avez fait " + dice);
-                game.Distribution(dice);
-            } else {
-                System.out.println("Vous avez fait un 7, veuillez deplacer le voleur.");
-                System.out.println("Donnez la ligne où vous voulez placer le voleur.");
-                String x = sc.nextLine();
-                System.out.println("Donnez la colonne où vous voulez placer le voleur.");
-                String y = sc.nextLine();
-                while (!game.getBoard().setThief(Integer.parseInt(x), Integer.parseInt(y))) {
-                    System.out.println("Vous ne respecter pas la règle de placement. Recommencez");
-                    System.out.println("Donnez la ligne où vous voulez placer le voleur.");
-                    x = sc.nextLine();
-                    System.out.println("Donnez la colonne où vous voulez placer le voleur.");
-                    y = sc.nextLine();
-                }
+            if(player.getHuman()){
 
-                Structure[] tabAction = game.getBoard().getThiefColonies();
-                int res = game.getRandom(game.getResCards().size());
-                int playerChoose = game.getRandom(tabAction.length);
-                // vol d'une ressources apres le placement du voleur
-                if (tabAction.length > 0 && tabAction != null) {
-                    while (tabAction[playerChoose].getOwner() == player) {
-                        playerChoose = game.getRandom(tabAction.length);
+                if (dice != 7) {
+                    System.out.println("Vous avez fait " + dice);
+                    game.distribution(dice);
+                } else {
+                    System.out.println("Vous avez fait un 7, veuillez deplacer le voleur.");
+                    System.out.println("Donnez la ligne où vous voulez placer le voleur.");
+                    String x = sc.nextLine();
+                    System.out.println("Donnez la colonne où vous voulez placer le voleur.");
+                    String y = sc.nextLine();
+                    while (!game.getBoard().setThief(Integer.parseInt(x), Integer.parseInt(y))) {
+                        System.out.println("Vous ne respecter pas la règle de placement. Recommencez");
+                        System.out.println("Donnez la ligne où vous voulez placer le voleur.");
+                        x = sc.nextLine();
+                        System.out.println("Donnez la colonne où vous voulez placer le voleur.");
+                        y = sc.nextLine();
                     }
-                    while (!game.hasRessources(1, game.getResCards().get(res), tabAction[playerChoose].getOwner())) {
-                        res = game.getRandom(game.getResCards().size());
+    
+                    Structure[] tabAction = game.getBoard().getThiefColonies();
+                    int res = game.getRandom(game.getResCards().size());
+                    int playerChoose = game.getRandom(tabAction.length);
+                    // vol d'une ressources apres le placement du voleur
+                    if (tabAction.length > 0 && tabAction != null) {
+                        while (tabAction[playerChoose].getOwner() == player) {
+                            playerChoose = game.getRandom(tabAction.length);
+                        }
+                        while (!game.hasRessources(1, game.getResCards().get(res), tabAction[playerChoose].getOwner())) {
+                            res = game.getRandom(game.getResCards().size());
+                        }
+                        game.enleveRessources(game.getResCards().get(res), tabAction[playerChoose].getOwner());
+                        game.giveRessources(game.getResCards().get(res), player);
                     }
-                    game.enleveRessources(game.getResCards().get(res), tabAction[playerChoose].getOwner());
-                    game.giveRessources(game.getResCards().get(res), player);
-                }
-                // le vol des ressources; si il faut enlever les ressources quand au dessus de
-                // 7;
-                for (int i = 0; i < game.getPlayers().length; i++) {
-                    if (game.getPlayers()[i].getResC().size() > 7) {
-                        int s = game.getPlayers()[i].getResC().size();
-                        while (game.getPlayers()[i].getResC().size() != s / 2) {
-                            while (!game.hasRessources(1, game.getResCards().get(res), game.getPlayers()[i])) {
-                                res = game.getRandom(game.getResCards().size());
+                    // le vol des ressources; si il faut enlever les ressources quand au dessus de
+                    // 7;
+                    for (int i = 0; i < game.getPlayers().length; i++) {
+                        if (game.getPlayers()[i].getResC().size() > 7) {
+                            int s = game.getPlayers()[i].getResC().size();
+                            while (game.getPlayers()[i].getResC().size() != s / 2) {
+                                while (!game.hasRessources(1, game.getResCards().get(res), game.getPlayers()[i])) {
+                                    res = game.getRandom(game.getResCards().size());
+                                }
+                                game.enleveRessources(game.getResCards().get(res), game.getPlayers()[i]);
                             }
-                            game.enleveRessources(game.getResCards().get(res), game.getPlayers()[i]);
                         }
                     }
+    
                 }
-
+            } else {
+                if (dice != 7) {
+                    game.distribution(dice);
+                } else {
+                    game.setAIThief();
+                }
             }
             // si humain
             if (player.getHuman()) {
@@ -319,6 +328,7 @@ public class PlayConsole {
                     game.getBoard().getTiles()[coordinates[0]][coordinates[1]].getStructure(pos).setType(1);
                     player.nbCities--;
                     player.nbSettelments++;
+                    display.printBoard(game.getBoard());
                     // TODO enlevez les ressources
                     // ajouter les point de victoires si besion
                 }

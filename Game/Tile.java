@@ -52,7 +52,7 @@ public class Tile {
             case "w":
                 return w;
         }
-        System.out.println("You have to choose between n, s, e, and w.");
+        System.out.println("You have to choose between n, s, e, and w to get the road.");
         return null;
     }
 
@@ -85,7 +85,7 @@ public class Tile {
             case "se":
                 return se;
         }
-        System.out.println("You have to choose between nw, sw, ne, and se.");
+        System.out.println("You have to choose between nw, sw, ne, and se to get the structure.");
         return null;
     }
 

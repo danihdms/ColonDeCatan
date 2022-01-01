@@ -11,6 +11,7 @@ import Cards.ResCard;
 import Cards.RoadBuildingCard;
 import Cards.VictoryCard;
 import Cards.YearOfPlentyCard;
+import Display.ConsoleDisplay;
 
 public class Game {
     private LinkedList<DevCard> devCards;
@@ -66,9 +67,10 @@ public class Game {
         int x = r.nextInt(13) + 2;// crée un nombre entre 2 et 12
         return x;
     }
-    public int getRandom(int range){
-        Random r=new Random();
-        int x=r.nextInt(range);
+
+    public int getRandom(int range) {
+        Random r = new Random();
+        int x = r.nextInt(range);
         return x;
     }
 
@@ -151,7 +153,8 @@ public class Game {
             }
         }
     }
-    public void giveRessources(ResCard r,Player p){
+
+    public void giveRessources(ResCard r, Player p) {
         for (int i = 0; i < this.resCards.size(); i++) {
             if (this.resCards.get(i).getType().equals(r.getType())) {
                 p.getResC().push(r);
@@ -160,7 +163,8 @@ public class Game {
             }
         }
     }
-    public boolean Distribution(int x) {
+
+    public boolean distribution(int x) {
         if (x < 13 && x > 1) {
             Tile[] temp = board.getTileByNumber(x);
             for (int i = 0; i < temp.length; i++) {
@@ -168,12 +172,12 @@ public class Game {
                     Structure[] Stemp = board.getListColonies(temp[i]);
                     for (int j = 0; j < Stemp.length; j++) {
                         if (Stemp[j] != null) {
-                            if (Stemp[j].getType() ==0){
-                                giveRessources(new ResCard(temp[i].getType()), Stemp[i].getOwner());
+                            if (Stemp[j].getType() == 0) {
+                                giveRessources(new ResCard(temp[i].getType()), Stemp[j].getOwner());
                             }
-                            if(Stemp[j].getType() == 1){
-                                giveRessources(new ResCard(temp[i].getType()), Stemp[i].getOwner());
-                                giveRessources(new ResCard(temp[i].getType()), Stemp[i].getOwner());
+                            if (Stemp[j].getType() == 1) {
+                                giveRessources(new ResCard(temp[i].getType()), Stemp[j].getOwner());
+                                giveRessources(new ResCard(temp[i].getType()), Stemp[j].getOwner());
                             }
                         }
                     }
@@ -188,13 +192,14 @@ public class Game {
     public void giveVictoryP(Player p) {
         p.setV(p.getV() + 1);
     }
-    public void throwCard(Player p){
-        DevCard s=devCards.pop();
+
+    public void throwCard(Player p) {
+        DevCard s = devCards.pop();
         p.getDevC().push(s);
-        System.out.println("vous avez piochez :"+ s.getType());
+        System.out.println("vous avez piochez :" + s.getType());
 
     }
-    
+
     public void addAIStructure(Player player) {
         String[] pos = { "ne", "se", "nw", "sw" };
         int x, y, z;
@@ -203,7 +208,7 @@ public class Game {
             x = r.nextInt(6) + 1;
             y = r.nextInt(6) + 1;
             z = r.nextInt(4);
-            Integer[] coordinates = {x, y, z};
+            Integer[] coordinates = { x, y, z };
             player.getStructures().add(coordinates);
         } while (!board.addStructure(x, y, new Structure(0, player), pos[z]));
     }
@@ -219,20 +224,20 @@ public class Game {
         } while (!board.addRoad(x, y, new Road(player), pos[z]));
     }
 
-    public Integer[] getCoordinatesOfStructure(Player player){
-        if(!player.getStructures().isEmpty()){
+    public Integer[] getCoordinatesOfStructure(Player player) {
+        if (!player.getStructures().isEmpty()) {
             return player.getStructures().removeFirst();
         }
         throw new IllegalStateException();
     }
 
     public void setAIThief() {
-        int x, y;
-        do {
-            Random r = new Random();
-            x = r.nextInt(6) + 1;
-            y = r.nextInt(6) + 1;
-        } while (!board.setThief(x, y));
+        Random r = new Random();
+        int x = r.nextInt(6) + 1;
+        int y = r.nextInt(6) + 1;
+        if (!board.setThief(x, y)) {
+            setAIThief();
+        }
     }
 
     public Player[] getPlayers() {

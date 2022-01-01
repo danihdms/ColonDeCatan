@@ -115,7 +115,6 @@ public class Board {
 
     // Placer une nouvelle structure sur la plateau
     public boolean addStructure(int x, int y, Structure struct, String structurePos) {
-        System.out.printf("x: %d, y: %d pos: %s\n", x, y, structurePos);
         if (caseValid(x, y)) {
             if (tiles[x][y].getStructure(structurePos) != null) {
                 System.out.println("case déjà occupée");
@@ -184,7 +183,6 @@ public class Board {
 
     // Placer une nouvelle route sur le plateau
     public boolean addRoad(int x, int y, Road r, String roadPos) {
-        System.out.printf("x: %d, y: %d, pos: %s\n", x, y, roadPos);
         if (caseValid(x, y)) {
 
             if (suisLaregleRoute(x, y, roadPos, r.getOwner())) {
@@ -303,7 +301,7 @@ public class Board {
                         || hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)
                         || hasSameOwnerR(x + 1, y, "e", owner) || hasSameOwnerR(x + 1, y, "w", owner))
                         || (hasSameOwnerS(x, y, "se", owner)
-                        || hasSameOwnerS(x, y, "sw", owner))) {
+                                || hasSameOwnerS(x, y, "sw", owner))) {
                     return true;
                 }
                 break;
@@ -313,7 +311,7 @@ public class Board {
                         || hasSameOwnerR(x - 1, y, pos, owner) || hasSameOwnerR(x, y, "s", owner)
                         || hasSameOwnerR(x, y - 1, "n", owner) || hasSameOwnerR(x, y - 1, "s", owner))
                         || (hasSameOwnerS(x, y, "nw", owner)
-                        || hasSameOwnerS(x, y, "sw", owner))) {
+                                || hasSameOwnerS(x, y, "sw", owner))) {
                     return true;
                 }
                 break;
@@ -321,7 +319,7 @@ public class Board {
                 if ((hasSameOwnerR(x + 1, y, pos, owner) || hasSameOwnerR(x - 1, y, pos, owner)
                         || hasSameOwnerR(x, y, "n", owner) || hasSameOwnerR(x, y, "s", owner)
                         || hasSameOwnerR(x, y + 1, "n", owner) || hasSameOwnerR(x, y + 1, "s", owner))
-                        || (hasSameOwnerS(x, y, "ne", owner) || hasSameOwnerS(x, y, "se", owner))){
+                        || (hasSameOwnerS(x, y, "ne", owner) || hasSameOwnerS(x, y, "se", owner))) {
                     return true;
                 }
                 break;
@@ -330,7 +328,7 @@ public class Board {
                         || hasSameOwnerR(x - 1, y, "e", owner) || hasSameOwnerR(x - 1, y, "w", owner)
                         || hasSameOwnerR(x, y - 1, pos, owner) || hasSameOwnerR(x, y + 1, pos, owner))
                         || (hasSameOwnerS(x, y, "ne", owner)
-                        || hasSameOwnerS(x, y, "nw", owner))) {
+                                || hasSameOwnerS(x, y, "nw", owner))) {
                     return true;
                 }
                 break;
@@ -357,7 +355,7 @@ public class Board {
     public boolean hasSameOwnerR(int x, int y, String pos, Player owner) {
         if (caseValid(x, y))
             if (this.tiles[x][y].getRoad(pos) != null) {
-                
+
                 return this.tiles[x][y].getRoad(pos).getOwner() == owner && this.tiles[x][y] != null;
             }
         return false;
@@ -371,10 +369,9 @@ public class Board {
 
                 for (int i = 1; i < 6; i++) {
                     for (int j = 1; j < 6; j++) {
-                        if(tiles[i][j] != null){
+                        if (tiles[i][j] != null) {
                             if (!tiles[i][j].getType().equals("desert") && tiles[i][j].getNumber() == x) {
                                 t[0] = tiles[i][j];
-
                             }
                         }
                     }
@@ -385,13 +382,12 @@ public class Board {
                 int count = 0;
                 for (int i = 1; i < 6; i++) {
                     for (int j = 1; j < 6; j++) {
-                        if (tiles[i][j] != null){
+                        if (tiles[i][j] != null) {
                             if (!tiles[i][j].getType().equals("desert") && tiles[i][j].getNumber() == x) {
-                                if (count <= 1){
+                                if (count <= 1) {
                                     t[count] = tiles[i][j];
                                     count++;
                                 }
-
                             }
                         }
                     }
@@ -427,14 +423,17 @@ public class Board {
     // différentes
     // des coordonnées actuelles du voleur
     public boolean setThief(int x, int y) {
-        if (tiles[x][y].hasThief()) {
-            System.out.println("le voleur est déjà sur cette case");
-            return false;
-        } else {
-            this.tiles[getThief()[0]][getThief()[1]].setThief(false);
-            this.tiles[x][y].setThief(true);
-            return true;
+        if (caseValid(x, y)) {
+            if (tiles[x][y].hasThief()) {
+                System.out.println("le voleur est déjà sur cette case");
+                return false;
+            } else {
+                this.tiles[getThief()[0]][getThief()[1]].setThief(false);
+                this.tiles[x][y].setThief(true);
+                return true;
+            }
         }
+        return false;
 
     }
 
@@ -457,9 +456,9 @@ public class Board {
         Structure[] list = new Structure[4];
 
         list[0] = t.getStructure("ne");
-        list[1] = t.getStructure("no");
+        list[1] = t.getStructure("nw");
         list[2] = t.getStructure("se");
-        list[3] = t.getStructure("so");
+        list[3] = t.getStructure("sw");
         return list;
 
     }
@@ -474,7 +473,6 @@ public class Board {
     }
 
     // distribuer les ressources
-    
 
     public Tile[][] getTiles() {
         return this.tiles;
@@ -486,6 +484,5 @@ public class Board {
     // verifier si une localisation est un port
     // ajouter les port
     // mettre leurs ressources en random
-
 
 }
