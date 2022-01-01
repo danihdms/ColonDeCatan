@@ -3,8 +3,8 @@ package Game;
 public class Tile {
     private int number = 0;
     private boolean hasThief = false;
-    private Road n, s, e, w;
-    private Structure nw, ne, se, sw;
+    private Road n, s, e, o;
+    private Structure no, ne, se, so;
     private final String typeTile; // desert, colline, plaine, foret, champ, montagne
     private final String type;
     private boolean isAPort = false;
@@ -88,10 +88,10 @@ public class Tile {
                 return s;
             case "e":
                 return e;
-            case "w":
-                return w;
+            case "o":
+                return o;
         }
-        System.out.println("You have to choose between n, s, e, and w to get the road.");
+        System.out.println("You have to choose between n, s, e, and o to get the road.");
         return null;
     }
 
@@ -106,35 +106,35 @@ public class Tile {
             case "e":
                 e = r;
                 return;
-            case "w":
-                w = r;
+            case "o":
+                o = r;
                 return;
         }
-        System.out.println("You have to choose between n, s, e, and w.");
+        System.out.println("You have to choose between n, s, e, and o.");
     }
 
     public Structure getStructure(String structurePos) {
         switch (structurePos) {
-            case "nw":
-                return nw;
-            case "sw":
-                return sw;
+            case "no":
+                return no;
+            case "so":
+                return so;
             case "ne":
                 return ne;
             case "se":
                 return se;
         }
-        System.out.println("You have to choose between nw, sw, ne, and se to get the structure.");
+        System.out.println("You have to choose between no, so, ne, and se to get the structure.");
         return null;
     }
 
     public void setStructure(Structure s, String structurePos) {
         switch (structurePos) {
-            case "nw":
-                nw = s;
+            case "no":
+                no = s;
                 return;
-            case "sw":
-                sw = s;
+            case "so":
+                so = s;
                 return;
             case "se":
                 se = s;
@@ -154,16 +154,16 @@ public class Tile {
         return ne;
     }
 
-    public Structure getSw() {
-        return sw;
+    public Structure getSo() {
+        return so;
     }
 
     public Structure getSe() {
         return se;
     }
 
-    public Structure getNw() {
-        return nw;
+    public Structure getNo() {
+        return no;
     }
 
     public Road getN() {
@@ -178,7 +178,7 @@ public class Tile {
         return e;
     }
 
-    public Road getW() {
-        return w;
+    public Road getO() {
+        return o;
     }
 }

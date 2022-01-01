@@ -195,7 +195,7 @@ public class Game {
     public void throwCard(Player p) {
         DevCard s = devCards.pop();
         p.getDevC().push(s);
-        System.out.println("vous avez piochez :" + s.getType());
+        System.out.println("Vous avez piochez :" + s.getType());
     }
 
     public boolean structuresFull() {
@@ -204,14 +204,14 @@ public class Game {
             for (int j = 1; j < 6; j++) {
                 if (board.caseValid(i, j)) {
                     Tile tile = board.getTiles()[i][j];
-                    if (tile.getNw() != null || tile.getNe() != null || tile.getSe() != null || tile.getSw() != null) {
+                    if (tile.getNo() != null || tile.getNe() != null || tile.getSe() != null || tile.getSo() != null) {
                         noEmptySpot = false;
                     }
                 }
             }
         }
         if (noEmptySpot)
-            System.out.println("There is no spot left to place a structure.");
+            System.out.println("Il n'y a plus d'emplacement vide pour placer une structure.");
         return noEmptySpot;
     }
 
@@ -221,19 +221,19 @@ public class Game {
             for (int j = 1; j < 6; j++) {
                 if (board.caseValid(i, j)) {
                     Tile tile = board.getTiles()[i][j];
-                    if (tile.getN() != null || tile.getS() != null || tile.getE() != null || tile.getW() != null) {
+                    if (tile.getN() != null || tile.getS() != null || tile.getE() != null || tile.getO() != null) {
                         noEmptySpot = false;
                     }
                 }
             }
         }
         if (noEmptySpot)
-            System.out.println("There is no spot left to place a road.");
+            System.out.println("Il n'y a plus d'emplacement vide pour placer une road.");
         return noEmptySpot;
     }
 
     public void addAIStructure(Player player) {
-        String[] pos = { "ne", "se", "nw", "sw" };
+        String[] pos = { "ne", "se", "no", "so" };
         int x, y, z;
         do {
             Random r = new Random();
@@ -247,7 +247,7 @@ public class Game {
 
     public void addAIRoad(Player player) {
         int x, y, z;
-        String[] pos = { "n", "s", "w", "e" };
+        String[] pos = { "n", "s", "o", "e" };
         do {
             Random r = new Random();
             x = r.nextInt(6) + 1;

@@ -62,7 +62,7 @@ public class PlayConsole {
                     String x = sc.nextLine();
                     System.out.println("Donnez la colonne de la colonie à placer.");
                     String y = sc.nextLine();
-                    System.out.println("Dans quel coin de la tuile voulez-vous la placer ? [ne/nw/se/sw]");
+                    System.out.println("Dans quel coin de la tuile voulez-vous la placer ? [ne/no/se/so]");
                     String pos = sc.nextLine();
                     while (!game.getBoard().addStructure(Integer.parseInt(x), Integer.parseInt(y), new Structure(0, p),
                             pos)) {
@@ -71,7 +71,7 @@ public class PlayConsole {
                         x = sc.nextLine();
                         System.out.println("Donnez la colonne de la colonie à placer.");
                         y = sc.nextLine();
-                        System.out.println("Dans quel coin voulez-vous la placer ? [ne/nw/se/sw]");
+                        System.out.println("Dans quel coin voulez-vous la placer ? [ne/no/se/so]");
                         pos = sc.nextLine();
                     }
                     System.out.println("Vous gagnez 1 point de victoire");
@@ -83,7 +83,7 @@ public class PlayConsole {
                     x = sc.nextLine();
                     System.out.println("Donnez la colonne de la route à placer.");
                     y = sc.nextLine();
-                    System.out.println("De quel côté voulez-vous la placer ? [n/w/e/s]");
+                    System.out.println("De quel côté voulez-vous la placer ? [n/o/e/s]");
                     pos = sc.nextLine();
                     while (!game.getBoard().addRoad(Integer.parseInt(x), Integer.parseInt(y), new Road(p), pos)) {
                         System.out.println("Vous ne respecter pas la règle de placement. Recommencez.");
@@ -91,7 +91,7 @@ public class PlayConsole {
                         x = sc.nextLine();
                         System.out.println("Donnez la colonne de la route à placer.");
                         y = sc.nextLine();
-                        System.out.println("De quel côté voulez-vous la placer ? [n/w/e/s]");
+                        System.out.println("De quel côté voulez-vous la placer ? [n/o/e/s]");
                         pos = sc.nextLine();
                     }
                     display.printBoard(game.getBoard());
@@ -185,7 +185,7 @@ public class PlayConsole {
                         String x = sc.nextLine();
                         System.out.println("Donnez la colonne où placer votre colonie.");
                         String y = sc.nextLine();
-                        System.out.println("Dans quel coin voulez-vous la placer ? [ne/nw/se/sw]");
+                        System.out.println("Dans quel coin voulez-vous la placer ? [ne/no/se/so]");
                         String pos = sc.nextLine();
                         while (!game.getBoard().addStructure(Integer.parseInt(x), Integer.parseInt(y),
                                 new Structure(0, player), pos)) {
@@ -194,7 +194,7 @@ public class PlayConsole {
                             x = sc.nextLine();
                             System.out.println("donnez la colonne où placer votre colonie.");
                             y = sc.nextLine();
-                            System.out.println("Dans quel coin voulez- vous la placer ? [ne/nw/se/sw]");
+                            System.out.println("Dans quel coin voulez- vous la placer ? [ne/no/se/so]");
                             pos = sc.nextLine();
                         }
                         player.nbSettelments--;
@@ -215,7 +215,7 @@ public class PlayConsole {
                         String x = sc.nextLine();
                         System.out.println("Donnez la colonne où placer votre route.");
                         String y = sc.nextLine();
-                        System.out.println("Dans quel coin voulez-vous la placer ? [n/w/e/s]");
+                        System.out.println("Dans quel coin voulez-vous la placer ? [n/o/e/s]");
                         String pos = sc.nextLine();
                         while (!game.getBoard().addRoad(Integer.parseInt(x), Integer.parseInt(y), new Road(player),
                                 pos)) {
@@ -224,7 +224,7 @@ public class PlayConsole {
                             x = sc.nextLine();
                             System.out.println("Donnez la colonne où placer votre route.");
                             y = sc.nextLine();
-                            System.out.println("Dans quel coin voulez-vous la placer ? [n/w/e/s]");
+                            System.out.println("Dans quel coin voulez-vous la placer ? [n/o/e/s]");
                             pos = sc.nextLine();
                         }
                         player.nbRoads--;
@@ -243,7 +243,7 @@ public class PlayConsole {
                         String x = sc.nextLine();
                         System.out.println("Donnezla colonne de la colonie à améliorer.");
                         String y = sc.nextLine();
-                        System.out.println("Dans quel coin ?[ne/nw/se/sw]");
+                        System.out.println("Dans quel coin ?[ne/no/se/so]");
                         String pos = sc.nextLine();
                         while (game.getBoard().getTiles()[Integer.parseInt(x)][Integer.parseInt(y)].getStructure(pos)
                                 .getOwner() != player) {
@@ -252,7 +252,7 @@ public class PlayConsole {
                             x = sc.nextLine();
                             System.out.println("Donnez la colonne de la colonie à améliorer.");
                             y = sc.nextLine();
-                            System.out.println("Dans quel coin ?[ne/nw/se/sw]");
+                            System.out.println("Dans quel coin ?[ne/no/se/so]");
                             pos = sc.nextLine();
                         }
                         game.getBoard().getTiles()[Integer.parseInt(x)][Integer.parseInt(y)].getStructure(pos)
@@ -322,10 +322,10 @@ public class PlayConsole {
                             pos = "se";
                             break;
                         case 2:
-                            pos = "nw";
+                            pos = "no";
                             break;
                         case 3:
-                            pos = "sw";
+                            pos = "so";
                             break;
                     }
                     game.getBoard().getTiles()[coordinates[0]][coordinates[1]].getStructure(pos).setType(1);

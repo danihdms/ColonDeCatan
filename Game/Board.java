@@ -169,13 +169,13 @@ public class Board {
             if (suisLaregleColonie(x, y, structurePos)) {
 
                 switch (structurePos) {
-                    case "nw":
+                    case "no":
                         tiles[x][y].setStructure(struct, structurePos);
                         if (caseValid(x - 1, y - 1)) {
                             tiles[x - 1][y - 1].setStructure(struct, "se");
                         }
                         if (caseValid(x - 1, y)) {
-                            tiles[x - 1][y].setStructure(struct, "sw");
+                            tiles[x - 1][y].setStructure(struct, "so");
                         }
                         if (caseValid(x, y - 1)) {
                             tiles[x][y - 1].setStructure(struct, "ne");
@@ -188,16 +188,16 @@ public class Board {
                             tiles[x - 1][y].setStructure(struct, "se");
                         }
                         if (caseValid(x - 1, y + 1)) {
-                            tiles[x - 1][y + 1].setStructure(struct, "sw");
+                            tiles[x - 1][y + 1].setStructure(struct, "so");
                         }
                         if (caseValid(x, y + 1)) {
-                            tiles[x][y + 1].setStructure(struct, "nw");
+                            tiles[x][y + 1].setStructure(struct, "no");
                         }
                         break;
-                    case "sw":
+                    case "so":
                         tiles[x][y].setStructure(struct, structurePos);
                         if (caseValid(x + 1, y)) {
-                            tiles[x + 1][y].setStructure(struct, "nw");
+                            tiles[x + 1][y].setStructure(struct, "no");
                         }
                         if (caseValid(x, y - 1)) {
                             tiles[x][y - 1].setStructure(struct, "se");
@@ -209,10 +209,10 @@ public class Board {
                     case "se":
                         tiles[x][y].setStructure(struct, structurePos);
                         if (caseValid(x + 1, y + 1)) {
-                            tiles[x + 1][y + 1].setStructure(struct, "nw");
+                            tiles[x + 1][y + 1].setStructure(struct, "no");
                         }
                         if (caseValid(x, y + 1)) {
-                            tiles[x][y + 1].setStructure(struct, "sw");
+                            tiles[x][y + 1].setStructure(struct, "so");
                         }
                         if (caseValid(x + 1, y)) {
                             tiles[x + 1][y].setStructure(struct, "ne");
@@ -250,7 +250,7 @@ public class Board {
                             tiles[x + 1][y].setRoadOnTile(r, "n");
                         }
                         break;
-                    case "w":
+                    case "o":
                         tiles[x][y].setRoadOnTile(r, roadPos);
                         if (caseValid(x, y - 1)) {
                             tiles[x][y - 1].setRoadOnTile(r, "e");
@@ -259,7 +259,7 @@ public class Board {
                     case "e":
                         tiles[x][y].setRoadOnTile(r, roadPos);
                         if (caseValid(x, y + 1)) {
-                            tiles[x][y + 1].setRoadOnTile(r, "w");
+                            tiles[x][y + 1].setRoadOnTile(r, "o");
                         }
                         break;
                 }
@@ -306,31 +306,31 @@ public class Board {
 
     public boolean suisLaregleColonie(int x, int y, String pos) {
         switch (pos) {
-            case "nw":
+            case "no":
                 if ((caseValid(x - 1, y) || caseValid(x, y) || caseValid(x, y - 1)) &&
-                        (isEmptyS(x - 1, y, "nw") && isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne")
-                                && isEmptyS(x, y - 1, "nw"))) {
+                        (isEmptyS(x - 1, y, "no") && isEmptyS(x, y, "so") && isEmptyS(x, y, "ne")
+                                && isEmptyS(x, y - 1, "no"))) {
                     return true;
                 }
                 break;
             case "ne":
                 if ((caseValid(x - 1, y) || caseValid(x, y) || caseValid(x, y + 1)) &&
-                        (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x, y + 1, "ne")
+                        (isEmptyS(x, y, "se") && isEmptyS(x, y, "no") && isEmptyS(x, y + 1, "ne")
                                 && isEmptyS(x - 1, y, "ne"))) {
                     return true;
                 }
                 break;
             case "se":
                 if ((caseValid(x + 1, y) || caseValid(x, y) || caseValid(x, y + 1)) &&
-                        (isEmptyS(x, y, "sw") && isEmptyS(x, y, "ne") && isEmptyS(x + 1, y, "se")
+                        (isEmptyS(x, y, "so") && isEmptyS(x, y, "ne") && isEmptyS(x + 1, y, "se")
                                 && isEmptyS(x, y + 1, "se"))) {
                     return true;
                 }
                 break;
-            case "sw":
+            case "so":
                 if ((caseValid(x + 1, y) || caseValid(x, y) || caseValid(x, y - 1)) &&
-                        (isEmptyS(x, y, "se") && isEmptyS(x, y, "nw") && isEmptyS(x + 1, y, "sw")
-                                && isEmptyS(x, y - 1, "sw"))) {
+                        (isEmptyS(x, y, "se") && isEmptyS(x, y, "no") && isEmptyS(x + 1, y, "so")
+                                && isEmptyS(x, y - 1, "so"))) {
                     return true;
                 }
                 break;
@@ -343,20 +343,20 @@ public class Board {
         switch (pos) {
             case "s":
                 if ((hasSameOwnerR(x, y + 1, pos, owner) || hasSameOwnerR(x, y - 1, pos, owner)
-                        || hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)
-                        || hasSameOwnerR(x + 1, y, "e", owner) || hasSameOwnerR(x + 1, y, "w", owner))
+                        || hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "o", owner)
+                        || hasSameOwnerR(x + 1, y, "e", owner) || hasSameOwnerR(x + 1, y, "o", owner))
                         || (hasSameOwnerS(x, y, "se", owner)
-                                || hasSameOwnerS(x, y, "sw", owner))) {
+                                || hasSameOwnerS(x, y, "so", owner))) {
                     return true;
                 }
                 break;
 
-            case "w":
+            case "o":
                 if ((hasSameOwnerR(x, y, "n", owner) || hasSameOwnerR(x + 1, y, pos, owner)
                         || hasSameOwnerR(x - 1, y, pos, owner) || hasSameOwnerR(x, y, "s", owner)
                         || hasSameOwnerR(x, y - 1, "n", owner) || hasSameOwnerR(x, y - 1, "s", owner))
-                        || (hasSameOwnerS(x, y, "nw", owner)
-                                || hasSameOwnerS(x, y, "sw", owner))) {
+                        || (hasSameOwnerS(x, y, "no", owner)
+                                || hasSameOwnerS(x, y, "so", owner))) {
                     return true;
                 }
                 break;
@@ -369,11 +369,11 @@ public class Board {
                 }
                 break;
             case "n":
-                if ((hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "w", owner)
-                        || hasSameOwnerR(x - 1, y, "e", owner) || hasSameOwnerR(x - 1, y, "w", owner)
+                if ((hasSameOwnerR(x, y, "e", owner) || hasSameOwnerR(x, y, "o", owner)
+                        || hasSameOwnerR(x - 1, y, "e", owner) || hasSameOwnerR(x - 1, y, "o", owner)
                         || hasSameOwnerR(x, y - 1, pos, owner) || hasSameOwnerR(x, y + 1, pos, owner))
                         || (hasSameOwnerS(x, y, "ne", owner)
-                                || hasSameOwnerS(x, y, "nw", owner))) {
+                                || hasSameOwnerS(x, y, "no", owner))) {
                     return true;
                 }
                 break;
@@ -501,9 +501,9 @@ public class Board {
         Structure[] list = new Structure[4];
 
         list[0] = t.getStructure("ne");
-        list[1] = t.getStructure("nw");
+        list[1] = t.getStructure("no");
         list[2] = t.getStructure("se");
-        list[3] = t.getStructure("sw");
+        list[3] = t.getStructure("so");
         return list;
 
     }
@@ -524,10 +524,6 @@ public class Board {
     }
 
     // trouver la plus longue route(optionnel)
-    // verifier si il y a une colonie du meme owner a
-    // cote avant de placer une route
-    // verifier si une localisation est un port
-    // ajouter les port
     // mettre leurs ressources en random
 
 }

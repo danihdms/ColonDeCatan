@@ -22,45 +22,45 @@ public class ConsoleDisplay {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 lastTile = tile;
-                int nwStructType;
-                String nwStructure = " ";
-                String nwColor = " ";
-                if (tile.getStructure("nw") != null) {
-                    nwColor = tile.getStructure("nw").getOwner().getColor();
-                    nwStructType = tile.getStructure("nw").getType();
-                    if (nwStructType == 0) {
-                        nwStructure = colony;
-                    } else if (nwStructType == 1) {
-                        nwStructure = city;
+                int noStructType;
+                String noStructure = " ";
+                String noColor = " ";
+                if (tile.getStructure("no") != null) {
+                    noColor = tile.getStructure("no").getOwner().getColor();
+                    noStructType = tile.getStructure("no").getType();
+                    if (noStructType == 0) {
+                        noStructure = colony;
+                    } else if (noStructType == 1) {
+                        noStructure = city;
                     }
-                    switch (nwColor) {
+                    switch (noColor) {
                         case "red":
-                            nwColor = bold + red + nwStructure + reset;
+                            noColor = bold + red + noStructure + reset;
                             break;
                         case "green":
-                            nwColor = bold + green + nwStructure + reset;
+                            noColor = bold + green + noStructure + reset;
                             break;
                         case "yellow":
-                            nwColor = bold + yellow + nwStructure + reset;
+                            noColor = bold + yellow + noStructure + reset;
                             break;
                         case "blue":
-                            nwColor = bold + blue + nwStructure + reset;
+                            noColor = bold + blue + noStructure + reset;
                             break;
                     }
                 }
                 if (tile.getRoad("n") != null) {
                     switch (tile.getRoad("n").getOwner().getColor()) {
                         case "red":
-                            System.out.print(nwColor + red + bold + " ═══════════════ " + reset); // 13 lignes
+                            System.out.print(noColor + red + bold + " ═══════════════ " + reset); // 13 lignes
                             break;
                         case "green":
-                            System.out.print(nwColor + green + bold + " ═══════════════ " + reset);
+                            System.out.print(noColor + green + bold + " ═══════════════ " + reset);
                             break;
                         case "blue":
-                            System.out.print(nwColor + blue + bold + " ═══════════════ " + reset);
+                            System.out.print(noColor + blue + bold + " ═══════════════ " + reset);
                             break;
                         case "yellow":
-                            System.out.print(nwColor + yellow + bold + " ═══════════════ " + reset);
+                            System.out.print(noColor + yellow + bold + " ═══════════════ " + reset);
                             break;
                     }
                     if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
@@ -68,7 +68,7 @@ public class ConsoleDisplay {
                         printLastColRoads(board, indexOfLine);
                     }
                 } else {
-                    System.out.print(nwColor + "                 ");
+                    System.out.print(noColor + "                 ");
                 }
             } else {
                 if (lastTile != null) {
@@ -114,8 +114,8 @@ public class ConsoleDisplay {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
-                if (tile.getRoad("w") != null) {
-                    westColor = tile.getRoad("w").getOwner().getColor();
+                if (tile.getRoad("o") != null) {
+                    westColor = tile.getRoad("o").getOwner().getColor();
                     switch (westColor) {
                         case "red":
                             westColor = bold + red + "║" + reset;
@@ -153,8 +153,8 @@ public class ConsoleDisplay {
                 System.out.print("                  ");
             } else {
                 String westColor = " ";
-                if (tile.getRoad("w") != null) {
-                    westColor = tile.getRoad("w").getOwner().getColor();
+                if (tile.getRoad("o") != null) {
+                    westColor = tile.getRoad("o").getOwner().getColor();
                     switch (westColor) {
                         case "red":
                             westColor = bold + red + "║" + reset;
@@ -209,8 +209,8 @@ public class ConsoleDisplay {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
-                if (tile.getRoad("w") != null) {
-                    westColor = tile.getRoad("w").getOwner().getColor();
+                if (tile.getRoad("o") != null) {
+                    westColor = tile.getRoad("o").getOwner().getColor();
                     switch (westColor) {
                         case "red":
                             westColor = bold + red + "║" + reset;
@@ -268,8 +268,8 @@ public class ConsoleDisplay {
         for (Tile tile : board.getTiles()[indexOfLine]) {
             if (tile != null) {
                 String westColor = " ";
-                if (tile.getRoad("w") != null) {
-                    westColor = tile.getRoad("w").getOwner().getColor();
+                if (tile.getRoad("o") != null) {
+                    westColor = tile.getRoad("o").getOwner().getColor();
                     switch (westColor) {
                         case "red":
                             westColor = bold + red + "║" + reset;
@@ -312,10 +312,10 @@ public class ConsoleDisplay {
                 int swStructType;
                 String swStructure = " ";
                 String swColor = " ";
-                if (tile.getStructure("sw") != null) {
-                    swColor = tile.getStructure("sw").getOwner().getColor();
-                    if (tile.getStructure("sw") != null) {
-                        swStructType = tile.getStructure("sw").getType();
+                if (tile.getStructure("so") != null) {
+                    swColor = tile.getStructure("so").getOwner().getColor();
+                    if (tile.getStructure("so") != null) {
+                        swStructType = tile.getStructure("so").getType();
                         if (swStructType == 0) {
                             swStructure = colony; // this is not recognized, might need to add a swith for each the
                                                   // colonies and the cities instead of a string variable ... relou
