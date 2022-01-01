@@ -13,6 +13,7 @@ public class ConsoleDisplay {
     public static final String green = "\u001B[32m";
     public static final String yellow = "\u001B[33m";
     public static final String bold = "\033[1m";
+    public static final String magenta = "\u001b[35m";
     public static final String colony = "•";
     public static final String city = "◯";
 
@@ -146,42 +147,6 @@ public class ConsoleDisplay {
         System.out.println();
     }
 
-    // print other tile lines
-    private void printOtherPartTile(Board board, int indexOfLine) {
-        int i = 0;
-        for (Tile tile : board.getTiles()[indexOfLine]) {
-            if (tile != null) {
-                String westColor = " ";
-                if (tile.getRoad("w") != null) {
-                    westColor = tile.getRoad("w").getOwner().getColor();
-                    switch (westColor) {
-                        case "red":
-                            westColor = bold + red + "║" + reset;
-                            break;
-                        case "green":
-                            westColor = bold + green + "║" + reset;
-                            break;
-                        case "yellow":
-                            westColor = bold + yellow + "║" + reset;
-                            break;
-                        case "blue":
-                            westColor = bold + blue + "║" + reset;
-                            break;
-                    }
-                }
-                System.out.print(westColor + bold + " ┃             ┃ ");
-                if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
-                        || (indexOfLine == 4 && i == 5) || (indexOfLine == 5 && i == 5)) {
-                    printLastColRoads(board, indexOfLine);
-                }
-            } else {
-                System.out.print("                  ");
-            }
-            i++;
-        }
-        System.out.println();
-    }
-
     // print the middle of the tiles, with the name of the land
     // desert, colline, plaine, foret, champ, montagne
     private void printTypeOnTile(Board board, int indexOfLine) {
@@ -208,24 +173,27 @@ public class ConsoleDisplay {
                             break;
                     }
                 }
+                String port = "";
+                if (tile.getIsAPort())
+                    port = blue;
                 switch (tile.getTypeTile()) {
                     case "desert":
-                        System.out.print(westColor + bold + " ┃    Desert   ┃ ");
+                        System.out.print(westColor + bold + " ┃   " + port + " Desert " + reset + "  ┃ ");
                         break;
                     case "colline":
-                        System.out.print(westColor + bold + " ┃   Colline   ┃ ");
+                        System.out.print(westColor + bold + " ┃  " + port + " Colline " + reset + "  ┃ ");
                         break;
                     case "plaine":
-                        System.out.print(westColor + bold + " ┃    Plaine   ┃ ");
+                        System.out.print(westColor + bold + " ┃   " + port + " Plaine " + reset + "  ┃ ");
                         break;
                     case "foret":
-                        System.out.print(westColor + bold + " ┃    Foret    ┃ ");
+                        System.out.print(westColor + bold + " ┃   " + port + " Foret " + reset + "   ┃ ");
                         break;
                     case "champ":
-                        System.out.print(westColor + bold + " ┃    Champ    ┃ ");
+                        System.out.print(westColor + bold + " ┃   " + port + " Champ " + reset + "   ┃ ");
                         break;
                     case "montagne":
-                        System.out.print(westColor + bold + " ┃   Montagne  ┃ ");
+                        System.out.print(westColor + bold + " ┃  " + port + " Montagne " + reset + " ┃ ");
                         break;
                 }
                 if ((indexOfLine == 1 && i == 3) || (indexOfLine == 2 && i == 4) || (indexOfLine == 3 && i == 5)
@@ -263,19 +231,23 @@ public class ConsoleDisplay {
                 }
                 if (tile.getType().equals("desert")) {
                     if (tile.hasThief()) {
-                        System.out.print(bold + westColor + " ┃      T      ┃ ");
+                        System.out.print(bold + westColor + " ┃      " + magenta + "V" + reset + "      ┃ ");
                     } else
                         System.out.print(bold + westColor + " ┃             ┃ ");
                 } else {
-                    if (tile.getNumber() > 9) {
+                    if (tile.getNumber() == 0 && !tile.getType().equals("desert")) {
+                        System.out.print(bold + westColor + " ┃      " + blue + "P" + reset + "      ┃ ");
+                    } else if (tile.getNumber() > 9) {
                         if (tile.hasThief()) {
-                            System.out.print(bold + westColor + " ┃     " + tile.getNumber() + " T    ┃ ");
+                            System.out.print(bold + westColor + " ┃     " + tile.getNumber() + " " + magenta + "V" + reset
+                                    + "    ┃ ");
                         } else {
                             System.out.print(bold + westColor + " ┃      " + tile.getNumber() + "     ┃ ");
                         }
                     } else {
                         if (tile.hasThief()) {
-                            System.out.print(bold + westColor + " ┃     " + tile.getNumber() + " T     ┃ ");
+                            System.out.print(bold + westColor + " ┃     " + tile.getNumber() + " " + magenta + "V" + reset
+                                    + "     ┃ ");
                         } else
                             System.out.print(bold + westColor + " ┃      " + tile.getNumber() + "      ┃ ");
                     }
@@ -461,23 +433,20 @@ public class ConsoleDisplay {
         System.out.print("          4        ");
         System.out.print("          5        ");
         for (int i = 0; i < board.getTiles().length; i++) {
-            printHRoads(board, i);
+            if (i < 6)
+                printHRoads(board, i);
 
             System.out.print(" ");
             printTopTile(board, i);
 
-            System.out.print(" ");
-            printOtherPartTile(board, i);
-
+            if (i == 0 || i == 6)
+                System.out.print(" ");
             if (i > 0 && i < 6)
                 System.out.print(i);
             printTypeOnTile(board, i);
 
             System.out.print(" ");
             printNumberOnTile(board, i);
-
-            System.out.print(" ");
-            printOtherPartTile(board, i);
 
             System.out.print(" ");
             printBottomTile(board, i);

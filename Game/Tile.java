@@ -7,7 +7,7 @@ public class Tile {
     private Structure nw, ne, se, sw;
     private final String typeTile; // desert, colline, plaine, foret, champ, montagne
     private final String type;
-    private boolean isAport = false;
+    private boolean isAPort = false;
 
     public Tile(int n, String str) {
         typeTile = str;
@@ -51,8 +51,8 @@ public class Tile {
         }
     }
 
-    public void isApoert() {
-        this.isAport = true;
+    public void isAPort() {
+        this.isAPort = true;
         this.number = 0;
     }
     public String getTypeTile(){return typeTile;}
@@ -140,5 +140,9 @@ public class Tile {
                 return;
         }
         
+    }
+
+    public boolean getIsAPort(){
+        return isAPort;
     }
 }

@@ -60,28 +60,28 @@ public class Board {
             switch (i) {
                 case 0:
                     tiles[0][1] = tilPort.get(i);
-                    tiles[0][1].isApoert();
+                    tiles[0][1].isAPort();
 
                     break;
                 case 1:
                     tiles[4][6] = tilPort.get(i);
-                    tiles[4][6].isApoert();
+                    tiles[4][6].isAPort();
                     break;
                 case 2:
                     tiles[6][3] = tilPort.get(i);
-                    tiles[6][3].isApoert();
+                    tiles[6][3].isAPort();
                     break;
                 case 3:
                     tiles[2][0] = tilPort.get(i);
-                    tiles[2][0].isApoert();
+                    tiles[2][0].isAPort();
                     break;
                 case 4:
                     tiles[0][3] = tilPort.get(i);
-                    tiles[0][3].isApoert();
+                    tiles[0][3].isAPort();
                     break;
                 case 5:
                     tiles[6][5] = tilPort.get(i);
-                    tiles[6][5].isApoert();
+                    tiles[6][5].isAPort();
                     break;
 
             }
