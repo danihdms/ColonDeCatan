@@ -162,13 +162,13 @@ public class PlayConsole {
                             }
                         }
                     }
-    
                 }
             } else {
                 if (dice != 7) {
                     game.distribution(dice);
                 } else {
                     game.setAIThief();
+
                 }
             }
             // si humain

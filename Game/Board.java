@@ -32,6 +32,16 @@ public class Board {
         tileList.add(new Tile("plaine"));
         tileList.add(new Tile("plaine"));
         tileList.add(new Tile("desert", true));
+        // tuile pour port
+        ArrayList<Tile> tilePort = new ArrayList<Tile>();
+        tilePort.add(new Tile("foret"));
+        tilePort.add(new Tile("colline"));
+        tilePort.add(new Tile("champ"));
+        tilePort.add(new Tile("montagne"));
+        tilePort.add(new Tile("plaine"));
+        Collections.shuffle(tilePort);
+        // ajoute un port random
+        tilePort.add(new Tile(tilePort.get(0).getTypeTile()));
 
         // Melange de la liste
         Collections.shuffle(tileList);
@@ -39,9 +49,44 @@ public class Board {
         // Placement des tuiles et de leur numero
         placeTiles(tileList);
         placeNumbers();
+        // Placement des ports
+
+        placePort(tilePort);
     }
 
     // voleurLocation = desert.getLocation();
+    public void placePort(ArrayList<Tile> tilPort) {
+        for (int i = 0; i < 6; i++) {
+            switch (i) {
+                case 0:
+                    tiles[0][1] = tilPort.get(i);
+                    tiles[0][1].isApoert();
+
+                    break;
+                case 1:
+                    tiles[4][6] = tilPort.get(i);
+                    tiles[4][6].isApoert();
+                    break;
+                case 2:
+                    tiles[6][3] = tilPort.get(i);
+                    tiles[6][3].isApoert();
+                    break;
+                case 3:
+                    tiles[2][0] = tilPort.get(i);
+                    tiles[2][0].isApoert();
+                    break;
+                case 4:
+                    tiles[0][3] = tilPort.get(i);
+                    tiles[0][3].isApoert();
+                    break;
+                case 5:
+                    tiles[6][5] = tilPort.get(i);
+                    tiles[6][5].isApoert();
+                    break;
+
+            }
+        }
+    }
 
     public void placeTiles(ArrayList<Tile> tileList) {
         // Nous avons decide de ne pas faire un plateau carre mais ressemblant plus a
@@ -103,7 +148,7 @@ public class Board {
                 break;
             }
 
-            if (tiles[tileOrder[n]][tileOrder[n + 1]].getType().equals("desert")) {
+            if (tiles[tileOrder[n]][tileOrder[n + 1]].getTypeTile().equals("desert")) {
                 tiles[tileOrder[n]][tileOrder[n + 1]].setNumber(7);
             } else {
                 tiles[tileOrder[n]][tileOrder[n + 1]].setNumber(numberOrder[numberTile]);
@@ -370,7 +415,7 @@ public class Board {
                 for (int i = 1; i < 6; i++) {
                     for (int j = 1; j < 6; j++) {
                         if (tiles[i][j] != null) {
-                            if (!tiles[i][j].getType().equals("desert") && tiles[i][j].getNumber() == x) {
+                            if (!tiles[i][j].getTypeTile().equals("desert") && tiles[i][j].getNumber() == x) {
                                 t[0] = tiles[i][j];
                             }
                         }
@@ -383,7 +428,7 @@ public class Board {
                 for (int i = 1; i < 6; i++) {
                     for (int j = 1; j < 6; j++) {
                         if (tiles[i][j] != null) {
-                            if (!tiles[i][j].getType().equals("desert") && tiles[i][j].getNumber() == x) {
+                            if (!tiles[i][j].getTypeTile().equals("desert") && tiles[i][j].getNumber() == x) {
                                 if (count <= 1) {
                                     t[count] = tiles[i][j];
                                     count++;

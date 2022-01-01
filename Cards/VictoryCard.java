@@ -1,4 +1,5 @@
 package Cards;
+
 public class VictoryCard extends DevCard {
     
     public VictoryCard(){
@@ -7,7 +8,7 @@ public class VictoryCard extends DevCard {
 
     @Override
     public void useCard() {
-        // TODO Auto-generated method stub
+        
         
     }
 }

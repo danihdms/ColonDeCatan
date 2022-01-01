@@ -11,7 +11,6 @@ import Cards.ResCard;
 import Cards.RoadBuildingCard;
 import Cards.VictoryCard;
 import Cards.YearOfPlentyCard;
-import Display.ConsoleDisplay;
 
 public class Game {
     private LinkedList<DevCard> devCards;
