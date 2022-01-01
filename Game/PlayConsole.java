@@ -116,7 +116,7 @@ public class PlayConsole {
             Player player = game.getPlayers()[turnP];
             // lancé de dé
             int dice = game.throwDice();
-            if(player.getHuman()){
+            if (player.getHuman()) {
 
                 if (dice != 7) {
                     System.out.println("Vous avez fait " + dice);
@@ -134,7 +134,7 @@ public class PlayConsole {
                         System.out.println("Donnez la colonne où vous voulez placer le voleur.");
                         y = sc.nextLine();
                     }
-    
+
                     Structure[] tabAction = game.getBoard().getThiefColonies();
                     int res = game.getRandom(game.getResCards().size());
                     int playerChoose = game.getRandom(tabAction.length);
@@ -143,7 +143,8 @@ public class PlayConsole {
                         while (tabAction[playerChoose].getOwner() == player) {
                             playerChoose = game.getRandom(tabAction.length);
                         }
-                        while (!game.hasRessources(1, game.getResCards().get(res), tabAction[playerChoose].getOwner())) {
+                        while (!game.hasRessources(1, game.getResCards().get(res),
+                                tabAction[playerChoose].getOwner())) {
                             res = game.getRandom(game.getResCards().size());
                         }
                         game.enleveRessources(game.getResCards().get(res), tabAction[playerChoose].getOwner());
@@ -174,7 +175,8 @@ public class PlayConsole {
             // si humain
             if (player.getHuman()) {
                 // placer structure
-                if (game.hasRessourcesToPlaceStructure(player)) {
+                if (!game.structuresFull() && game.hasRessourcesToPlaceStructure(player)
+                        && player.getNbSettlements() > 0) {
                     System.out.println("Voulez vous placer une colonie ? [y/n]");
                     String rep = sc.nextLine();
 
@@ -204,7 +206,7 @@ public class PlayConsole {
 
                 }
                 // placer routes
-                if (game.hasRessourcesForRoad(player)) {
+                if (!game.roadsFull() && game.hasRessourcesForRoad(player) && player.getNbRoads() > 0) {
                     System.out.println("Voulez-vous placer une route ? [y/n]");
                     String rep = sc.nextLine();
 
@@ -232,7 +234,7 @@ public class PlayConsole {
                     }
                 }
                 // améliorer une colonies
-                if (game.hasRessourcesToUpgrade(player)) {
+                if (game.hasRessourcesToUpgrade(player) && player.getNbCities() > 0) {
                     System.out.println("Voulez-vous améliorer une colonie ? [y/n]");
                     String rep = sc.nextLine();
 
@@ -299,12 +301,13 @@ public class PlayConsole {
                 // TODO echange
             } else {
                 // si c'est une ia
-                if (game.hasRessourcesToPlaceStructure(player) && player.getNbSettlements() > 0) {
+                if (!game.structuresFull() && game.hasRessourcesToPlaceStructure(player)
+                        && player.getNbSettlements() > 0) {
                     game.addAIStructure(player);
                     display.printBoard(game.getBoard());
                 }
 
-                if (game.hasRessourcesForRoad(player) && player.getNbRoads() > 0) {
+                if (!game.roadsFull() && game.hasRessourcesForRoad(player) && player.getNbRoads() > 0) {
                     game.addAIRoad(player);
                     display.printBoard(game.getBoard());
                 }

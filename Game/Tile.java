@@ -55,7 +55,11 @@ public class Tile {
         this.isAPort = true;
         this.number = 0;
     }
-    public String getTypeTile(){return typeTile;}
+
+    public String getTypeTile() {
+        return typeTile;
+    }
+
     public boolean hasThief() {
         return hasThief;
     }
@@ -139,10 +143,42 @@ public class Tile {
                 ne = s;
                 return;
         }
-        
+
     }
 
-    public boolean getIsAPort(){
+    public boolean getIsAPort() {
         return isAPort;
+    }
+
+    public Structure getNe() {
+        return ne;
+    }
+
+    public Structure getSw() {
+        return sw;
+    }
+
+    public Structure getSe() {
+        return se;
+    }
+
+    public Structure getNw() {
+        return nw;
+    }
+
+    public Road getN() {
+        return n;
+    }
+
+    public Road getS() {
+        return s;
+    }
+
+    public Road getE() {
+        return e;
+    }
+
+    public Road getW() {
+        return w;
     }
 }

@@ -196,7 +196,40 @@ public class Game {
         DevCard s = devCards.pop();
         p.getDevC().push(s);
         System.out.println("vous avez piochez :" + s.getType());
+    }
 
+    public boolean structuresFull() {
+        boolean noEmptySpot = true;
+        for (int i = 1; i < 6; i++) {
+            for (int j = 1; j < 6; j++) {
+                if (board.caseValid(i, j)) {
+                    Tile tile = board.getTiles()[i][j];
+                    if (tile.getNw() != null || tile.getNe() != null || tile.getSe() != null || tile.getSw() != null) {
+                        noEmptySpot = false;
+                    }
+                }
+            }
+        }
+        if (noEmptySpot)
+            System.out.println("There is no spot left to place a structure.");
+        return noEmptySpot;
+    }
+
+    public boolean roadsFull() {
+        boolean noEmptySpot = true;
+        for (int i = 1; i < 6; i++) {
+            for (int j = 1; j < 6; j++) {
+                if (board.caseValid(i, j)) {
+                    Tile tile = board.getTiles()[i][j];
+                    if (tile.getN() != null || tile.getS() != null || tile.getE() != null || tile.getW() != null) {
+                        noEmptySpot = false;
+                    }
+                }
+            }
+        }
+        if (noEmptySpot)
+            System.out.println("There is no spot left to place a road.");
+        return noEmptySpot;
     }
 
     public void addAIStructure(Player player) {
