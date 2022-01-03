@@ -34,13 +34,13 @@ public class Tile {
                 return "argile";
 
             case "plaine":
-                return "mouton";
+                return "laine";
 
             case "foret":
                 return "bois";
 
             case "champ":
-                return "mouton";
+                return "blé";
 
             case "montagne":
                 return "minerais";
@@ -127,7 +127,14 @@ public class Tile {
         System.out.println("You have to choose between no, so, ne, and se to get the structure.");
         return null;
     }
-
+    public boolean hasStructure(Player p,String pos){
+        if (getStructure(pos) != null){
+           if ( getStructure(pos).getOwner() == p){
+                return true;
+           }
+        }
+        return false;
+    }
     public void setStructure(Structure s, String structurePos) {
         switch (structurePos) {
             case "no":

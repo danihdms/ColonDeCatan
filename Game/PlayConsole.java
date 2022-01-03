@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Display.ConsoleDisplay;
@@ -139,9 +140,11 @@ public class PlayConsole {
                     int res = game.getRandom(game.getResCards().size());
                     int playerChoose = game.getRandom(tabAction.length);
                     // vol d'une ressources apres le placement du voleur
-                    if (tabAction.length > 0 && tabAction != null) {
+                    if (tabAction != null) {
                         while (tabAction[playerChoose].getOwner() == player) {
+
                             playerChoose = game.getRandom(tabAction.length);
+
                         }
                         while (!game.hasRessources(1, game.getResCards().get(res),
                                 tabAction[playerChoose].getOwner())) {
@@ -149,17 +152,16 @@ public class PlayConsole {
                         }
                         game.enleveRessources(game.getResCards().get(res), tabAction[playerChoose].getOwner());
                         game.giveRessources(game.getResCards().get(res), player);
+                        System.out.println("vous avez trouvé des ressources");
                     }
                     // le vol des ressources; si il faut enlever les ressources quand au dessus de
                     // 7;
                     for (int i = 0; i < game.getPlayers().length; i++) {
                         if (game.getPlayers()[i].getResC().size() > 7) {
-                            int s = game.getPlayers()[i].getResC().size();
-                            while (game.getPlayers()[i].getResC().size() != s / 2) {
-                                while (!game.hasRessources(1, game.getResCards().get(res), game.getPlayers()[i])) {
-                                    res = game.getRandom(game.getResCards().size());
-                                }
-                                game.enleveRessources(game.getResCards().get(res), game.getPlayers()[i]);
+                            int s = game.getPlayers()[i].getResC().size() / 2;
+                            for (int j = 0; j < s; j++) {
+                                game.getResCards().add(game.getPlayers()[i].getResC().get(i));
+                                game.getPlayers()[i].getResC().remove(j);
                             }
                         }
                     }
@@ -174,6 +176,7 @@ public class PlayConsole {
             }
             // si humain
             if (player.getHuman()) {
+                game.PlayerStat(player);
                 // placer structure
                 if (!game.structuresFull() && game.hasRessourcesToPlaceStructure(player)
                         && player.getNbSettlements() > 0) {
@@ -265,37 +268,162 @@ public class PlayConsole {
                         game.giveVictoryP(player);
                     }
                 }
-                if (!player.getDevC().isEmpty()) {
-                    // voulez vous jouez une carte ?,laquelle,jouez la carte si oui
-                    if (game.hassRessourcesPickCard(player)) {
-                        System.out.println("Voulez-vous piochez une carte ? [y/n]");
-                        String rep = sc.nextLine();
 
+                // voulez vous jouez une carte ?,laquelle,jouez la carte si oui
+                if (game.hassRessourcesPickCard(player)) {
+                    System.out.println("Voulez-vous piochez une carte ? [y/n]");
+                    String rep = sc.nextLine();
+
+                    if (rep.equals("y")) {
+                        game.throwCard(player);
+                        game.PrendrePaiement(player, coutPioche);
+                    }
+                    if (!player.getDevC().isEmpty()) {
+                        System.out.println("Voulez vous jouez l'une de vos cartes ?[y/n]");
+                        rep = sc.nextLine();
                         if (rep.equals("y")) {
-                            game.throwCard(player);
-                            game.PrendrePaiement(player, coutPioche);
-                        }
-                        if (!player.getDevC().isEmpty()) {
-                            System.out.println("Voulez vous jouez l'une de vos cartes ?[y/n]");
+                            System.out.println("Vous avez le choix entre ces cartes Choisissez avec le numéro");
+                            for (int i = 0; i < player.getDevC().size(); i++) {
+                                System.out.println(i + "." + player.getDevC().get(i).getType());
+                            }
                             rep = sc.nextLine();
-                            if (rep.equals("y")) {
-                                System.out.println("Vous avez le choix entre ces cartes Choisissez avec le numéro");
-                                for (int i = 0; i < player.getDevC().size(); i++) {
-                                    System.out.println(i + "." + player.getDevC().get(i).getType());
-                                }
-                                rep = sc.nextLine();
-                                // verifiez le numero
-                                player.getDevC().get(Integer.parseInt(rep)).useCard();
-                                // todo les différenetes cartes et effets
-                                if (player.getDevC().get(Integer.parseInt(rep)).getType().equals("victory")) {
+                            // verifiez le numero
 
-                                } else {
+                            player.getDevC().get(Integer.parseInt(rep)).useCard();
+                            // todo les différenetes cartes et effets
+                            switch (player.getDevC().get(Integer.parseInt(rep)).getType()) {
+                                case "victory":
+                                    player.setV(player.getV() + 2);
                                     player.getResC().remove(Integer.parseInt(rep));
-                                }
+                                    break;
+                                case "knight":
+                                    System.out.println("Veuillez deplacer le voleur.");
+                                    System.out.println("Donnez la ligne où vous voulez placer le voleur.");
+                                    String x = sc.nextLine();
+                                    System.out.println("Donnez la colonne où vous voulez placer le voleur.");
+                                    String y = sc.nextLine();
+                                    while (!game.getBoard().setThief(Integer.parseInt(x), Integer.parseInt(y))) {
+                                        System.out.println(
+                                                "Vous ne respecter pas la règle de placement. Recommencez");
+                                        System.out.println("Donnez la ligne où vous voulez placer le voleur.");
+                                        x = sc.nextLine();
+                                        System.out.println("Donnez la colonne où vous voulez placer le voleur.");
+                                        y = sc.nextLine();
+                                    }
 
+                                    Structure[] tabAction = game.getBoard().getThiefColonies();
+                                    int res = game.getRandom(game.getResCards().size());
+                                    int playerChoose = game.getRandom(tabAction.length);
+                                    // vol d'une ressources apres le placement du voleur
+                                    if (tabAction != null) {
+                                        while (tabAction[playerChoose].getOwner() == player) {
+
+                                            playerChoose = game.getRandom(tabAction.length);
+
+                                        }
+                                        while (!game.hasRessources(1, game.getResCards().get(res),
+                                                tabAction[playerChoose].getOwner())) {
+                                            res = game.getRandom(game.getResCards().size());
+                                        }
+                                        game.enleveRessources(game.getResCards().get(res),
+                                                tabAction[playerChoose].getOwner());
+                                        game.giveRessources(game.getResCards().get(res), player);
+                                        System.out.println("vous avez trouvé des ressources");
+                                    }
+                                    player.chevalierJ++;
+                                    if (player.chevalierJ == 3 && !game.getFirtsTo3Knight()) {
+                                        player.setV(player.getV() + 2);
+                                        game.setfirstTo3Knigths();
+                                    }
+                                    player.getResC().remove(Integer.parseInt(rep));
+                                    break;
+                                case "roadBuilding":
+                                    int count = 0;
+                                    while (count < 2) {
+                                        System.out.println("Donnez la ligne où placer votre route.");
+                                        x = sc.nextLine();
+                                        System.out.println("Donnez la colonne où placer votre route.");
+                                        y = sc.nextLine();
+                                        System.out.println("Dans quel coin voulez-vous la placer ? [n/o/e/s]");
+                                        String pos = sc.nextLine();
+                                        while (!game.getBoard().addRoad(Integer.parseInt(x), Integer.parseInt(y),
+                                                new Road(player),
+                                                pos)) {
+                                            System.out.println(
+                                                    "Vous ne respecter pas la règle de placement. Recommencez.");
+                                            System.out.println("Donnez la ligne où placer votre route.");
+                                            x = sc.nextLine();
+                                            System.out.println("Donnez la colonne où placer votre route.");
+                                            y = sc.nextLine();
+                                            System.out.println("Dans quel coin voulez-vous la placer ? [n/o/e/s]");
+                                            pos = sc.nextLine();
+                                        }
+                                        player.nbRoads--;
+                                        count++;
+                                    }
+                                    // verifier si route la plus longue;
+                                    player.getResC().remove(Integer.parseInt(rep));
+                                case "monopoly":
+                                    System.out.println(
+                                            "choisissez une ressources à monopoliser entre :[argile, laine, blé, minerais, bois]");
+                                    String repp = sc.nextLine();
+                                    for (int i = 0; i < game.getPlayers().length; i++) {
+                                        if (game.getPlayers()[i] != player) {
+                                            while (game.hasRessources(1, new ResCard(repp), game.getPlayers()[i])) {
+                                                game.enleveRessources(new ResCard(repp), game.getPlayers()[i]);
+                                                game.giveRessources(new ResCard(repp), player);
+                                            }
+                                        }
+                                    }
+                                    player.getResC().remove(Integer.parseInt(rep));
+                                    break;
+                                case "yearOfPlenty":
+                                    System.out.println(
+                                            "Vous avez le droit de choisir deux ressources parmi [argile, laine, blé, minerais, bois]");
+
+                                    System.out.println("Ressource 1:");
+                                    String ress = sc.nextLine();
+                                    game.giveRessources(new ResCard(ress), player);
+                                    System.out.println("Ressource 2:");
+                                    ress = sc.nextLine();
+                                    game.giveRessources(new ResCard(ress), player);
+                                    player.getResC().remove(Integer.parseInt(rep));
+
+                                default:
+                                    break;
                             }
 
+                            player.getResC().remove(Integer.parseInt(rep));
+
                         }
+
+                    }
+                }
+
+                if (game.AcotéDunPort(player)) {
+
+                    System.out.println(
+                            "Vous pouvez échanger des ressources avec un port,vous pouvez donnez deux  ressources  similaire au port contre une choisis");
+                    System.out.println("vous voulez ?[y/n]");
+                    String answer = sc.nextLine();
+                    if (answer.equals("y")) {
+                        ArrayList<String> port = game.ListPortPlayer(player);
+                        System.out.println("Vous avez le choix entre :");
+                        for (String s : port) {
+                            System.out.print(s + " ");
+                        }
+                        System.out.println("");
+                        answer = sc.nextLine();
+                        if (game.hasRessources(2, new ResCard(answer), player)) {
+                            System.out.println("choisissez votre ressources [laine,blé,bois,argile,minerais]");
+                            String choix = sc.nextLine();
+                            game.enleveRessources(new ResCard(answer), player);
+                            game.enleveRessources(new ResCard(answer), player);
+                            game.giveRessources(new ResCard(choix), player);
+                        } else {
+                            System.out.println("vous n'avez pas les ressources suffisantes");
+                        }
+
                     }
                 }
                 // TODO echange

@@ -14,6 +14,7 @@ public class Player {
     public int nbCities = 4;
     public int nbRoads = 15;
     private int nbVictoryPoints = 0;
+    public int chevalierJ=0;
 
     private LinkedList<Integer[]> structures;
     // Only useful for AI since it makes random moves.

@@ -59,7 +59,7 @@ public class Board {
         for (int i = 0; i < 6; i++) {
             switch (i) {
                 case 0:
-                    tiles[0][1] = tilPort.get(i);
+                    tiles[0][1] = tilPort.get(i); //01 46 63 20 03 65
                     tiles[0][1].isAPort();
 
                     break;
@@ -269,7 +269,7 @@ public class Board {
         return false;
     }
 
-    public boolean caseValid(int x, int y) {
+    public boolean caseValid(int x, int y) { 
         switch (x) {
             case 0:
                 return false;
@@ -485,12 +485,26 @@ public class Board {
     // donner la liste de structure autour du voleur
     public Structure[] getThiefColonies() {
 
-        Structure[] list = new Structure[4];
+        
         Tile temp = tiles[getThief()[0]][getThief()[1]];
-        list[0] = temp.getStructure("ne");
-        list[1] = temp.getStructure("no");
-        list[2] = temp.getStructure("se");
-        list[3] = temp.getStructure("so");
+        String [] t={"no","ne","se","so"};
+        int count =0;
+        for(int i=0;i<4;i++){
+            if(temp.getStructure(t[i]) != null){
+                count++;
+            }
+        }
+        Structure[] list = new Structure[count];
+        count=0;
+        for(int i=0;i<4;i++){
+            if(temp.getStructure(t[i]) != null){
+                list[count]=temp.getStructure(t[i]);
+                count++;
+                if (count == list.length){
+                    break;
+                }
+            }
+        }
         return list;
 
     }

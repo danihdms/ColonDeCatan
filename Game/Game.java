@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
@@ -17,6 +18,7 @@ public class Game {
     private LinkedList<ResCard> resCards;
     private Board board;
     private Player[] players;
+    private boolean firtsTo3Knight = false;
 
     public Game(Player[] player) {
         this.devCards = addDevCards();
@@ -28,6 +30,14 @@ public class Game {
             System.out.println("Il doit y avoir au minimum 2 joueurs et au maximum 4.");
             throw new IllegalStateException();
         }
+    }
+
+    public void setfirstTo3Knigths() {
+        this.firtsTo3Knight = true;
+    }
+
+    public boolean getFirtsTo3Knight() {
+        return this.firtsTo3Knight;
     }
 
     public LinkedList<DevCard> addDevCards() {
@@ -52,7 +62,7 @@ public class Game {
     public LinkedList<ResCard> addResCards() {
         this.resCards = new LinkedList<>();
         for (int i = 0; i < 19; i++) {
-            resCards.add(new ResCard("ble"));
+            resCards.add(new ResCard("blé"));
             resCards.add(new ResCard("bois"));
             resCards.add(new ResCard("argile"));
             resCards.add(new ResCard("minerais"));
@@ -287,4 +297,59 @@ public class Game {
     public LinkedList<ResCard> getResCards() {
         return this.resCards;
     }
+
+    public boolean AcotéDunPort(Player p) {
+        if(board.getTiles()[1][1].hasStructure(p, "no") || board.getTiles()[1][1].hasStructure(p, "ne")){return true;}
+        if(board.getTiles()[1][3].hasStructure(p, "no") || board.getTiles()[1][3].hasStructure(p, "ne")){return true;}
+        if(board.getTiles()[2][1].hasStructure(p, "no") || board.getTiles()[2][1].hasStructure(p, "so")){return true;}
+        if(board.getTiles()[4][5].hasStructure(p, "se") || board.getTiles()[4][5].hasStructure(p, "ne")){return true;}
+        if(board.getTiles()[5][3].hasStructure(p, "se") || board.getTiles()[5][3].hasStructure(p, "so")){return true;}
+        if(board.getTiles()[5][5].hasStructure(p, "se") || board.getTiles()[5][5].hasStructure(p, "so")){return true;}
+
+        System.out.println("pas de port");
+        return false;
+        
+    }
+    public ArrayList<String> ListPortPlayer(Player p){
+        ArrayList<String> fin=new ArrayList<String>();
+        if(board.getTiles()[1][1].hasStructure(p, "no") || board.getTiles()[1][1].hasStructure(p, "ne")){fin.add(board.getTiles()[0][1].getType());}
+        if(board.getTiles()[1][3].hasStructure(p, "no") || board.getTiles()[1][3].hasStructure(p, "ne")){fin.add(board.getTiles()[0][3].getType());}
+        if(board.getTiles()[2][1].hasStructure(p, "no") || board.getTiles()[2][1].hasStructure(p, "so")){fin.add(board.getTiles()[2][0].getType());}
+        if(board.getTiles()[4][5].hasStructure(p, "se") || board.getTiles()[4][5].hasStructure(p, "ne")){fin.add(board.getTiles()[4][6].getType());}
+        if(board.getTiles()[5][3].hasStructure(p, "se") || board.getTiles()[5][3].hasStructure(p, "so")){fin.add(board.getTiles()[6][3].getType());}
+        if(board.getTiles()[5][5].hasStructure(p, "se") || board.getTiles()[5][5].hasStructure(p, "so")){fin.add(board.getTiles()[6][5].getType());}
+        
+        return fin;
+    }
+    public void PlayerStat(Player p){
+        
+        int countLaine =0;
+        int CountBle=0;
+        int CountArgile=0;
+        int CountBois=0;
+        int CountMinerais=0;
+        for (ResCard res : p.getResC()){
+            switch(res.getType()){
+                case "laine":
+                    countLaine++;
+                    break;
+                case "blé":
+                    CountBle++;
+                    break;
+                case "argile":
+                    CountArgile++;
+                    break;
+                case "minerais":
+                    CountMinerais++;
+                    break;
+                case "bois":
+                    CountBois++;
+                    break;
+                default :
+                break;
+            }
+        }
+        System.out.println("Laine = "+countLaine+" | Blé = "+CountBle+" | Argile = "+CountArgile+" | Minerais = "+CountMinerais+" | Bois = "+CountBois+ " | Point de Victoire = "+p.getV());
+    }
+
 }
