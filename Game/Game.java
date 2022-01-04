@@ -73,7 +73,7 @@ public class Game {
 
     public int throwDice() {
         Random r = new Random();
-        int x = r.nextInt(13) + 2;// crée un nombre entre 2 et 12
+        int x = r.nextInt(12) + 2;// crée un nombre entre 2 et 12
         return x;
     }
 
