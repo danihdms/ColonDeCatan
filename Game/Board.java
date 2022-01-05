@@ -540,7 +540,7 @@ public class Board {
     public int longuestRoad(Player p, int x, int y, String or, String dir) { // or equivaut à n/s/e/o pour la route et
                                                                              // dir represente la direction dans
                                                                              // laquelle le parcours va se faire on
-                                                                             // commencera en ""
+                                                                             // commencera en "h&b"
         // verification si tuile vide
         int b = 0;
         int h = 0;
@@ -560,64 +560,132 @@ public class Board {
         switch (or) {
             case "e":
                 if (dir.equals("h&b")) {
+                    if (tiles[x][y].hasStructure(p, "ne") || tiles[x][y].getStructure("ne") == null) {
+                        h = 1 + MaxOf3(longuestRoad(p, x, y, "n", "g"), longuestRoad(p, x, y + 1, "n", "d"),
+                                longuestRoad(p, x - 1, y, "e", "h"));
+                    } 
 
+                    if (tiles[x][y].hasStructure(p, "se") || tiles[x][y].getStructure("se") == null) {
+                        b = 1 + MaxOf3(longuestRoad(p, x, y, "s", "g"), longuestRoad(p, x, y + 1, "s", "d"),
+                                longuestRoad(p, x + 1, y, "e", "b"));
+                    } 
+                    return b+h;
                 } else {
                     if (dir.equals("h")) {
                         if (tiles[x][y].hasStructure(p, "ne") || tiles[x][y].getStructure("ne") == null) {
-                            h = 1 + MaxOf3(longuestRoad(p, x, y, "n", "h"), longuestRoad(p, x, y + 1, "n", "h"),
-                                    longuestRoad(p, x - 1, y, "e", "h"));
+                            return 1 + MaxOf3(longuestRoad(p, x, y, "n", "g"), longuestRoad(p, x, y + 1, "n", "d"),
+                                longuestRoad(p, x - 1, y, "e", "h"));
                         } else {
                             return 0;
                         }
                     } else {
                         if (tiles[x][y].hasStructure(p, "se") || tiles[x][y].getStructure("se") == null) {
-                            b = 1 + MaxOf3(longuestRoad(p, x, y, "s", "b"), longuestRoad(p, x, y + 1, "s", "b"),
-                                    longuestRoad(p, x + 1, y, "e", "b"));
+                            return 1 + MaxOf3(longuestRoad(p, x, y, "s", "g"), longuestRoad(p, x, y + 1, "s", "d"),
+                                longuestRoad(p, x + 1, y, "e", "b"));
                         } else {
                             return 0;
                         }
                     }
-                    break;
+
                 }
 
             case "o":
                 if (dir.equals("h&b")) {
-                    if (tiles[x][y].hasStructure(p, "ne") || tiles[x][y].getStructure("ne") == null) {
-                        h = 1 + MaxOf3(longuestRoad(p, x, y, "n", "h"), longuestRoad(p, x, y + 1, "n", "h"),
-                                longuestRoad(p, x - 1, y, "e", "h"));
-                    } else {
-                        return 0;
-                    }
+                    if (tiles[x][y].hasStructure(p, "no") || tiles[x][y].getStructure("no") == null) {
+                        h = 1 + MaxOf3(longuestRoad(p, x, y, "n", "d"), longuestRoad(p, x, y - 1, "n", "g"),
+                                longuestRoad(p, x - 1, y, "o", "h"));
+                    } 
 
-                    if (tiles[x][y].hasStructure(p, "se") || tiles[x][y].getStructure("se") == null) {
-                        b = 1 + MaxOf3(longuestRoad(p, x, y, "s", "b"), longuestRoad(p, x, y + 1, "s", "b"),
-                                longuestRoad(p, x + 1, y, "e", "b"));
-                    } else {
-                        return 0;
-                    }
+                    if (tiles[x][y].hasStructure(p, "so") || tiles[x][y].getStructure("so") == null) {
+                        b = 1 + MaxOf3(longuestRoad(p, x, y, "s", "d"), longuestRoad(p, x, y - 1, "s", "g"),
+                                longuestRoad(p, x + 1, y, "o", "b"));
+                    } 
+                    return b+h;
                 } else {
                     if (dir.equals("h")) {
-                        if (tiles[x][y].hasStructure(p, "ne") || tiles[x][y].getStructure("ne") == null) {
-                            h = 1 + MaxOf3(longuestRoad(p, x, y, "n", "h"), longuestRoad(p, x, y + 1, "n", "h"),
-                                    longuestRoad(p, x - 1, y, "e", "h"));
+                        if (tiles[x][y].hasStructure(p, "no") || tiles[x][y].getStructure("no") == null) {
+                            return 1 + MaxOf3(longuestRoad(p, x, y, "n", "d"), longuestRoad(p, x, y - 1, "n", "g"),
+                                longuestRoad(p, x - 1, y, "o", "h"));
                         } else {
                             return 0;
                         }
                     } else {
-                        if (tiles[x][y].hasStructure(p, "se") || tiles[x][y].getStructure("se") == null) {
-                            b = 1 + MaxOf3(longuestRoad(p, x, y, "s", "b"), longuestRoad(p, x, y + 1, "s", "b"),
-                                    longuestRoad(p, x + 1, y, "e", "b"));
+                        if (tiles[x][y].hasStructure(p, "so") || tiles[x][y].getStructure("so") == null) {
+                            return 1 + MaxOf3(longuestRoad(p, x, y, "s", "d"), longuestRoad(p, x, y - 1, "s", "g"),
+                                longuestRoad(p, x + 1, y, "o", "b"));
                         } else {
                             return 0;
                         }
                     }
-                    break;
+                
                 }
             case "n":
+                if (dir.equals("h&b")) {
+                    if (tiles[x][y].hasStructure(p, "no") || tiles[x][y].getStructure("no") == null) {
+                        h = 1 + MaxOf3(longuestRoad(p, x, y, "o", "b"), longuestRoad(p, x, y - 1, "n", "g"),
+                                longuestRoad(p, x - 1, y, "o", "h"));
+                    } 
+                    
+
+                    if (tiles[x][y].hasStructure(p, "ne") || tiles[x][y].getStructure("ne") == null) {
+                        b = 1 + MaxOf3(longuestRoad(p, x, y, "e", "b"), longuestRoad(p, x, y + 1, "n", "d"),
+                                longuestRoad(p, x - 1, y, "e", "h"));
+                    } 
+
+                    return b+h;
+                } else {
+                    if (dir.equals("g")) {
+                        if (tiles[x][y].hasStructure(p, "no") || tiles[x][y].getStructure("no") == null) {
+                            return  1 + MaxOf3(longuestRoad(p, x, y, "o", "b"), longuestRoad(p, x, y - 1, "n", "g"),
+                                longuestRoad(p, x - 1, y, "o", "h"));
+                        } else {
+                            return 0;
+                        }
+                    } else {
+                        if (tiles[x][y].hasStructure(p, "ne") || tiles[x][y].getStructure("ne") == null) {
+                            return  1 + MaxOf3(longuestRoad(p, x, y, "e", "b"), longuestRoad(p, x, y + 1, "n", "d"),
+                                longuestRoad(p, x - 1, y, "e", "h"));
+                        } else {
+                            return 0;
+                        }
+                    }
+                    
+                }
             case "s":
-            default:
+                if (dir.equals("h&b")) {
+                    if (tiles[x][y].hasStructure(p, "so") || tiles[x][y].getStructure("so") == null) {
+                        h = 1 + MaxOf3(longuestRoad(p, x, y, "o", "h"), longuestRoad(p, x, y -1 , "s", "g"),
+                                longuestRoad(p, x + 1, y, "o", "b"));
+                    } 
+
+                    if (tiles[x][y].hasStructure(p, "se") || tiles[x][y].getStructure("se") == null) {
+                        b = 1 + MaxOf3(longuestRoad(p, x, y, "e", "h"), longuestRoad(p, x, y + 1, "s", "d"),
+                                longuestRoad(p, x + 1, y, "e", "b"));
+                    } 
+
+                    return b+h;
+                } else {
+                    if (dir.equals("g")) {
+                        if (tiles[x][y].hasStructure(p, "no") || tiles[x][y].getStructure("no") == null) {
+                            return 1 + MaxOf3(longuestRoad(p, x, y, "o", "h"), longuestRoad(p, x, y -1 , "s", "g"),
+                                longuestRoad(p, x + 1, y, "o", "b"));
+                        } else {
+                            return 0;
+                        }
+                    } else {
+                        if (tiles[x][y].hasStructure(p, "so") || tiles[x][y].getStructure("so") == null) {
+                            return 1 + MaxOf3(longuestRoad(p, x, y, "e", "h"), longuestRoad(p, x, y + 1, "s", "d"),
+                                longuestRoad(p, x + 1, y, "e", "b"));
+                        } else {
+                            return 0;
+                        }
+                    }
+                    
+                }
+            
 
         }
+
         return h + b;
     }
 
@@ -629,6 +697,9 @@ public class Board {
             return y;
         }
         return z;
+    }
+    public void rebootList(){
+        this.idList=new ArrayList<Integer>();
     }
 
     // trouver la plus longue route(optionnel)

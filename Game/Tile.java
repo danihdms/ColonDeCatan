@@ -6,24 +6,24 @@ public class Tile {
     private Road n, s, e, o;
     private Structure no, ne, se, so;
     private final String typeTile; // desert, colline, plaine, foret, champ, montagne
-    private final String type;
+    private final String typeRes;
     private boolean isAPort = false;
 
     public Tile(int n, String str) {
         typeTile = str;
         number = n;
-        type = setType(str);
+        typeRes= setType(str);
     }
 
     public Tile(String str) {
         typeTile = str;
-        type = setType(str);
+        typeRes= setType(str);
     }
 
     public Tile(String str, boolean b) {
         typeTile = str;
         hasThief = b;
-        type = setType(str);
+        typeRes= setType(str);
 
     }
 
@@ -77,7 +77,7 @@ public class Tile {
     }
 
     public String getType() {
-        return type;
+        return typeRes;
     }
 
     public Road getRoad(String roadPos) {

@@ -1,37 +1,18 @@
 package Display;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.NoSuchFileException;
 
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
 import Game.*;
 
-public class ImagePane extends JPanel {
-    Image image;
-    boolean fit;
+public interface GUIMethods {
 
-    ImagePane(Image image, boolean fit) {
-            this.image = image;
-            this.fit = fit;
-            setLayout(new BorderLayout());
-        }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if(fit){
-            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-        } else {
-            g.drawImage(image, 0, 0, null);
-        }
-    }
-
-    public GridBagLayout appendObjects(Game game) {
+    public static GridBagLayout appendObjects(Game game, JPanel panel) {
         GridBagLayout gbl = new GridBagLayout();
-        this.setLayout(gbl);
+        panel.setLayout(gbl);
         GridBagConstraints gc = new GridBagConstraints();
         Tile[][] tiles = game.getBoard().getTiles();
         int x = 0, y = 0;
@@ -48,7 +29,7 @@ public class ImagePane extends JPanel {
                                 Image image = ImageIO.read(new File("res/colony.jpg"));
                                 JStructure s = new JStructure(image, true, x, y, 0);
                                 s.setBackground(getColorStructure(tiles[i][j].getNo()));
-                                this.add(s);
+                                panel.add(s);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -58,7 +39,7 @@ public class ImagePane extends JPanel {
                                 Image image = ImageIO.read(new File("res/city.jpg"));
                                 JStructure s = new JStructure(image, true, x, y, 1);
                                 s.setBackground(getColorStructure(tiles[i][j].getNo()));
-                                this.add(s);
+                                panel.add(s);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -69,7 +50,7 @@ public class ImagePane extends JPanel {
                         gc.weighty = 0.2;
                         gc.gridx = x;
                         gc.gridy = y;
-                        this.add(new JPanel());
+                        panel.add(new JPanel());
                         x++;
                     }
                     if (tiles[i][j].getN() != null) {
@@ -79,14 +60,14 @@ public class ImagePane extends JPanel {
                         gc.gridy = y;
                         JRoad r = new JRoad(x, y, "horizontal");
                         r.setBackground(getColorRoad(tiles[i][j].getN()));
-                        this.add(r);
+                        panel.add(r);
                         x++;
                     } else {
                         gc.weightx = 0.8;
                         gc.weighty = 0.2;
                         gc.gridx = x;
                         gc.gridy = y;
-                        this.add(new JPanel());
+                        panel.add(new JPanel());
                         x++;
                     }
                     if (x == 15) {
@@ -100,7 +81,7 @@ public class ImagePane extends JPanel {
                                     Image image = ImageIO.read(new File("res/colony.jpg"));
                                     JStructure s = new JStructure(image, true, x, y, 0);
                                     s.setBackground(getColorStructure(tiles[i][j].getNo()));
-                                    this.add(s);
+                                    panel.add(s);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -110,7 +91,7 @@ public class ImagePane extends JPanel {
                                     Image image = ImageIO.read(new File("res/city.jpg"));
                                     JStructure s = new JStructure(image, true, x, y, 1);
                                     s.setBackground(getColorStructure(tiles[i][j].getNo()));
-                                    this.add(s);
+                                    panel.add(s);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -121,7 +102,7 @@ public class ImagePane extends JPanel {
                             gc.weighty = 0.2;
                             gc.gridx = x;
                             gc.gridy = y;
-                            this.add(new JPanel());
+                            panel.add(new JPanel());
                             x = 0;
                         }
                     }
@@ -130,7 +111,7 @@ public class ImagePane extends JPanel {
                     gc.weighty = 1;
                     gc.gridx = x;
                     gc.gridy = y;
-                    this.add(new JPanel());
+                    panel.add(new JPanel());
                 }
             }
             for (int j = 0; j < tiles[i].length; j++) {
@@ -142,14 +123,14 @@ public class ImagePane extends JPanel {
                         gc.gridy = y;
                         JRoad r = new JRoad(x, y, "vertical");
                         r.setBackground(getColorRoad(tiles[i][j].getO()));
-                        this.add(r);
+                        panel.add(r);
                         x++;
                     } else {
                         gc.weightx = 0.2;
                         gc.weighty = 0.8;
                         gc.gridx = x;
                         gc.gridy = y;
-                        this.add(new JPanel());
+                        panel.add(new JPanel());
                         x++;
                     }
                     gc.weightx = 0.8;
@@ -158,9 +139,9 @@ public class ImagePane extends JPanel {
                     gc.gridy = y;
                     try{
                         JTile tile = new JTile(getImageTypeTile(tiles[i][j]), false, x, y, tiles[i][j].getTypeTile());
-                        this.add(tile);
+                        panel.add(tile);
                     } catch (Exception e) {
-                        this.add(new JPanel());
+                        panel.add(new JPanel());
                     }
                     if(x == 15){
                         if (tiles[i][j].getE() != null) {
@@ -170,14 +151,14 @@ public class ImagePane extends JPanel {
                             gc.gridy = y;
                             JRoad r = new JRoad(x, y, "vertical");
                             r.setBackground(getColorRoad(tiles[i][j].getE()));
-                            this.add(r);
+                            panel.add(r);
                             x++;
                         } else {
                             gc.weightx = 0.2;
                             gc.weighty = 0.8;
                             gc.gridx = x;
                             gc.gridy = y;
-                            this.add(new JPanel());
+                            panel.add(new JPanel());
                             x++;
                         }
                     }
@@ -186,7 +167,7 @@ public class ImagePane extends JPanel {
                     gc.weighty = 1;
                     gc.gridx = x;
                     gc.gridy = y;
-                    this.add(new JPanel());
+                    panel.add(new JPanel());
                 }
             }
         }
@@ -271,5 +252,4 @@ public class ImagePane extends JPanel {
         }
         return null;
     }
-
 }

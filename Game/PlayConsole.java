@@ -117,7 +117,7 @@ public class PlayConsole {
             Player player = game.getPlayers()[turnP];
             // lancé de dé
             int dice = game.throwDice();
-            
+
             if (player.getHuman()) {
 
                 if (dice != 7) {
@@ -177,9 +177,7 @@ public class PlayConsole {
             }
             // si humain
             if (player.getHuman()) {
-                
-                
-                
+
                 System.out.println(game.PlayerStat(player));
                 // placer structure
                 if (!game.structuresFull() && game.hasRessourcesToPlaceStructure(player)
@@ -235,6 +233,10 @@ public class PlayConsole {
                             pos = sc.nextLine();
                         }
                         player.nbRoads--;
+                        if (game.seeHasTheLonguest(player, Integer.parseInt(x), Integer.parseInt(y), pos)) {
+                            game.getBoard().rebootList();
+                            System.out.println("vous avez la route la plus longue");
+                        }
                         display.printBoard(game.getBoard());
                         game.PrendrePaiement(player, coutRoad);
                         // TODO la route la plus longue plus tout ce qu'il y a autour
@@ -314,7 +316,7 @@ public class PlayConsole {
                                         System.out.println("Donnez la colonne où vous voulez placer le voleur.");
                                         y = sc.nextLine();
                                     }
-                                    
+
                                     Structure[] tabAction = game.getBoard().getThiefColonies();
                                     int res = game.getRandom(game.getResCards().size());
                                     int playerChoose = game.getRandom(tabAction.length);
@@ -362,7 +364,12 @@ public class PlayConsole {
                                             System.out.println("Dans quel coin voulez-vous la placer ? [n/o/e/s]");
                                             pos = sc.nextLine();
                                         }
-                                        
+                                        if (game.seeHasTheLonguest(player, Integer.parseInt(x), Integer.parseInt(y),
+                                                pos)) {
+                                            game.getBoard().rebootList();
+                                            System.out.println("vous avez la route la plus longue");
+                                        }
+
                                         player.nbRoads--;
                                         count++;
                                     }
@@ -398,8 +405,6 @@ public class PlayConsole {
                                     break;
                             }
                             display.printBoard(game.getBoard());
-
-                            
 
                         }
 

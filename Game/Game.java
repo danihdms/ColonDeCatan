@@ -19,6 +19,8 @@ public class Game {
     private Board board;
     private Player[] players;
     private boolean firtsTo3Knight = false;
+    private int LonguestRoad=0;
+    private Player hasTheLonguestR;
 
     public Game(Player[] player) {
         this.devCards = addDevCards();
@@ -27,9 +29,25 @@ public class Game {
         if (player.length < 5 && player.length > 2) {
             this.players = player;
         } else {
-            System.out.println("Il doit y avoir au minimum 2 joueurs et au maximum 4.");
+            System.out.println("Il doit y avoir au minimum 3 joueurs et au maximum 4.");
             throw new IllegalStateException();
         }
+    }
+    public boolean seeHasTheLonguest(Player p,int x,int y,String pos){
+        int test=this.getBoard().longuestRoad(p, x, y, pos, "h&b");
+        if (setLonguestRP(test, p)){
+            return true;
+        }
+        return false;
+    }
+    public boolean setLonguestRP(int l,Player p){
+        if (l > this.LonguestRoad){
+            this.LonguestRoad=l;
+            this.hasTheLonguestR=p;
+            return true;
+        } 
+        return false;
+
     }
 
     public void setfirstTo3Knigths() {
@@ -85,7 +103,11 @@ public class Game {
 
     public boolean endGame() {
         for (Player p : this.players) {
-            if (p.getV() >= 10) {
+            int Vp=p.getV();
+            if (p==this.hasTheLonguestR){
+                Vp=Vp+2;
+            }
+            if (Vp >= 10) {
                 return true;
             }
         }
@@ -264,6 +286,9 @@ public class Game {
             y = r.nextInt(6) + 1;
             z = r.nextInt(4);
         } while (!board.addRoad(x, y, new Road(player), pos[z]));
+        seeHasTheLonguest(player, x, y, pos[z]);
+        this.getBoard().rebootList();
+                            
     }
 
     public Integer[] getCoordinatesOfStructure(Player player) {
