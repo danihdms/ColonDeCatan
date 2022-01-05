@@ -5,6 +5,7 @@ import java.util.Collections;
 
 public class Board {
     private Tile[][] tiles;
+    private ArrayList<Integer> idList = new ArrayList<Integer>();
 
     public Board() {
         tiles = new Tile[7][7];
@@ -59,7 +60,7 @@ public class Board {
         for (int i = 0; i < 6; i++) {
             switch (i) {
                 case 0:
-                    tiles[0][1] = tilPort.get(i); //01 46 63 20 03 65
+                    tiles[0][1] = tilPort.get(i); // 01 46 63 20 03 65
                     tiles[0][1].isAPort();
 
                     break;
@@ -269,7 +270,7 @@ public class Board {
         return false;
     }
 
-    public boolean caseValid(int x, int y) { 
+    public boolean caseValid(int x, int y) {
         switch (x) {
             case 0:
                 return false;
@@ -485,22 +486,21 @@ public class Board {
     // donner la liste de structure autour du voleur
     public Structure[] getThiefColonies() {
 
-        
         Tile temp = tiles[getThief()[0]][getThief()[1]];
-        String [] t={"no","ne","se","so"};
-        int count =0;
-        for(int i=0;i<4;i++){
-            if(temp.getStructure(t[i]) != null){
+        String[] t = { "no", "ne", "se", "so" };
+        int count = 0;
+        for (int i = 0; i < 4; i++) {
+            if (temp.getStructure(t[i]) != null) {
                 count++;
             }
         }
         Structure[] list = new Structure[count];
-        count=0;
-        for(int i=0;i<4;i++){
-            if(temp.getStructure(t[i]) != null){
-                list[count]=temp.getStructure(t[i]);
+        count = 0;
+        for (int i = 0; i < 4; i++) {
+            if (temp.getStructure(t[i]) != null) {
+                list[count] = temp.getStructure(t[i]);
                 count++;
-                if (count == list.length){
+                if (count == list.length) {
                     break;
                 }
             }
@@ -535,6 +535,88 @@ public class Board {
 
     public Tile[][] getTiles() {
         return this.tiles;
+    }
+
+    public int longuestRoad(Player p, int x, int y, String or, String dir) { // or equivaut à n/s/e/o pour la route et
+                                                                             // dir represente la direction dans
+                                                                             // laquelle le parcours va se faire on
+                                                                             // commencera en ""
+        // verification si tuile vide
+        int b = 0;
+        int h = 0;
+        if (tiles[x][y] == null) {
+            return 0;
+        }
+        // verification si route vide
+        if (tiles[x][y].getRoad(or) == null) {
+            return 0;
+        }
+        // verification si id dans la liste
+        if (this.idList.contains(tiles[x][y].getRoad(or).getId())) {
+            return 0;
+        } else {
+            this.idList.add(tiles[x][y].getRoad(or).getId());
+        }
+        switch (or) {
+            case "e":
+                if (dir.equals("h&b")) {
+
+                } else {
+                    if (dir.equals("h")) {
+                        if (tiles[x][y].hasStructure(p, "ne") || tiles[x][y].getStructure("ne") == null) {
+                            h = 1 + MaxOf3(longuestRoad(p, x, y, "n", "h"), longuestRoad(p, x, y + 1, "n", "h"),
+                                    longuestRoad(p, x - 1, y, "e", "h"));
+                        } else {
+                            return 0;
+                        }
+                    } else {
+                        if (tiles[x][y].hasStructure(p, "se") || tiles[x][y].getStructure("se") == null) {
+                            b = 1 + MaxOf3(longuestRoad(p, x, y, "s", "b"), longuestRoad(p, x, y + 1, "s", "b"),
+                                    longuestRoad(p, x + 1, y, "e", "b"));
+                        } else {
+                            return 0;
+                        }
+                    }
+                    break;
+                }
+
+            case "o":
+                if (dir.equals("h&b")) {
+
+                } else {
+                    if (dir.equals("h")) {
+                        if (tiles[x][y].hasStructure(p, "ne") || tiles[x][y].getStructure("ne") == null) {
+                            h = 1 + MaxOf3(longuestRoad(p, x, y, "n", "h"), longuestRoad(p, x, y + 1, "n", "h"),
+                                    longuestRoad(p, x - 1, y, "e", "h"));
+                        } else {
+                            return 0;
+                        }
+                    } else {
+                        if (tiles[x][y].hasStructure(p, "se") || tiles[x][y].getStructure("se") == null) {
+                            b = 1 + MaxOf3(longuestRoad(p, x, y, "s", "b"), longuestRoad(p, x, y + 1, "s", "b"),
+                                    longuestRoad(p, x + 1, y, "e", "b"));
+                        } else {
+                            return 0;
+                        }
+                    }
+                    break;
+                }
+            case "n":
+            case "s":
+            default:
+
+        }
+        return h + b;
+    }
+
+    public int MaxOf3(int x, int y, int z) {
+        if (x > y && x > z) {
+            return x;
+        }
+        if (y > x && y > z) {
+            return y;
+        }
+        return z;
     }
 
     // trouver la plus longue route(optionnel)
