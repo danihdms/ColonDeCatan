@@ -306,7 +306,7 @@ public class Game {
         if(board.getTiles()[5][3].hasStructure(p, "se") || board.getTiles()[5][3].hasStructure(p, "so")){return true;}
         if(board.getTiles()[5][5].hasStructure(p, "se") || board.getTiles()[5][5].hasStructure(p, "so")){return true;}
 
-        System.out.println("pas de port");
+       
         return false;
         
     }
@@ -321,7 +321,7 @@ public class Game {
         
         return fin;
     }
-    public void PlayerStat(Player p){
+    public String PlayerStat(Player p){
         
         int countLaine =0;
         int CountBle=0;
@@ -349,7 +349,7 @@ public class Game {
                 break;
             }
         }
-        System.out.println("Laine = "+countLaine+" | Blé = "+CountBle+" | Argile = "+CountArgile+" | Minerais = "+CountMinerais+" | Bois = "+CountBois+ " | Point de Victoire = "+p.getV());
+        return "Laine = "+countLaine+" | Blé = "+CountBle+" | Argile = "+CountArgile+" | Minerais = "+CountMinerais+" | Bois = "+CountBois+ " | Point de Victoire = "+p.getV();
     }
 
 }

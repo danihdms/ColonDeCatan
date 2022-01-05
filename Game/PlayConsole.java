@@ -117,6 +117,7 @@ public class PlayConsole {
             Player player = game.getPlayers()[turnP];
             // lancé de dé
             int dice = game.throwDice();
+            
             if (player.getHuman()) {
 
                 if (dice != 7) {
@@ -176,7 +177,10 @@ public class PlayConsole {
             }
             // si humain
             if (player.getHuman()) {
-                game.PlayerStat(player);
+                
+                
+                
+                System.out.println(game.PlayerStat(player));
                 // placer structure
                 if (!game.structuresFull() && game.hasRessourcesToPlaceStructure(player)
                         && player.getNbSettlements() > 0) {
@@ -294,7 +298,7 @@ public class PlayConsole {
                             switch (player.getDevC().get(Integer.parseInt(rep)).getType()) {
                                 case "victory":
                                     player.setV(player.getV() + 2);
-                                    player.getResC().remove(Integer.parseInt(rep));
+                                    player.getDevC().remove(Integer.parseInt(rep));
                                     break;
                                 case "knight":
                                     System.out.println("Veuillez deplacer le voleur.");
@@ -310,7 +314,7 @@ public class PlayConsole {
                                         System.out.println("Donnez la colonne où vous voulez placer le voleur.");
                                         y = sc.nextLine();
                                     }
-
+                                    
                                     Structure[] tabAction = game.getBoard().getThiefColonies();
                                     int res = game.getRandom(game.getResCards().size());
                                     int playerChoose = game.getRandom(tabAction.length);
@@ -335,7 +339,7 @@ public class PlayConsole {
                                         player.setV(player.getV() + 2);
                                         game.setfirstTo3Knigths();
                                     }
-                                    player.getResC().remove(Integer.parseInt(rep));
+                                    player.getDevC().remove(Integer.parseInt(rep));
                                     break;
                                 case "roadBuilding":
                                     int count = 0;
@@ -358,11 +362,12 @@ public class PlayConsole {
                                             System.out.println("Dans quel coin voulez-vous la placer ? [n/o/e/s]");
                                             pos = sc.nextLine();
                                         }
+                                        
                                         player.nbRoads--;
                                         count++;
                                     }
                                     // verifier si route la plus longue;
-                                    player.getResC().remove(Integer.parseInt(rep));
+                                    player.getDevC().remove(Integer.parseInt(rep));
                                 case "monopoly":
                                     System.out.println(
                                             "choisissez une ressources à monopoliser entre :[argile, laine, blé, minerais, bois]");
@@ -375,7 +380,7 @@ public class PlayConsole {
                                             }
                                         }
                                     }
-                                    player.getResC().remove(Integer.parseInt(rep));
+                                    player.getDevC().remove(Integer.parseInt(rep));
                                     break;
                                 case "yearOfPlenty":
                                     System.out.println(
@@ -387,13 +392,14 @@ public class PlayConsole {
                                     System.out.println("Ressource 2:");
                                     ress = sc.nextLine();
                                     game.giveRessources(new ResCard(ress), player);
-                                    player.getResC().remove(Integer.parseInt(rep));
+                                    player.getDevC().remove(Integer.parseInt(rep));
 
                                 default:
                                     break;
                             }
+                            display.printBoard(game.getBoard());
 
-                            player.getResC().remove(Integer.parseInt(rep));
+                            
 
                         }
 
