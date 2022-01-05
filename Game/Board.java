@@ -582,7 +582,19 @@ public class Board {
 
             case "o":
                 if (dir.equals("h&b")) {
+                    if (tiles[x][y].hasStructure(p, "ne") || tiles[x][y].getStructure("ne") == null) {
+                        h = 1 + MaxOf3(longuestRoad(p, x, y, "n", "h"), longuestRoad(p, x, y + 1, "n", "h"),
+                                longuestRoad(p, x - 1, y, "e", "h"));
+                    } else {
+                        return 0;
+                    }
 
+                    if (tiles[x][y].hasStructure(p, "se") || tiles[x][y].getStructure("se") == null) {
+                        b = 1 + MaxOf3(longuestRoad(p, x, y, "s", "b"), longuestRoad(p, x, y + 1, "s", "b"),
+                                longuestRoad(p, x + 1, y, "e", "b"));
+                    } else {
+                        return 0;
+                    }
                 } else {
                     if (dir.equals("h")) {
                         if (tiles[x][y].hasStructure(p, "ne") || tiles[x][y].getStructure("ne") == null) {
