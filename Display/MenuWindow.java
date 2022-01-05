@@ -1,286 +1,237 @@
 package Display;
 
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 public class MenuWindow extends JFrame {
-    // Variables declaration - do not modify                     
-    private JLabel jLabel1;
-    private JLabel jLabel10;
-    private JLabel jLabel11;
-    private JLabel jLabel12;
-    private JLabel jLabel2;
-    private JLabel jLabel3;
-    private JLabel jLabel4;
-    private JLabel jLabel5;
-    private JLabel jLabel6;
-    private JLabel jLabel7;
-    private JLabel jLabel8;
-    private JLabel jLabel9;
-    private JPanel jPanel1;
-    private JPanel jPanel2;
-    private JSplitPane jSplitPane1;
-    private JTextField jTextField1;
-    private JTextField jTextField2;
-    private JTextField jTextField3;
-    private JTextField jTextField4;
-    private JToggleButton jToggleButton1;
-    private JToggleButton jToggleButton2;
-    private JToggleButton jToggleButton3;
-    private JToggleButton jToggleButton4;
-    private JButton beginGame;
-    // End of variables declaration                   
+    private JButton fourPButton;
+    private JLabel hLabel1;
+    private JLabel hLabel2;
+    private JLabel hLabel3;
+    private JLabel hLabel4;
+    private JPanel jPanel3;
+    private JLabel nameLabel1;
+    private JLabel nameLabel2;
+    private JLabel nameLabel3;
+    private JLabel nameLabel4;
+    private JLabel pLabel1;
+    private JLabel pLabel2;
+    private JLabel pLabel3;
+    private JLabel pLabel4;
+    private JButton startButton;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JTextField textField4;
+    private JTextField textField3;
+    private JButton threePButton;
+    private JLabel titleLabel;
+    private JToggleButton toggleButton1;
+    private JToggleButton toggleButton2;
+    private JToggleButton toggleButton3;
+    private JToggleButton toggleButton4;
 
     public MenuWindow() {
-        initComponents();
-    }
-                          
-    Image img = Toolkit.getDefaultToolkit().getImage("CATANE.jpeg");
-
-    private void initComponents() {
-        this.setContentPane(new JPanel() {
-            @Override
-            public void paintComponent(Graphics g) {
-               super.paintComponent(g);
-               g.drawImage(img, 0, 0, null);
-            }
-         });
-        jPanel1 = new JPanel();
-        jSplitPane1 = new JSplitPane();
-        jLabel1 = new JLabel();
-        jLabel2 = new JLabel();
-        jLabel3 = new JLabel();
-        jLabel4 = new JLabel();
-        jLabel5 = new JLabel();
-        jLabel6 = new JLabel();
-        jLabel7 = new JLabel();
-        jLabel8 = new JLabel();
-        jLabel9 = new JLabel();
-        jLabel10 = new JLabel();
-        jLabel11 = new JLabel();
-        jLabel12 = new JLabel();
-        jToggleButton1 = new JToggleButton();
-        jTextField1 = new JTextField();
-        jTextField2 = new JTextField();
-        jTextField3 = new JTextField();
-        jTextField4 = new JTextField();
-        jToggleButton2 = new JToggleButton();
-        jToggleButton3 = new JToggleButton();
-        jToggleButton4 = new JToggleButton();
-        beginGame = new JButton("Commencer la partie");
-        jPanel2 = new JPanel();
-
+        try {
+            Image img = ImageIO.read(new File("res/catan-promo-poster-small.jpg"));
+            jPanel3 = new ImagePane(img, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            jPanel3 = new JPanel();
+        }
+        titleLabel = new JLabel();
+        threePButton = new JButton("3 PLAYERS");
+        fourPButton = new JButton("4 PLAYERS");
+        nameLabel1 = new JLabel("Name :");
+        nameLabel2 = new JLabel("Name :");
+        nameLabel3 = new JLabel("Name :");
+        nameLabel4 = new JLabel("Name :");
+        textField1 = new JTextField("Steve");
+        textField2 = new JTextField("Peter");
+        textField3 = new JTextField("Tony");
+        textField4 = new JTextField("Natasha");
+        hLabel1 = new JLabel("Human ?");
+        hLabel2 = new JLabel("Human ?");
+        hLabel3 = new JLabel("Human ?");
+        hLabel4 = new JLabel("Human ?");
+        pLabel1 = new JLabel("Player 1");
+        pLabel2 = new JLabel("Player 2");
+        pLabel3 = new JLabel("Player 3");
+        pLabel4 = new JLabel("Player 4");
+        toggleButton1 = new JToggleButton("Yes");
+        toggleButton2 = new JToggleButton("Yes");
+        toggleButton3 = new JToggleButton("Yes");
+        toggleButton4 = new JToggleButton("Yes");
+        startButton = new JButton("START");
+    
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Player 1");
-
-        jLabel2.setText("Player 2");
-
-        jLabel3.setText("Player 3");
-
-        jLabel4.setText("Player 4");
-
-        jLabel5.setText("Name :");
-
-        jLabel6.setText("Name :");
-
-        jLabel7.setText("Name :");
-
-        jLabel8.setText("Name :");
-
-        jLabel9.setText("Human :");
-
-        jLabel10.setText("Human :");
-
-        jLabel11.setText("Human :");
-
-        jLabel12.setText("Human :");
-
-        
-        jTextField1.setText("Daniel");
-        jTextField1.setForeground(Color.GRAY);
-        jTextField1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                actionPerformed(evt);
-            }
-        });
-        
-        jTextField2.setText("Hugo");
-        jTextField2.setForeground(Color.GRAY);
-        
-        jTextField3.setText("Daniel");
-        jTextField3.setForeground(Color.GRAY);
-        
-        jTextField4.setText("Hugo");
-        jTextField4.setForeground(Color.GRAY);
-        
-        jToggleButton1.setText("Yes");
-        jToggleButton1.addActionListener((ActionListener) new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                actionPerformed(evt);
-            }
-        });
-
-        jToggleButton2.setText("Yes");
-        jToggleButton2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                actionPerformed(evt);
-            }
-        });
-
-        jToggleButton3.setText("Yes");
-        jToggleButton3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                actionPerformed(evt);
-            }
-        });
-
-        jToggleButton4.setText("Yes");
-        jToggleButton4.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                actionPerformed(evt);
-            }
-        });
-
-        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+    
+        GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+                jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap(48, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(startButton, GroupLayout.PREFERRED_SIZE, 426,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(140, 140, 140)
+                                                .addComponent(titleLabel)))
+                                .addContainerGap(48, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addComponent(pLabel3)
+                                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                                        .addGap(23, 23, 23)
+                                                        .addGroup(jPanel3Layout
+                                                                .createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                                                .addComponent(hLabel3)
+                                                                .addComponent(nameLabel3))
+                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                        .addGroup(jPanel3Layout
+                                                                .createParallelGroup(GroupLayout.Alignment.LEADING,
+                                                                        false)
+                                                                .addComponent(textField3)
+                                                                .addComponent(toggleButton3, GroupLayout.PREFERRED_SIZE,
+                                                                        71, GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addComponent(pLabel1)
+                                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                                        .addGap(23, 23, 23)
+                                                        .addGroup(jPanel3Layout
+                                                                .createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                                                .addComponent(hLabel1)
+                                                                .addComponent(nameLabel1))
+                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                        .addGroup(jPanel3Layout
+                                                                .createParallelGroup(GroupLayout.Alignment.LEADING,
+                                                                        false)
+                                                                .addComponent(textField1)
+                                                                .addComponent(toggleButton1, GroupLayout.PREFERRED_SIZE,
+                                                                        71, GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(threePButton, GroupLayout.PREFERRED_SIZE, 172,
+                                                GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(pLabel2)
+                                        .addComponent(pLabel4)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(23, 23, 23)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                                .addGroup(jPanel3Layout
+                                                                        .createParallelGroup(
+                                                                                GroupLayout.Alignment.TRAILING)
+                                                                        .addComponent(hLabel2)
+                                                                        .addComponent(nameLabel2))
+                                                                .addPreferredGap(
+                                                                        LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addGroup(jPanel3Layout
+                                                                        .createParallelGroup(
+                                                                                GroupLayout.Alignment.LEADING, false)
+                                                                        .addComponent(textField2)
+                                                                        .addComponent(toggleButton2,
+                                                                                GroupLayout.PREFERRED_SIZE, 71,
+                                                                                GroupLayout.PREFERRED_SIZE)))
+                                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                                .addGroup(jPanel3Layout
+                                                                        .createParallelGroup(
+                                                                                GroupLayout.Alignment.TRAILING)
+                                                                        .addComponent(hLabel4)
+                                                                        .addComponent(nameLabel4))
+                                                                .addPreferredGap(
+                                                                        LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addGroup(jPanel3Layout
+                                                                        .createParallelGroup(
+                                                                                GroupLayout.Alignment.LEADING, false)
+                                                                        .addComponent(textField4)
+                                                                        .addComponent(toggleButton4,
+                                                                                GroupLayout.PREFERRED_SIZE, 71,
+                                                                                GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(fourPButton, GroupLayout.PREFERRED_SIZE, 172,
+                                                GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+        jPanel3Layout.setVerticalGroup(
+                jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap(10, Short.MAX_VALUE)
+                                .addComponent(titleLabel)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(threePButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
+                                        .addComponent(fourPButton, GroupLayout.PREFERRED_SIZE, 54,
+                                                GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(pLabel1)
+                                        .addComponent(pLabel2))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(nameLabel1)
+                                        .addComponent(textField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(nameLabel2)
+                                        .addComponent(textField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(hLabel1)
+                                        .addComponent(toggleButton1)
+                                        .addComponent(hLabel2)
+                                        .addComponent(toggleButton2))
                                 .addGap(27, 27, 27)
-                                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5)))
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jToggleButton1, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton2, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton3, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton4, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField1)))
-                            .addComponent(beginGame, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSplitPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                .addComponent(jSplitPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
-                .addComponent(jLabel1)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jToggleButton2, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addComponent(jLabel3)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jToggleButton3, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addComponent(jLabel4)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextField4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jToggleButton4, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addComponent(beginGame, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-                );
-
-        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(138, 138, 138)
-                .addGap(137, 137, 137))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
+                                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(pLabel3)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(nameLabel3)
+                                                        .addComponent(textField3, GroupLayout.PREFERRED_SIZE,
+                                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(hLabel3)
+                                                        .addComponent(toggleButton3)))
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(pLabel4)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(nameLabel4)
+                                                        .addComponent(textField4, GroupLayout.PREFERRED_SIZE,
+                                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(jPanel3Layout
+                                                        .createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(hLabel4)
+                                                        .addComponent(toggleButton4))))
+                                .addGap(67, 67, 67)
+                                .addComponent(startButton, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)));
+    
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(69, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+    
         pack();
-    }                                          
+        this.setSize(new Dimension(845, 760));
+        this.setLocationRelativeTo(null);
+    }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -289,21 +240,24 @@ public class MenuWindow extends JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuWindow.class.getName()).log(java.util.logging.Level.SEVERE, null,
+                    ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuWindow.class.getName()).log(java.util.logging.Level.SEVERE, null,
+                    ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuWindow.class.getName()).log(java.util.logging.Level.SEVERE, null,
+                    ex);
         } catch (UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuWindow.class.getName()).log(java.util.logging.Level.SEVERE, null,
+                    ex);
         }
-        //</editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
-        EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MenuWindow menuWindow = new MenuWindow();
-                menuWindow.setVisible(true);
+                new MenuWindow().setVisible(true);
             }
         });
     }
