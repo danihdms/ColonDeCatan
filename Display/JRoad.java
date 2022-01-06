@@ -4,19 +4,23 @@ import java.awt.*;
 
 import javax.swing.JPanel;
 
-public class JRoad extends JPanel {
+public class JRoad extends Button {
     private int x, y;
-    private String type;
+    private String pos;
+    private boolean isActive;
 
-    public JRoad(int x, int y, String type) {
+    public JRoad(int x, int y, String pos, boolean  active) {
         this.x = x;
         this.y = y;
-        this.type = type;
+        this.pos = pos;
+        this.isActive = active;
 
-        if (type.equals("horizontal")) {
-            setSize(new Dimension(85, 20));
-        } else {
-            setSize(new Dimension(20, 85));
-        }
+        
     }
+    public int getX(){return x;}
+    public int getY(){return y;}
+    public String getPos(){return pos;}
+    public void setActive(boolean b){this.isActive=b;}
+    public boolean getActive(){return this.isActive;}
+
 }

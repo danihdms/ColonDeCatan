@@ -2,48 +2,43 @@ package Display;
 
 import java.awt.*;
 import java.io.File;
-import java.nio.file.NoSuchFileException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import Game.*;
 
 public class ImagePane extends JPanel {
     Image image;
-    boolean fit;
 
     ImagePane(Image image) {
         this.image = image;
         setLayout(new BorderLayout());
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-    }
-
     public void appendObjects(Game game) {
         Tile[][] tiles = game.getBoard().getTiles();
         for (int i = 0; i < 7; i++) {
+            // Premiere boucle sur lune ligne de tuiles
             for (int j = 0; j < 7; j++) {
                 if (tiles[i][j] != null) {
+                    // AJout de la colonie du Nord Ouest
                     if (tiles[i][j].getNo() != null) {
                         if (tiles[i][j].getNo().getType() == 0) {
                             try {
                                 Image image = ImageIO.read(new File("res/colony.png"));
-                                JStructure s = new JStructure(image, true, i, j, 0);
+                                JStructure s = new JStructure(image, true, i, j, "no", 0);
                                 s.setBackground(getColorStructure(tiles[i][j].getNo()));
                                 this.add(s);
                             } catch (Exception e) {
-                                this.add(new JPanel());
+                                this.add(new JButton());
                                 e.printStackTrace();
                             }
                         } else if (tiles[i][j].getNo().getType() == 1) {
                             try {
                                 Image image = ImageIO.read(new File("res/city.png"));
-                                JStructure s = new JStructure(image, true, i, j, 1);
+                                JStructure s = new JStructure(image, false, i, j, "no", 1);
                                 s.setBackground(getColorStructure(tiles[i][j].getNo()));
                                 this.add(s);
                             } catch (Exception e) {
@@ -51,25 +46,29 @@ public class ImagePane extends JPanel {
                             }
                         }
                     } else {
-                        this.add(new JPanel());
+                        JStructure s = new JStructure(image, true, i, j, "no", -1);
+                        this.add(s);
                     }
+                    // AJout de la route du nord
                     if (tiles[i][j].getN() != null) {
-                        JRoad r = new JRoad(i, j, "horizontal");
+                        JRoad r = new JRoad(i, j, "horizontal", false);
                         r.setBackground(getColorRoad(tiles[i][j].getN()));
                         this.add(r);
 
                     } else {
-                        this.add(new JPanel());
+                        JRoad r = new JRoad(i, j, "horizontal", true);
+                        this.add(r);
 
                     }
-                    if ((i == 0 && j == 0)|| (i == 1 && j == 3) || (i == 2 && j == 4) || (i == 3 && j == 5)
+                    // Ajout de la colonie du nord ouest dans les cas exceptionnels
+                    if ((i == 0 && j == 0) || (i == 1 && j == 3) || (i == 2 && j == 4) || (i == 3 && j == 5)
                             || (i == 4 && j == 5) || (i == 5 && j == 5) || i == 6) {
                         if (tiles[i][j].getNe() != null) {
 
                             if (tiles[i][j].getNe().getType() == 0) {
                                 try {
                                     Image image = ImageIO.read(new File("res/colony.png"));
-                                    JStructure s = new JStructure(image, true, i, j, 0);
+                                    JStructure s = new JStructure(image, true, i, j, "ne", 0);
                                     s.setBackground(getColorStructure(tiles[i][j].getNo()));
                                     this.add(s);
                                 } catch (Exception e) {
@@ -79,7 +78,7 @@ public class ImagePane extends JPanel {
                             if (tiles[i][j].getNe().getType() == 1) {
                                 try {
                                     Image image = ImageIO.read(new File("res/city.png"));
-                                    JStructure s = new JStructure(image, true, i, j, 1);
+                                    JStructure s = new JStructure(image, false, i, j, "ne", 1);
                                     s.setBackground(getColorStructure(tiles[i][j].getNo()));
                                     this.add(s);
                                 } catch (Exception e) {
@@ -87,23 +86,91 @@ public class ImagePane extends JPanel {
                                 }
                             }
                         } else {
-                            this.add(new JPanel());
+                            JStructure s = new JStructure(image, true, i, j, "ne", -1);
+                            this.add(s);
                         }
                     }
+                    // Ajout des colonies du sud ouest dans les cas exceptionnels
+                    if ((i == 3 && j == 1) || (i == 4 && j == 2) || (i == 5 && j == 3) || (i == 5 && j == 4)
+                            || (i == 5 && j == 5)) {
+                        if (tiles[i][j].getSo() != null) {
+
+                            if (tiles[i][j].getSo().getType() == 0) {
+                                try {
+                                    Image image = ImageIO.read(new File("res/colony.png"));
+                                    JStructure s = new JStructure(image, true, i, j, "so", 0);
+                                    s.setBackground(getColorStructure(tiles[i][j].getSe()));
+                                    this.add(s);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            if (tiles[i][j].getSo().getType() == 1) {
+                                try {
+                                    Image image = ImageIO.read(new File("res/city.png"));
+                                    JStructure s = new JStructure(image, false, i, j, "so", 1);
+                                    s.setBackground(getColorStructure(tiles[i][j].getSo()));
+                                    this.add(s);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else {
+                            JStructure s = new JStructure(image, true, i, j, "so", -1);
+                            this.add(s);
+                        }
+                    }
+                    // Ajout de la colonie du sud est de la derniere case du tableau
+                    if (tiles[5][5].getSe() != null) {
+                        if (tiles[5][5].getSe().getType() == 0) {
+                            try {
+                                Image image = ImageIO.read(new File("res/colony.png"));
+                                JStructure s = new JStructure(image, true, 5, 5, "se", 0);
+                                s.setBackground(getColorStructure(tiles[5][5].getSe()));
+                                this.add(s);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (tiles[5][5].getSe().getType() == 1) {
+                            try {
+                                Image image = ImageIO.read(new File("res/city.png"));
+                                JStructure s = new JStructure(image, false, 5, 5, "se", 1);
+                                s.setBackground(getColorStructure(tiles[5][5].getSe()));
+                                this.add(s);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    } else {
+                        JStructure s = new JStructure(image, true, 5, 5, "se", -1);
+                        this.add(s);
+                    }
                 } else {
-                    this.add(new JPanel());
-                    this.add(new JPanel());
+                    // Si la tuile est nulle, on met un panel de la couleur de l'arriere plan
+                    try {
+                        this.add(new ImagePane(ImageIO.read(new File("res/ocean.jpg"))));
+                        this.add(new ImagePane(ImageIO.read(new File("res/ocean.jpg"))));
+                    } catch (Exception e) {
+                        this.add(new JPanel());
+                        this.add(new JPanel());
+                        e.printStackTrace();
+                    }
                 }
             }
+            // Deuxieme boucle sur la ligne de tuiles
             for (int j = 0; j < 7; j++) {
                 if (tiles[i][j] != null) {
                     if (tiles[i][j].getO() != null) {
-                        JRoad r = new JRoad(i, j, "vertical");
+                        JRoad r = new JRoad(i, j, "o", false);
                         r.setBackground(getColorRoad(tiles[i][j].getO()));
                         this.add(r);
 
                     } else {
-                        this.add(new JPanel());
+                        JRoad r = new JRoad(i, j, "o", true);
+
+                        this.add(r);
 
                     }
 
@@ -111,31 +178,39 @@ public class ImagePane extends JPanel {
                         JTile tile = new JTile(getImageTypeTile(tiles[i][j]), false, i, j, tiles[i][j].getTypeTile());
                         this.add(tile);
                     } catch (Exception e) {
-                        this.add(new JPanel());
+                        this.add(new JButton());
                     }
                     if (i == 0 || (i == 1 && j == 3) || (i == 2 && j == 4) || (i == 3 && j == 5)
                             || (i == 4 && j == 5) || (i == 5 && j == 5) || i == 6) {
                         addLastColRoads(tiles[i][j], i, j);
                     }
-                    if (i == 15) {
-                        if (tiles[i][j].getE() != null) {
-                            JRoad r = new JRoad(i, j, "vertical");
-                            r.setBackground(getColorRoad(tiles[i][j].getE()));
-                            this.add(r);
+                    if (tiles[i][j].getE() != null) {
+                        JRoad r = new JRoad(i, j, "e", false);
+                        r.setBackground(getColorRoad(tiles[i][j].getE()));
+                        this.add(r);
 
-                        } else {
-                            this.add(new JPanel());
+                    } else {
+                        JRoad r = new JRoad(i, j, "e", true);
+                        this.add(r);
 
-                        }
                     }
                 } else {
-                    this.add(new JPanel());
-                    this.add(new JPanel());
+                    try {
+                        this.add(new ImagePane(ImageIO.read(new File("res/ocean.jpg"))));
+                        this.add(new ImagePane(ImageIO.read(new File("res/ocean.jpg"))));
+                    } catch (Exception e) {
+                        this.add(new JPanel());
+                        this.add(new JPanel());
+                        e.printStackTrace();
+                    }
                 }
             }
         }
     }
 
+    // clique road -> crée
+    // clique sur un panel colonie sois add soit upgrade
+    // tuile posé le voleur
     public static Color getColorStructure(Structure s) {
         if (s != null) {
 
@@ -220,12 +295,11 @@ public class ImagePane extends JPanel {
 
     public void addLastColRoads(Tile tile, int i, int j) {
         if (tile.getE() != null) {
-            JRoad r = new JRoad(i, j, "vertical");
+            JRoad r = new JRoad(i, j, "vertical", false);
             r.setBackground(getColorRoad(tile.getE()));
             this.add(r);
         } else {
-            this.add(new JRoad(i, j, "vertical"));
+            this.add(new JRoad(i, j, "vertical", true));
         }
     }
-
 }

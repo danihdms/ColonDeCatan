@@ -1,23 +1,29 @@
 package Display;
 
-import javax.swing.*;
 import java.awt.*;
-import Game.*;
 
-public class JStructure extends ImagePane {
+public class JStructure extends ImageButton {
     private int x, y;
     private int type;
+    private boolean isActive;
+    private String pos;
 
-    public JStructure(Image image, boolean fit, int x, int y, int type) {
+    public JStructure(Image image, boolean isActive, int x, int y,String pos, int type) {
         super(image);
         this.x = x;
         this.y = y;
         this.type = type;
-        setSize(new Dimension(85, 85));
-
+        this.isActive=isActive;
+        this.pos=pos;
     }
 
     public int getType(){
         return this.type;
     }
+    public int getX(){return x;}
+    public int getY(){return y;}
+    public String getPos(){return pos;}
+
+    public void setActive(boolean b){this.isActive=b;}
+    public boolean getActive(){return this.isActive;}
 }
