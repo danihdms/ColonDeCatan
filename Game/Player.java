@@ -37,6 +37,14 @@ public class Player {
         return this.name;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setHuman(boolean human){
+        this.human = human;
+    }
+
     public boolean getHuman(){
         return this.human;
     }

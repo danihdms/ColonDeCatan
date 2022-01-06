@@ -9,10 +9,12 @@ public class JStructure extends ImagePane {
     private int type;
 
     public JStructure(Image image, boolean fit, int x, int y, int type) {
-        super(image, fit);
+        super(image);
         this.x = x;
         this.y = y;
         this.type = type;
+        setSize(new Dimension(85, 85));
+
     }
 
     public int getType(){

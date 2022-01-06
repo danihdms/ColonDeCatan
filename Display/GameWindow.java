@@ -3,13 +3,12 @@ package Display;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import Game.Game;
-import Game.Player;
+import Game.*;
 
 import java.awt.*;
 import java.io.File;
 
-public class GameWindow extends JFrame implements GUIMethods{
+public class GameWindow extends JFrame {
 
         private JButton addRoadButton;
         private JButton addStructureButton;
@@ -27,14 +26,14 @@ public class GameWindow extends JFrame implements GUIMethods{
                 this.getContentPane().setBackground(new Color(0, 0, 0));
                 try {
                         Image menuImage = ImageIO.read(new File("res/old_map_vintage_background.jpg"));
-                        menuPanel = new ImagePane(menuImage, true);
+                        menuPanel = new ImagePane(menuImage);
 
                         Image centralImage = ImageIO.read(new File("res/ocean.jpg"));
-                        centralPanel = new ImagePane(centralImage, true);
-                        boardPanel = new ImagePane(centralImage, true);
+                        centralPanel = new ImagePane(centralImage);
+                        boardPanel = new ImagePane(centralImage);
 
                         Image playersImage = ImageIO.read(new File("res/old_map_vintage_background.jpg"));
-                        playersPanel = new ImagePane(playersImage, true);
+                        playersPanel = new ImagePane(playersImage);
 
                 } catch (Exception e) {
                         e.printStackTrace();
@@ -116,7 +115,7 @@ public class GameWindow extends JFrame implements GUIMethods{
                                 playersPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addGap(0, 135, Short.MAX_VALUE));
 
-                // boardPanel.setLayout(new GridBagLayout());
+                boardPanel.setLayout(new GridLayout(0, 15, 1, 1));
                 ((ImagePane) boardPanel).appendObjects(game);
 
                 GroupLayout centralPanelLayout = new GroupLayout(centralPanel);
@@ -171,7 +170,7 @@ public class GameWindow extends JFrame implements GUIMethods{
                                                                 GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
                 pack();
-                // this.setSize(new Dimension(1000, 800));
+                this.setSize(new Dimension(1000, 800));
                 this.setLocationRelativeTo(null);
         }
 
@@ -196,13 +195,21 @@ public class GameWindow extends JFrame implements GUIMethods{
                         java.util.logging.Logger.getLogger(GameWindow.class.getName())
                                         .log(java.util.logging.Level.SEVERE, null, ex);
                 }
-                // </editor-fold>
+
+                Player p = new Player("daniel", "blue", true);
+                Player[] players = { p, new Player("daniel", "red", true), new Player("daniel", "green", true) };
+                Game game = new Game(players);
+                game.addAIStructure(p);
+                game.addAIStructure(p);
+                game.addAIStructure(p);
+                game.addAIRoad(p);
+                game.addAIRoad(p);
+                game.addAIRoad(p);
 
                 /* Create and display the form */
                 EventQueue.invokeLater(new Runnable() {
                         public void run() {
-                                new GameWindow(new Game(new Player[3])).setVisible(true);
-                                ;
+                                new GameWindow(game).setVisible(true);
                         }
                 });
         }

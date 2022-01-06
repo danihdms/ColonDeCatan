@@ -423,6 +423,11 @@ public class ConsoleDisplay {
     }
 
     public void printBoard(Board board) {
+        for(int i = 0; i < 150; i++){
+            System.out.print("_");
+        }
+        System.out.println();
+        System.out.println();
         System.out.print("                  ");
         System.out.print("          1        ");
         System.out.print("          2        ");
