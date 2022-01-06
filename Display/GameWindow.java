@@ -25,8 +25,18 @@ public class GameWindow extends JFrame {
 
         public GameWindow(Game game) {
                 panels = new JPanel[15][15];
+                for(int i = 0; i < panels.length; i++){
+                        for (int j = 0; j < panels[i].length; j++){
+                                try{
+                                panels[i][j] = new ImagePane(ImageIO.read(new File("res/ocean.jpg")));
 
-                while (!game.endGame()) {
+                                } catch (Exception e){
+                                        e.printStackTrace();
+                                }
+                        }
+                }
+                int turnPlayer = 0;
+                // while (!game.endGame()) {
                         this.getContentPane().setBackground(new Color(0, 0, 0));
                         try {
                                 Image menuImage = ImageIO.read(new File("res/old_map_vintage_background.jpg"));
@@ -135,7 +145,12 @@ public class GameWindow extends JFrame {
                                                         .addGap(0, 135, Short.MAX_VALUE));
 
                         boardPanel.setLayout(new GridLayout(0, 15, 1, 1));
-                        ((ImagePane) boardPanel).appendObjects(game);
+                        ImagePane.appendObjects(game, game.getPlayers()[turnPlayer]);
+                        for(int i = 0; i < panels.length; i++){
+                                for (int j = 0; j < panels[i].length; j++){
+                                        boardPanel.add(panels[i][j]);
+                                }
+                        }
 
                         GroupLayout centralPanelLayout = new GroupLayout(centralPanel);
                         centralPanel.setLayout(centralPanelLayout);
@@ -200,7 +215,7 @@ public class GameWindow extends JFrame {
                         this.setSize(new Dimension(1000, 800));
                         this.setLocationRelativeTo(null);
                 }
-        }
+        // }
 
         public static void main(String args[]) {
                 try {
